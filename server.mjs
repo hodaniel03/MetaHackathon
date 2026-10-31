@@ -1,4 +1,5 @@
 import http from 'node:http';
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -94,7 +95,50 @@ function caseView(token) {
   const c = caseOr404(token);
   const docs = db.documents(token);
   const a = db.analysis(token, db.docsHash(docs), ai.PART_KEYS);
-  return { case: { token: c.token, name: c.name, person: c.person }, documents: docs, analysis: a.data, analysisState: a.state };
+  return { case: { token: c.token, name: c.name, person: c.person }, documents: docs, analysis: a.data, analysisState: a.state, checks: db.checks(token) };
+}
+
+const icsEsc = (s) => String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
+
+// Linjer i iCalendar skal brytes ved 75 byte, ikke 75 tegn.
+function icsFold(line) {
+  const out = [];
+  let cur = '', bytes = 0;
+  for (const ch of line) {
+    const b = Buffer.byteLength(ch);
+    if (bytes + b > 74) {
+      out.push(cur);
+      cur = ' ' + ch;
+      bytes = 1 + b;
+    } else {
+      cur += ch;
+      bytes += b;
+    }
+  }
+  out.push(cur);
+  return out.join('\r\n');
+}
+
+function buildIcs(c, docs, frister) {
+  const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
+  const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Saksmappen//NO', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', `X-WR-CALNAME:${icsEsc('Frister: ' + c.name)}`];
+  for (const f of frister) {
+    const next = new Date(`${f.dato}T12:00:00Z`);
+    next.setUTCDate(next.getUTCDate() + 1);
+    const doc = docs.find((x) => x.id === f.dok);
+    const uid = crypto.createHash('sha1').update(c.token + f.dato + f.hva).digest('hex').slice(0, 20) + '@saksmappen';
+    const desc = [`Sak: ${c.name}`, doc && `Kilde: ${doc.title}`, f.sitat && `Sitat: «${f.sitat}»`, 'Sjekk alltid fristen mot brevet.'].filter(Boolean).join('\n');
+    L.push(
+      'BEGIN:VEVENT', `UID:${uid}`, `DTSTAMP:${stamp}`,
+      `DTSTART;VALUE=DATE:${f.dato.replace(/-/g, '')}`, `DTEND;VALUE=DATE:${next.toISOString().slice(0, 10).replace(/-/g, '')}`,
+      `SUMMARY:${icsEsc('Frist: ' + f.hva)}`, `DESCRIPTION:${icsEsc(desc)}`,
+      'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Frist om en uke', 'TRIGGER:-P7D', 'END:VALARM',
+      'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Frist i morgen', 'TRIGGER:-P1D', 'END:VALARM',
+      'END:VEVENT',
+    );
+  }
+  L.push('END:VCALENDAR');
+  return L.map(icsFold).join('\r\n') + '\r\n';
 }
 
 const PART_FIELDS = { a: ['sammendrag', 'status', 'tidslinje'], b: ['frister', 'neste_steg'], c: ['mangler', 'ordliste'] };
@@ -151,7 +195,7 @@ async function readImages(token, body) {
 }
 
 const route = (method, pathname) => {
-  const m = pathname.match(/^\/api\/cases(?:\/([^/]+))?(?:\/([a-z]+))?(?:\/([^/]+))?$/);
+  const m = pathname.match(/^\/api\/cases(?:\/([^/]+))?(?:\/([a-z.]+))?(?:\/([^/]+))?$/);
   return m ? { method, token: m[1], sub: m[2], id: m[3] } : null;
 };
 
@@ -210,6 +254,23 @@ http
         const f = db.getFile(token, id);
         if (!f) throw new HttpError(404, 'Fant ikke filen.');
         return send(res, 200, f.data, f.mime, { 'Cache-Control': 'private, max-age=3600' });
+      }
+
+      if (sub === 'checks' && req.method === 'PUT') {
+        const b = await readBody(req);
+        const key = str(b.key, 200).trim();
+        if (!key) throw new HttpError(400, 'Mangler nøkkel.');
+        db.setCheck(token, key, !!b.done);
+        return sendJson(res, { ok: true });
+      }
+
+      if (sub === 'calendar.ics' && req.method === 'GET') {
+        const docs = db.documents(token);
+        const frister = (db.analysis(token, db.docsHash(docs), ai.PART_KEYS).data?.frister || []).filter((f) => f.dato).sort((x, y) => x.dato.localeCompare(y.dato));
+        const i = new URL(req.url, 'http://x').searchParams.get('i');
+        const list = i !== null && frister[Number(i)] ? [frister[Number(i)]] : frister;
+        if (!list.length) throw new HttpError(404, 'Ingen frister med dato ennå.');
+        return send(res, 200, buildIcs(db.getCase(token), docs, list), 'text/calendar; charset=utf-8', { 'Content-Disposition': 'attachment; filename="saksmappen-frister.ics"' });
       }
 
       if (sub === 'read' && req.method === 'POST') return sendJson(res, await readImages(token, await readBody(req, 25_000_000)));
