@@ -1,0 +1,190 @@
+{
+ "sammendrag": "Saken handler om Kari Eksempel som ble skadet i trafikkulykke 3. februar 2026. Legeerklæring fra fastlege 2026-03-12 beskriver skade i nakke og rygg og full sykmelding. Brev fra Fiktiv Forsikring AS 2026-09-30 godtok utgifter til behandling, men sa nei foreløpig til tapt inntekt og menerstatning. Menerstatning er penger for varig skade på kroppen. Vedtak fra NAV: avslag på AAP 2026-10-14 sa nei til arbeidsavklaringspenger, som er penger fra NAV når man ikke kan jobbe.",
+ "status": "Nå venter saken på time hos ortoped, som er en spesialist på skjelett og muskler. Innkalling til ortoped 2026-10-20 gir time 2026-11-18, og forsikringen trenger uttalelse innen 2026-11-30.",
+ "tidslinje": [
+  {
+   "dato": "2026-03-12",
+   "tittel": "Legeerklæring",
+   "beskrivelse": "Fastlegen beskriver ulykken, smerter og full sykmelding siden februar. Ventetid til spesialist er anslått til cirka åtte uker.",
+   "dok": "d1",
+   "sitat": "Pasienten ble påkjørt bakfra i trafikkulykke 3. februar 2026.",
+   "verifisert": true
+  },
+  {
+   "dato": "2026-09-30",
+   "tittel": "Svar fra forsikring",
+   "beskrivelse": "Forsikringen dekker behandling med 14 200 kroner. Krav om tapt inntekt og menerstatning er avslått foreløpig fordi spesialistuttalelse mangler.",
+   "dok": "d2",
+   "sitat": "Kravet om erstatning for tapt inntekt og menerstatning avslås foreløpig.",
+   "verifisert": true
+  },
+  {
+   "dato": "2026-10-14",
+   "tittel": "Avslag fra NAV",
+   "beskrivelse": "NAV sier nei til arbeidsavklaringspenger. NAV mener det ikke er vist at arbeidsevnen er nedsatt med minst halvparten.",
+   "dok": "d3",
+   "sitat": "Vi avslår søknaden din om arbeidsavklaringspenger.",
+   "verifisert": true
+  },
+  {
+   "dato": "2026-10-20",
+   "tittel": "Time hos ortoped",
+   "beskrivelse": "Det er satt opp time hos spesialist. Timen er 2026-11-18 klokken 10:30.",
+   "dok": "d4",
+   "sitat": "Du er innkalt til time 18. november 2026 klokken 10:30.",
+   "verifisert": true
+  },
+  {
+   "dato": "2026-10-25",
+   "tittel": "Notat om jobb og inntekt",
+   "beskrivelse": "Arbeidsgiver sier de ikke kan tilrettelegge for delvis jobb. Det er ikke samlet kvitteringer eller oversikt over tapt inntekt.",
+   "dok": "d5",
+   "sitat": "De sier de ikke kan tilrettelegge arbeidet slik at Kari kan jobbe delvis.",
+   "verifisert": true
+  }
+ ],
+ "frister": [
+  {
+   "dato": "2026-11-16",
+   "hva": "Avbestill timen hos ortoped hvis du ikke kan møte.",
+   "regel": "Innkalling til ortoped 2026-10-20 sier avbestilling senest 48 timer før timen.",
+   "dok": "d4",
+   "sitat": "Hvis du ikke kan møte, må du avbestille senest 48 timer før timen.",
+   "viktighet": "middels",
+   "verifisert": true
+  },
+  {
+   "dato": "2026-11-18",
+   "hva": "Møt til timen hos ortoped.",
+   "regel": "Innkalling til ortoped 2026-10-20 sier time 18. november 2026 klokken 10:30.",
+   "dok": "d4",
+   "sitat": "Du er innkalt til time 18. november 2026 klokken 10:30.",
+   "viktighet": "høy",
+   "verifisert": true
+  },
+  {
+   "dato": "2026-11-30",
+   "hva": "Send uttalelse fra ortoped til forsikring. Uten uttalelse blir saken avsluttet.",
+   "regel": "Brev fra Fiktiv Forsikring AS 2026-09-30 sier uttalelse innen 30. november 2026.",
+   "dok": "d2",
+   "sitat": "Vi trenger en uttalelse fra ortoped innen 30. november 2026.",
+   "viktighet": "høy",
+   "verifisert": true
+  },
+  {
+   "dato": null,
+   "hva": "Send klage på avslag om arbeidsavklaringspenger.",
+   "regel": "Vedtak fra NAV: avslag på AAP 2026-10-14 sier klagefrist er seks uker fra mottak. Mottak er ikke kjent.",
+   "dok": "d3",
+   "sitat": "Klagefristen er seks uker fra du mottok dette vedtaket.",
+   "viktighet": "høy",
+   "verifisert": true
+  }
+ ],
+ "neste_steg": [
+  {
+   "steg": "Møt til timen hos ortoped. Ta med MR-bilder og liste over medisiner.",
+   "hvorfor": "Uttalelse trengs for kravet hos forsikring.",
+   "innen": "2026-11-18"
+  },
+  {
+   "steg": "Send uttalelse fra ortoped til Fiktiv Forsikring AS.",
+   "hvorfor": "Ellers blir saken avsluttet.",
+   "innen": "2026-11-30"
+  },
+  {
+   "steg": "Send klage på vedtak fra NAV 2026-10-14. Be om innsyn hvis du trenger papirene.",
+   "hvorfor": "For å be om ny vurdering.",
+   "innen": null
+  },
+  {
+   "steg": "Samle kvitteringer og lag oversikt over tapt inntekt. Be arbeidsgiver om skriftlig beskrivelse av manglende tilrettelegging.",
+   "hvorfor": "NAV og forsikring trenger dokumentasjon.",
+   "innen": null
+  }
+ ],
+ "mangler": [
+  {
+   "hva": "Uttalelse fra ortoped om varig medisinsk invaliditet",
+   "hvorfor": "Brev fra Fiktiv Forsikring AS 2026-09-30 sier at krav om tapt inntekt og menerstatning er avslått fordi slik uttalelse mangler. Selskapet ber om uttalelsen innen 2026-11-30. Time er satt i Innkalling til ortoped 2026-10-20.",
+   "hvordan": "Møt til timen 2026-11-18. Be ortopeden skrive uttalelse om varig skade. Send den til forsikringsselskapet før fristen.",
+   "dok": "d2",
+   "sitat": "Kravet om erstatning for tapt inntekt og menerstatning avslås foreløpig.",
+   "verifisert": true
+  },
+  {
+   "hva": "Beskrivelse fra lege om hvilke arbeidsoppgaver som ikke kan utføres",
+   "hvorfor": "Vedtak fra NAV: avslag på AAP 2026-10-14 sier at det ikke er vist at arbeidsevnen er nedsatt med minst halvparten. Legeerklæring fra fastlege 2026-03-12 beskriver diagnose, men ikke arbeidsoppgaver.",
+   "hvordan": "Be fastlegen skrive ny erklæring. Den bør si hvilke oppgaver som ikke går, og hvor mye arbeidsevnen er nedsatt.",
+   "dok": "d3",
+   "sitat": "det ikke er dokumentert at arbeidsevnen din er nedsatt med minst halvparten på grunn av sykdom eller skade",
+   "verifisert": true
+  },
+  {
+   "hva": "Skriftlig bekreftelse fra arbeidsgiver om at tilrettelegging ikke er mulig",
+   "hvorfor": "Mitt notat etter samtale med arbeidsgiver 2026-10-25 sier at arbeidsgiver ikke kan tilrettelegge, men at dette ikke er skrevet ned. NAV og forsikringsselskap vil ofte se skriftlig bevis.",
+   "hvordan": "Be arbeidsgiver skrive et kort brev. Det bør si hvilke krav jobben har, og hvorfor delvis arbeid ikke går.",
+   "dok": "d5",
+   "sitat": "De sier de ikke kan tilrettelegge arbeidet slik at Kari kan jobbe delvis.",
+   "verifisert": true
+  },
+  {
+   "hva": "Oversikt over tapt inntekt og kvitteringer for utgifter",
+   "hvorfor": "Mitt notat etter samtale med arbeidsgiver 2026-10-25 sier at det ikke finnes oversikt over tapt inntekt eller kvitteringer. Brev fra Fiktiv Forsikring AS 2026-09-30 har avslått krav om tapt inntekt.",
+   "hvordan": "Lag liste over måneder uten inntekt fra mai og framover. Samle lønnsslipper, kontoutskrifter og kvitteringer for behandling.",
+   "dok": "d5",
+   "sitat": "Vi har ikke samlet kvitteringer eller oversikt over tapt inntekt.",
+   "verifisert": true
+  },
+  {
+   "hva": "MR-bilder og oversikt over medisiner til ortopedtimen",
+   "hvorfor": "Innkalling til ortoped 2026-10-20 ber om å ta med dette til timen 2026-11-18. Uten dette kan uttalelsen bli svak.",
+   "hvordan": "Be fastlegen om henvisning til MR hvis det ikke er tatt. Lag liste over medisiner. Ta med til timen.",
+   "dok": "d4",
+   "sitat": "Ta med eventuelle MR-bilder og oversikt over medisiner.",
+   "verifisert": true
+  }
+ ],
+ "ordliste": [
+  {
+   "begrep": "whiplash-skade",
+   "forklaring": "Skade i nakke etter brå bevegelse, for eksempel ved påkjørsel bakfra."
+  },
+  {
+   "begrep": "arbeidsuførhet",
+   "forklaring": "At du ikke kan jobbe på grunn av sykdom eller skade."
+  },
+  {
+   "begrep": "arbeidsevne",
+   "forklaring": "Hvor mye og hva slags arbeid du klarer å gjøre."
+  },
+  {
+   "begrep": "arbeidsavklaringspenger",
+   "forklaring": "Penger fra NAV når arbeidsevnen er nedsatt og du trenger oppfølging."
+  },
+  {
+   "begrep": "tapt inntekt",
+   "forklaring": "Lønn du har mistet fordi du ikke kunne jobbe etter skaden."
+  },
+  {
+   "begrep": "menerstatning",
+   "forklaring": "Erstatning for varig skade som gir varige plager."
+  },
+  {
+   "begrep": "varig medisinsk invaliditet",
+   "forklaring": "Varig skade på kroppen, vurdert av lege med spesialkunnskap."
+  },
+  {
+   "begrep": "spesialistuttalelse",
+   "forklaring": "Skriftlig vurdering fra lege med spesialkunnskap, her ortoped."
+  },
+  {
+   "begrep": "ortoped",
+   "forklaring": "Lege med spesialkunnskap om skjelett, muskler og ledd."
+  },
+  {
+   "begrep": "klagefrist",
+   "forklaring": "Siste frist for å si at du er uenig i et vedtak."
+  }
+ ]
+}

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saksmappen</title>
+<style>
+:root {
+  --bg: #f6f5f1; --card: #ffffff; --ink: #1d2327; --muted: #5d676e; --line: #e2e0d8;
+  --accent: #1f5f4a; --accent-ink: #ffffff; --warn: #9a5b00; --warn-bg: #fff3dc;
+  --bad: #a02a2a; --bad-bg: #fde8e8; --ok: #1f6b3d; --ok-bg: #e5f4ea; --mark: #fff0a8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14181a; --card: #1d2326; --ink: #e8ecee; --muted: #9aa6ad; --line: #2c3539;
+    --accent: #5ec2a0; --accent-ink: #0c1a15; --warn: #f0b45a; --warn-bg: #3a2c12;
+    --bad: #f08a8a; --bad-bg: #3b1d1d; --ok: #7fd49c; --ok-bg: #16301f; --mark: #5a4d12;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { padding: 20px 16px 8px; max-width: 1100px; margin: 0 auto; }
+h1 { margin: 0; font-size: 26px; }
+.sub { color: var(--muted); margin: 4px 0 0; max-width: 62ch; }
+.privacy { margin: 12px 0 0; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; font-size: 14px; color: var(--muted); background: var(--card); }
+main { max-width: 1100px; margin: 0 auto; padding: 8px 16px 48px; display: grid; grid-template-columns: 320px 1fr; gap: 16px; }
+@media (max-width: 800px) { main { grid-template-columns: 1fr; } }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.card + .card { margin-top: 12px; }
+h2 { font-size: 18px; margin: 0 0 8px; }
+h3 { font-size: 15px; margin: 0; }
+button, select, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 8px 12px; }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+button:disabled { opacity: .5; cursor: default; }
+button.link { border: 0; background: none; padding: 0; color: var(--accent); text-decoration: underline; text-align: left; }
+input, select, textarea { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 8px; background: var(--bg); }
+textarea { min-height: 110px; resize: vertical; }
+label { display: block; font-size: 13px; color: var(--muted); margin: 8px 0 2px; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.doc { padding: 8px 0; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 8px; }
+.doc:last-child { border-bottom: 0; }
+.meta { color: var(--muted); font-size: 13px; }
+.tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 12px; }
+.tabs button { border-radius: 999px; }
+.tabs button.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.item { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.item:last-child { border-bottom: 0; }
+.badge { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 999px; margin-left: 6px; vertical-align: middle; }
+.ok { background: var(--ok-bg); color: var(--ok); }
+.warn { background: var(--warn-bg); color: var(--warn); }
+.bad { background: var(--bad-bg); color: var(--bad); }
+.quote { margin: 6px 0 0; padding-left: 10px; border-left: 3px solid var(--line); color: var(--muted); font-size: 14px; }
+.timeline { position: relative; margin-left: 8px; padding-left: 18px; border-left: 2px solid var(--line); }
+.timeline .item { position: relative; border: 0; padding: 0 0 18px; }
+.timeline .item::before { content: ""; position: absolute; left: -25px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+.empty { color: var(--muted); padding: 24px 8px; text-align: center; }
+.status { padding: 12px; border-radius: 8px; background: var(--ok-bg); color: var(--ink); margin-top: 8px; }
+.error { background: var(--bad-bg); color: var(--bad); padding: 10px 12px; border-radius: 8px; margin-bottom: 12px; }
+dialog { max-width: 680px; width: calc(100% - 32px); border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--ink); padding: 16px; }
+dialog::backdrop { background: rgba(0,0,0,.5); }
+pre.text { white-space: pre-wrap; font: inherit; margin: 12px 0 0; max-height: 55vh; overflow: auto; }
+mark { background: var(--mark); color: inherit; }
+.out { white-space: pre-wrap; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin-top: 12px; }
+.spin { color: var(--muted); padding: 16px 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Saksmappen</h1>
+  <p class="sub">Legg inn dokumentene i en langvarig sak. Få oversikt over hendelsesforløp, frister og hva som mangler, med kilde til alt.</p>
+  <p class="privacy">Verktøyet organiserer og forklarer. Det gir ikke juridisk rådgivning. Saken lagres bare i denne nettleseren, men teksten sendes til Metas modell når du analyserer. Bruk anonymiserte dokumenter til du er sikker på at du vil dele dem.</p>
+</header>
+<main>
+  <section>
+    <div class="card">
+      <h2>Dokumenter</h2>
+      <div id="docs"></div>
+      <div class="row" style="margin-top:12px">
+        <button id="add-btn">Legg til dokument</button>
+        <button id="sample-btn">Last eksempelsak</button>
+        <button id="clear-btn" class="link">Tøm saken</button>
+      </div>
+    </div>
+    <div class="card" id="add-card" hidden>
+      <h2>Nytt dokument</h2>
+      <label for="f-title">Tittel</label><input id="f-title" placeholder="For eksempel: Vedtak fra NAV">
+      <label for="f-type">Type</label>
+      <select id="f-type">
+        <option value="vedtak">Vedtak</option><option value="legeerklæring">Legeerklæring</option>
+        <option value="forsikring">Forsikring</option><option value="advokat">Advokat</option>
+        <option value="innkalling">Innkalling</option><option value="notat">Eget notat</option><option value="annet">Annet</option>
+      </select>
+      <label for="f-date">Dato på dokumentet</label><input id="f-date" type="date">
+      <label for="f-received">Dato du mottok det (hvis du vet)</label><input id="f-received" type="date">
+      <label for="f-text">Tekst fra dokumentet</label><textarea id="f-text" placeholder="Lim inn teksten her, eller last opp en tekstfil under."></textarea>
+      <label for="f-file">Tekstfil (.txt)</label><input id="f-file" type="file" accept=".txt,text/plain">
+      <div class="row" style="margin-top:12px"><button id="save-doc" class="primary">Legg til</button><button id="cancel-doc">Avbryt</button></div>
+    </div>
+  </section>
+  <section>
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <h2 style="margin:0">Oversikt</h2>
+        <button id="analyze" class="primary">Analyser saken</button>
+      </div>
+      <div id="err"></div>
+      <div class="tabs" id="tabs"></div>
+      <div id="view"></div>
+    </div>
+  </section>
+</main>
+<dialog id="viewer"><div class="row" style="justify-content:space-between"><h3 id="v-title"></h3><button id="v-close">Lukk</button></div><div class="meta" id="v-meta"></div><div id="v-note" class="meta"></div><pre class="text" id="v-text"></pre></dialog>
+
+<script>
+const KEY = 'saksmappen_v1';
+const TABS = [['oversikt', 'Frister og neste steg'], ['mangler', 'Dokumentasjon som mangler'], ['tidslinje', 'Tidslinje'], ['sporsmal', 'Spør saken'], ['utkast', 'Utkast']];
+let state = { docs: [], analysis: null, tab: 'oversikt', busy: false, pending: [], answer: null, draft: null };
+try { Object.assign(state, JSON.parse(localStorage.getItem(KEY) || '{}'), { busy: false, pending: [] }); } catch {}
+const SPIN = (t) => `<div class="spin">${t}</div>`;
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify({ docs: state.docs, analysis: state.analysis, tab: state.tab })); } catch {} };
+const fmt = (d) => d ? new Date(d + 'T12:00:00').toLocaleDateString('nb-NO', { day: 'numeric', month: 'long', year: 'numeric' }) : 'ukjent dato';
+const docById = (id) => state.docs.find((d) => d.id === id);
+
+async function api(path, body) {
+  const r = await fetch(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const j = await r.json().catch(() => ({ error: 'Uventet svar fra serveren.' }));
+  if (!r.ok || j.error) throw new Error(j.error || 'Noe gikk galt.');
+  return j;
+}
+
+async function run(label, fn) {
+  state.busy = label; $('err').innerHTML = ''; render();
+  try { await fn(); } catch (e) { $('err').innerHTML = `<div class="error">${esc(e.message)}</div>`; }
+  state.busy = false; save(); render();
+}
+
+const countdown = (d) => {
+  if (!d) return '';
+  const days = Math.round((new Date(d + 'T12:00:00') - new Date()) / 864e5);
+  if (days < 0) return `<span class="badge bad">utløpt for ${-days} dager siden</span>`;
+  if (days <= 14) return `<span class="badge warn">om ${days} dager</span>`;
+  return `<span class="badge ok">om ${days} dager</span>`;
+};
+
+const source = (it) => {
+  if (!it.dok || !docById(it.dok)) return '';
+  const d = docById(it.dok);
+  const badge = it.verifisert ? '<span class="badge ok">sitat funnet i dokumentet</span>' : '<span class="badge warn">sitatet ble ikke funnet. Sjekk selv</span>';
+  return `<div class="quote">Kilde: <button class="link" data-open="${esc(it.dok)}" data-quote="${esc(it.sitat || '')}">${esc(d.title)}</button>${badge}${it.sitat ? `<br>«${esc(it.sitat)}»` : ''}</div>`;
+};
+
+function renderDocs() {
+  $('docs').innerHTML = state.docs.length ? state.docs.slice().sort((a, b) => (a.date || '').localeCompare(b.date || '')).map((d) => `
+    <div class="doc"><div><button class="link" data-open="${esc(d.id)}">${esc(d.title)}</button>
+    <div class="meta">${esc(d.type)} · ${fmt(d.date)}${d.received ? ` · mottatt ${fmt(d.received)}` : ''}</div></div>
+    <button class="link" data-del="${esc(d.id)}" aria-label="Slett ${esc(d.title)}">Slett</button></div>`).join('') : '<div class="meta">Ingen dokumenter ennå.</div>';
+}
+
+function renderView() {
+  const a = state.analysis;
+  const wait = (p) => state.pending.includes(p);
+  $('tabs').innerHTML = TABS.map(([k, l]) => `<button data-tab="${k}" class="${state.tab === k ? 'on' : ''}">${l}</button>`).join('');
+  if (state.busy) return ($('view').innerHTML = `<div class="spin">${esc(state.busy)} Det kan ta opptil et minutt.</div>`);
+  if (state.tab === 'sporsmal') return renderAsk();
+  if (state.tab === 'utkast') return renderDraft();
+  if (!a) return ($('view').innerHTML = `<div class="empty">${state.docs.length ? 'Trykk «Analyser saken» for å få oversikt.' : 'Legg til dokumenter eller last eksempelsaken for å starte.'}</div>`);
+
+  if (state.tab === 'oversikt') {
+    const fr = (a.frister || []).slice().sort((x, y) => (x.dato || '9999').localeCompare(y.dato || '9999'));
+    $('view').innerHTML = `
+      ${wait('a') ? SPIN('Leser dokumentene…') : `<p>${esc(a.sammendrag)}</p><div class="status"><strong>Hvor står saken nå:</strong> ${esc(a.status)}</div>`}
+      <h2 style="margin-top:20px">Frister</h2>
+      ${wait('b') ? SPIN('Henter frister…') : fr.length ? fr.map((f) => `<div class="item"><strong>${esc(f.hva)}</strong> ${f.dato ? `<span class="meta">${fmt(f.dato)}</span> ${countdown(f.dato)}` : '<span class="badge warn">dato mangler</span>'}
+        ${f.dato ? '' : `<div class="meta">${esc(f.regel || '')}</div><div class="row" style="margin-top:6px"><label style="margin:0">Når mottok du brevet?</label><input type="date" style="width:auto" data-received="${esc(f.dok)}"></div>`}
+        ${source(f)}</div>`).join('') : '<div class="meta">Ingen frister funnet i dokumentene.</div>'}
+      <h2 style="margin-top:20px">Neste steg</h2>
+      ${wait('b') ? '' : (a.neste_steg || []).map((s) => `<div class="item"><strong>${esc(s.steg)}</strong> ${s.innen ? `<span class="meta">innen ${fmt(s.innen)}</span>` : ''}<div class="meta">${esc(s.hvorfor)}</div></div>`).join('')}
+      ${(a.ordliste || []).length ? `<h2 style="margin-top:20px">Ord og uttrykk</h2>${a.ordliste.map((o) => `<div class="item"><strong>${esc(o.begrep)}</strong><div class="meta">${esc(o.forklaring)}</div></div>`).join('')}` : ''}`;
+  } else if (state.tab === 'mangler') {
+    $('view').innerHTML = wait('c') ? SPIN('Leter etter det som mangler…') : (a.mangler || []).length ? (a.mangler).map((m) => `<div class="item"><strong>${esc(m.hva)}</strong><div>${esc(m.hvorfor)}</div><div class="meta">Slik får du tak i den: ${esc(m.hvordan)}</div>${source(m)}</div>`).join('') : '<div class="empty">Ingenting som mangler ble funnet.</div>';
+  } else {
+    $('view').innerHTML = wait('a') ? SPIN('Bygger tidslinjen…') : `<div class="timeline">${(a.tidslinje || []).slice().sort((x, y) => (x.dato || '').localeCompare(y.dato || '')).map((t) => `<div class="item"><span class="meta">${fmt(t.dato)}</span><br><strong>${esc(t.tittel)}</strong><div>${esc(t.beskrivelse)}</div>${source(t)}</div>`).join('')}</div>`;
+  }
+}
+
+function renderAsk() {
+  const ans = state.answer;
+  $('view').innerHTML = `<label for="q">Still et spørsmål om saken</label><div class="row"><input id="q" style="flex:1" placeholder="For eksempel: Hva må ortopeden skrive for at forsikringen skal godta det?"><button id="ask" class="primary">Spør</button></div>
+  ${ans ? `<div class="item"><p>${esc(ans.svar)}</p>${(ans.kilder || []).map((k) => source(k)).join('')}</div>` : ''}`;
+}
+
+function renderDraft() {
+  const vedtak = state.docs.filter((d) => ['vedtak', 'forsikring'].includes(d.type));
+  $('view').innerHTML = `
+    <p class="meta">Utkastene bygger bare på det som står i dokumentene. Les gjennom og rett før du bruker dem.</p>
+    <div class="row"><select id="d-doc" style="flex:1">${vedtak.map((d) => `<option value="${esc(d.id)}">${esc(d.title)}</option>`).join('') || '<option value="">Ingen vedtak lagt inn</option>'}</select>
+    <button id="d-klage" ${vedtak.length ? '' : 'disabled'}>Lag klageutkast</button></div>
+    <div class="row" style="margin-top:8px"><button id="d-over">Lag oversikt til advokat eller ny hjelper</button></div>
+    ${state.draft ? `<div class="out" id="draft-out">${esc(state.draft)}</div><div class="row" style="margin-top:8px"><button id="copy">Kopier tekst</button></div>` : ''}`;
+}
+
+function render() { renderDocs(); renderView(); $('analyze').disabled = !state.docs.length || !!state.busy || state.pending.length > 0; }
+
+async function analyze() {
+  $('err').innerHTML = '';
+  state.analysis = {}; state.pending = ['a', 'b', 'c']; state.tab = 'oversikt'; render();
+  try {
+    const r = await fetch('/api/analyze-stream', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ documents: state.docs }) });
+    if (!r.ok || !r.body) throw new Error((await r.json().catch(() => ({}))).error || 'Noe gikk galt.');
+    const reader = r.body.getReader(), dec = new TextDecoder();
+    let buf = '';
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      for (let i; (i = buf.indexOf('\n')) >= 0;) {
+        const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1);
+        if (!line) continue;
+        const m = JSON.parse(line);
+        if (m.error) throw new Error(m.error);
+        Object.assign(state.analysis, m.data);
+        state.pending = state.pending.filter((p) => p !== m.part);
+        render();
+      }
+    }
+  } catch (e) {
+    $('err').innerHTML = `<div class="error">${esc(e.message)}</div>`;
+    if (!Object.keys(state.analysis).length) state.analysis = null;
+  }
+  state.pending = []; save(); render();
+}
+
+document.addEventListener('click', (e) => {
+  const t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.tab) { state.tab = t.dataset.tab; save(); render(); }
+  else if (t.dataset.open) openDoc(t.dataset.open, t.dataset.quote);
+  else if (t.dataset.del) { state.docs = state.docs.filter((d) => d.id !== t.dataset.del); state.analysis = null; save(); render(); }
+  else if (t.id === 'ask') { const q = $('q').value.trim(); if (q) run('Leter i saken…', async () => { state.answer = await api('/api/ask', { documents: state.docs, question: q }); }); }
+  else if (t.id === 'd-klage') run('Skriver utkast…', async () => { state.draft = (await api('/api/draft', { documents: state.docs, kind: 'klage', docId: $('d-doc').value })).tekst; });
+  else if (t.id === 'd-over') run('Lager oversikt…', async () => { state.draft = (await api('/api/draft', { documents: state.docs, kind: 'overlevering' })).tekst; });
+  else if (t.id === 'copy') navigator.clipboard?.writeText(state.draft).then(() => { t.textContent = 'Kopiert'; });
+});
+
+document.addEventListener('change', (e) => {
+  if (e.target.dataset.received) {
+    const d = docById(e.target.dataset.received);
+    if (d && e.target.value) { d.received = e.target.value; save(); analyze(); }
+  }
+});
+
+function openDoc(id, quote) {
+  const d = docById(id); if (!d) return;
+  $('v-title').textContent = d.title;
+  $('v-meta').textContent = `${d.type} · ${fmt(d.date)}`;
+  const i = quote ? d.text.toLowerCase().indexOf(quote.toLowerCase()) : -1;
+  $('v-note').textContent = quote && i < 0 ? 'Sitatet ble ikke funnet ordrett i teksten.' : '';
+  $('v-text').innerHTML = i >= 0 ? `${esc(d.text.slice(0, i))}<mark>${esc(d.text.slice(i, i + quote.length))}</mark>${esc(d.text.slice(i + quote.length))}` : esc(d.text);
+  $('viewer').showModal();
+  $('viewer').querySelector('mark')?.scrollIntoView({ block: 'center' });
+}
+$('v-close').onclick = () => $('viewer').close();
+$('add-btn').onclick = () => { $('add-card').hidden = false; $('f-title').focus(); };
+$('cancel-doc').onclick = () => { $('add-card').hidden = true; };
+$('f-file').onchange = async (e) => { const f = e.target.files[0]; if (f) { $('f-text').value = await f.text(); if (!$('f-title').value) $('f-title').value = f.name.replace(/\.txt$/i, ''); } };
+$('save-doc').onclick = () => {
+  const text = $('f-text').value.trim(); if (!text) return;
+  state.docs.push({ id: 'd' + Date.now(), title: $('f-title').value.trim() || 'Uten tittel', type: $('f-type').value, date: $('f-date').value, received: $('f-received').value, text });
+  state.analysis = null; ['f-title', 'f-date', 'f-received', 'f-text', 'f-file'].forEach((i) => ($(i).value = ''));
+  $('add-card').hidden = true; save(); render();
+};
+$('sample-btn').onclick = async () => {
+  const s = await (await fetch('/api/sample')).json();
+  state.docs = s.documents; state.analysis = s.analysis || null; state.answer = null; state.draft = null; save(); render();
+};
+$('clear-btn').onclick = () => { if (confirm('Slette alle dokumenter og analysen fra denne nettleseren?')) { state.docs = []; state.analysis = null; state.answer = null; state.draft = null; save(); render(); } };
+$('analyze').onclick = analyze;
+render();
+</script>
+</body>
+</html>
