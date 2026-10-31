@@ -1,0 +1,40 @@
+{
+  "_merknad": "Fiktiv eksempelsak. Alle navn, datoer og beløp er oppdiktet.",
+  "documents": [
+    {
+      "id": "d1",
+      "title": "Legeerklæring fra fastlege",
+      "type": "legeerklæring",
+      "date": "2026-03-12",
+      "text": "LEGEERKLÆRING\nPasient: Kari Eksempel, født 1991.\nFastlege: Dr. Ola Fiktiv, Eksempel legesenter.\n\nPasienten ble påkjørt bakfra i trafikkulykke 3. februar 2026. Diagnose: whiplash-skade i nakke og korsrygg. Pasienten har smerter ved sitting lenger enn 30 minutter og ved løft.\nPasienten har vært 100 prosent sykmeldt siden 3. februar 2026.\nPasienten er henvist til ortoped. Ventetid er anslått til cirka åtte uker.\nForventet varighet av arbeidsuførhet er usikker.\n\nMed vennlig hilsen\nDr. Ola Fiktiv"
+    },
+    {
+      "id": "d2",
+      "title": "Brev fra Fiktiv Forsikring AS",
+      "type": "forsikring",
+      "date": "2026-09-30",
+      "text": "FIKTIV FORSIKRING AS\nSaksnummer: FF-2026-48213\nDato: 30. september 2026\n\nVi har behandlet kravet ditt om erstatning etter trafikkulykken 3. februar 2026.\n\nVi har godkjent dekning av utgifter til behandling på til sammen kr 14 200.\n\nKravet om erstatning for tapt inntekt og menerstatning avslås foreløpig. Grunnen er at det ikke foreligger en spesialistuttalelse om varig medisinsk invaliditet.\n\nVi trenger en uttalelse fra ortoped innen 30. november 2026. Mottar vi ikke uttalelsen innen denne datoen, vil saken bli avsluttet.\n\nDu kan klage på avgjørelsen. Informasjon om klageadgang er vedlagt.\n\nMed hilsen\nSkadeavdelingen"
+    },
+    {
+      "id": "d3",
+      "title": "Vedtak fra NAV: avslag på AAP",
+      "type": "vedtak",
+      "date": "2026-10-14",
+      "text": "NAV\nVEDTAK\nDato: 14. oktober 2026\n\nVi avslår søknaden din om arbeidsavklaringspenger.\n\nBegrunnelse: Vi mener det ikke er dokumentert at arbeidsevnen din er nedsatt med minst halvparten på grunn av sykdom eller skade. Legeerklæringen fra 12. mars 2026 beskriver diagnose, men ikke hvilke arbeidsoppgaver du ikke klarer å utføre.\n\nDu har rett til å klage. Klagefristen er seks uker fra du mottok dette vedtaket.\nDu kan be om innsyn i dokumentene i saken din.\n\nMed hilsen\nNAV"
+    },
+    {
+      "id": "d4",
+      "title": "Innkalling til ortoped",
+      "type": "innkalling",
+      "date": "2026-10-20",
+      "text": "ORTOPEDISK POLIKLINIKK\nInnkalling til time\n\nDu er innkalt til time 18. november 2026 klokken 10:30.\nTa med eventuelle MR-bilder og oversikt over medisiner.\nHvis du ikke kan møte, må du avbestille senest 48 timer før timen."
+    },
+    {
+      "id": "d5",
+      "title": "Mitt notat etter samtale med arbeidsgiver",
+      "type": "notat",
+      "date": "2026-10-25",
+      "text": "Snakket med arbeidsgiver i dag. De sier de ikke kan tilrettelegge arbeidet slik at Kari kan jobbe delvis. Jobben krever tungt løft og lange perioder med stående og sittende arbeid.\nArbeidsgiver har ikke skrevet noe om dette. Jeg har ikke kontaktet advokat ennå.\nKari har ikke hatt inntekt siden mai. Vi har ikke samlet kvitteringer eller oversikt over tapt inntekt."
+    }
+  ]
+}
