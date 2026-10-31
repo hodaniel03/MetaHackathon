@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="nb">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<title>Saksmappen</title>
+<title>CaseFolder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600&family=Source+Serif+4:ital,wght@1,400&display=swap" rel="stylesheet">
@@ -32,26 +32,27 @@ a { color: var(--primary); }
 :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; border-radius: 6px; }
 .meta { font-size: .875rem; color: var(--muted); }
 .lead { font-size: 1.125rem; color: var(--ink); max-width: 62ch; }
-.eyebrow { font-size: .875rem; font-weight: 600; color: var(--muted); letter-spacing: .02em; text-transform: none; }
+.eyebrow { font-size: .875rem; font-weight: 600; color: var(--muted); letter-spacing: .02em; }
 .stack > * + * { margin-top: 24px; }
 .stack-s > * + * { margin-top: 12px; }
 .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
 .between { justify-content: space-between; }
 .ic { flex: none; vertical-align: middle; }
 
-/* Topp */
+/* Top */
 .top { background: var(--surface); border-bottom: 1px solid var(--line); }
 .top-in { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 12px; padding-bottom: 12px; min-height: 72px; }
 .brand { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 1.125rem; color: var(--primary); text-decoration: none; min-height: 44px; }
 .casename { flex: 1; min-width: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-left: 16px; border-left: 1px solid var(--line); }
 .top-actions { display: flex; gap: 16px; align-items: center; margin-left: auto; flex-wrap: wrap; }
 @media (max-width: 640px) {
-  .top-in { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "brand share" "name switch"; gap: 4px 12px; min-height: 0; padding-top: 8px; padding-bottom: 8px; }
+  .top-in { display: grid; grid-template-columns: 1fr auto auto; grid-template-areas: "brand lang share" "name name switch"; gap: 4px 12px; min-height: 0; padding-top: 8px; padding-bottom: 8px; }
   .top-actions { display: contents; }
   .brand { grid-area: brand; }
   .casename { grid-area: name; border-left: 0; padding-left: 0; }
   .switch { grid-area: switch; }
-  .top-actions .btn { grid-area: share; justify-self: end; }
+  .langbtn { grid-area: lang; }
+  .top-actions .share { grid-area: share; justify-self: end; }
 }
 .switch { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; border: 0; background: none; font: inherit; color: var(--ink); cursor: pointer; padding: 0; }
 .switch .track { width: 44px; height: 26px; border-radius: 999px; background: var(--ctl); position: relative; transition: background .15s; flex: none; }
@@ -67,10 +68,11 @@ a { color: var(--primary); }
 .tabs a[aria-current="page"] { border-bottom-color: var(--primary); font-weight: 600; color: var(--primary); }
 .tabs a:focus-visible { outline-offset: -3px; }
 
-main { padding-top: 32px; padding-bottom: 96px; }
+main { padding-top: 32px; padding-bottom: 48px; }
 main:focus { outline: none; }
+footer.foot { padding-top: 0; padding-bottom: 48px; }
 
-/* Knapper og skjema */
+/* Buttons and forms */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 20px; border-radius: 10px; border: 1.5px solid var(--primary); background: var(--surface); color: var(--primary); font-family: inherit; font-weight: 600; font-size: 1rem; line-height: 1.2; cursor: pointer; text-decoration: none; }
 .btn:hover { background: var(--quote-bg); }
 .btn.primary { background: var(--primary); color: #fff; }
@@ -86,20 +88,19 @@ textarea.big { min-height: 280px; }
 .copyrow input { flex: 1; min-width: 220px; }
 
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 24px; }
-.card.center { text-align: center; }
 .notice { display: flex; gap: 12px; align-items: flex-start; padding: 16px; border-radius: 10px; background: var(--warn-bg); color: var(--warn-ink); border: 1px solid #E8D49A; }
 .notice.bad { background: var(--bad-bg); color: var(--bad); border-color: #E7B8B2; }
 .notice > div { color: var(--ink); }
 .notice .ic { margin-top: 3px; }
 
-/* Merker */
+/* Badges */
 .badge { display: inline-flex; align-items: center; gap: 6px; font-size: .875rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; line-height: 1.4; }
 .badge.ok { color: var(--ok); background: var(--ok-bg); }
 .badge.warn { color: var(--warn-ink); background: var(--warn-bg); }
 .badge.bad { color: var(--bad); background: var(--bad-bg); }
 .badge.neutral { color: var(--ink); background: var(--neutral-bg); }
 
-/* Den verifiserte påstanden */
+/* The verified claim */
 .claim { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--ok); border-radius: var(--r); padding: 20px 24px; }
 .claim.is-bad { border: 1.5px solid var(--bad); border-left-width: 4px; }
 .claim-text { font-size: 1.125rem; font-weight: 600; margin: 12px 0 4px; line-height: 1.35; }
@@ -120,13 +121,12 @@ mark { background: var(--mark); color: var(--ink); padding: 1px 2px; border-radi
 .claim-toggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
 .claim-body { margin-top: 12px; }
 
-/* Oversikt */
+/* Overview */
 .att-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
 @media (min-width: 760px) { .att-grid { grid-template-columns: repeat(3, 1fr); } }
 .att { display: flex; flex-direction: column; gap: 12px; }
 .att .grow { flex: 1; }
-.bigdate { font-size: 2rem; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
-.bignum { font-size: 2rem; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
+.bigdate, .bignum { font-size: 2rem; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
 .progress { height: 10px; border-radius: 999px; background: var(--neutral-bg); overflow: hidden; }
 .progress > span { display: block; height: 100%; background: var(--primary); border-radius: 999px; }
 .plain-list { margin: 0; padding-left: 20px; }
@@ -136,13 +136,13 @@ mark { background: var(--mark); color: var(--ink); padding: 1px 2px; border-radi
 .trust.some-bad .ic { color: var(--bad); }
 .skeleton { color: var(--muted); }
 
-/* Tidslinje */
+/* Timeline */
 .timeline { list-style: none; margin: 0 0 0 8px; padding: 0 0 0 28px; border-left: 2px solid var(--line); }
 .timeline > li { position: relative; padding-bottom: 20px; }
 .timeline > li:last-child { padding-bottom: 0; }
 .timeline > li::before { content: ""; position: absolute; left: -37px; top: 22px; width: 14px; height: 14px; border-radius: 50%; background: var(--primary); border: 3px solid var(--bg); }
 
-/* Dokumenter */
+/* Documents */
 .drop { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; padding: 32px 24px; border: 2px dashed var(--ctl); border-radius: var(--r); background: var(--surface); cursor: pointer; width: 100%; font: inherit; color: var(--ink); }
 .drop:hover, .drop.over { background: var(--quote-bg); border-color: var(--primary); }
 .drop strong { font-size: 1.125rem; }
@@ -154,14 +154,14 @@ mark { background: var(--mark); color: var(--ink); padding: 1px 2px; border-radi
 .thumb { width: 56px; height: 72px; border-radius: 6px; border: 1px solid var(--line); background: var(--quote-bg); display: flex; align-items: center; justify-content: center; overflow: hidden; flex: none; color: var(--muted); }
 .thumb img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Frister */
+/* Deadlines */
 .calc { display: flex; align-items: flex-end; gap: 12px 16px; flex-wrap: wrap; margin: 12px 0 4px; padding: 16px; background: var(--quote-bg); border-radius: 10px; }
 .calc dt { font-size: .875rem; color: var(--muted); }
 .calc dd { margin: 0; font-weight: 600; font-size: 1.125rem; }
 .calc .res dd { font-size: 1.375rem; }
 .calc .op { font-size: 1.375rem; color: var(--muted); padding-bottom: 2px; }
 
-/* Mangler */
+/* Missing */
 .check { display: flex; gap: 16px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid var(--line); }
 .check:last-child { border-bottom: 0; }
 .check input[type="checkbox"] { width: 24px; height: 24px; min-height: 24px; margin: 8px 0 0; padding: 0; accent-color: var(--primary); flex: none; cursor: pointer; }
@@ -169,7 +169,7 @@ mark { background: var(--mark); color: var(--ink); padding: 1px 2px; border-radi
 .check.done .ck-title { text-decoration: line-through; text-decoration-thickness: 1px; color: var(--muted); }
 .check .grow { flex: 1; min-width: 0; }
 
-/* Enkel visning */
+/* Simple view */
 body.simple main { font-size: 1.25rem; line-height: 1.75; color: #0B1620; }
 body.simple h1 { font-size: 2.25rem; }
 body.simple h2 { font-size: 1.625rem; margin: 48px 0 12px; }
@@ -178,7 +178,7 @@ body.simple .simple-list li { margin: 16px 0; padding-left: 4px; }
 body.simple .btn { font-size: 1.125rem; min-height: 52px; }
 body.simple .meta { font-size: 1rem; }
 
-/* Dialoger */
+/* Dialogs */
 dialog { max-width: 960px; width: calc(100% - 24px); max-height: calc(100vh - 24px); overflow: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); color: var(--ink); padding: 24px; }
 dialog::backdrop { background: rgba(22, 34, 50, .55); }
 .intake { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px; }
@@ -195,12 +195,12 @@ details.orig summary { cursor: pointer; min-height: 44px; display: flex; align-i
 #toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 10px; opacity: 0; pointer-events: none; transition: opacity .2s; max-width: 90vw; z-index: 30; }
 #toast.on { opacity: 1; }
 
-/* Overlevering og utskrift */
+/* Handover and print */
 .handover section { margin-top: 32px; }
 .handover .claim { break-inside: avoid; }
 @media print {
   body { background: #fff; font-size: 12pt; }
-  .top, .tabs, .noprint, .skip, #toast { display: none !important; }
+  .top, .tabs, .noprint, .skip, #toast, footer.foot { display: none !important; }
   main { padding: 0; }
   .wrap { max-width: none; padding: 0; }
   .claim, .card { break-inside: avoid; box-shadow: none; }
@@ -209,21 +209,161 @@ details.orig summary { cursor: pointer; min-height: 44px; display: flex; align-i
 </style>
 </head>
 <body>
-<a class="skip" href="#app">Hopp til innholdet</a>
+<a class="skip" id="skip" href="#app">Skip to content</a>
 <header class="top"><div class="wrap top-in" id="top"></div></header>
-<nav class="tabs" id="tabs" aria-label="Sakens deler" hidden></nav>
+<nav class="tabs" id="tabs" hidden></nav>
 <main class="wrap" id="app" tabindex="-1"></main>
-<dialog id="viewer" aria-label="Dokument"></dialog>
-<dialog id="intake" aria-label="Sjekk dokumentet"></dialog>
+<footer class="wrap foot meta" id="foot"></footer>
+<dialog id="viewer"></dialog>
+<dialog id="intake"></dialog>
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-/* ---------- Grunnlag ---------- */
-const LS_KEY = 'saksmappen_saker_v2', SIMPLE_KEY = 'saksmappen_enkel';
+/* ---------- Texts. Missing Norwegian keys fall back to English. ---------- */
+const T = {
+  en: {
+    brand: 'CaseFolder', skip: 'Skip to content', simpleView: 'Simple view', shareBtn: 'Share case', langBtn: 'Norsk', langAria: 'Bytt til norsk',
+    tabsAria: 'Parts of the case', tab_oversikt: 'Overview', tab_tidslinje: 'Timeline', tab_dokumenter: 'Documents', tab_frister: 'Deadlines', tab_mangler: 'Missing', tab_skriv: 'Ask & write',
+    foot: 'Reads and checks your documents with Meta’s Muse Spark. Not legal advice.',
+    type_vedtak: 'Decision', type_legeerklæring: 'Medical statement', type_forsikring: 'Insurance', type_advokat: 'Lawyer', type_innkalling: 'Appointment', type_notat: 'Own note', type_annet: 'Other',
+    unknownDate: 'unknown date',
+    homeTitle: 'Cases', homeLead: 'Gather the letters and documents in a long-running case. We find deadlines and what is missing, and show you where we found it.',
+    yourCases: 'Your cases', noCases: 'You have no cases yet. Create the first one below.', removeFromList: 'Remove from list', removeTitle: 'Only removes it from this list. The case is not deleted.',
+    newCase: 'New case', newPlaceholder: 'For example: Mum, benefits and insurance', createBtn: 'Create case', trySample: 'See a fictional sample case', defaultCaseName: 'New case', sampleName: 'Sample case: Jordan',
+    trustTitle: 'How you can trust what you see',
+    trust1: 'Everything we find comes with a quote from the letter.', trust2: 'We check that the quote really is in the document. If we cannot find it, we say so.',
+    trust3: 'Dates are calculated by an ordinary calculator, not by AI.', trust4: 'We do not give legal advice. We gather, explain and suggest.',
+    opening: 'Opening the case…', notFoundTitle: 'We could not find the case', backToCases: 'Back to your cases',
+    welcomeTitle: 'Welcome to your case', welcomeLead: 'Start with the first letter. We read it, and you see what we found.',
+    dropTitle: 'Take a photo or upload a PDF of the letter', dropHint: 'You can also drag the file here. Several photos become pages of the same letter.',
+    readyTitle: 'Ready to read through the case', readyLead: (n) => `You have added ${n} ${n === 1 ? 'document' : 'documents'}. We read them and find deadlines and what is missing.`, readBtn: 'Read through the case',
+    attentionTitle: 'What needs your attention now',
+    cardDeadline: 'Next deadline', cardMissing: 'What is missing', cardLatest: 'Latest event',
+    findingDeadlines: 'We are looking for deadlines…', needDate: 'We need a date', addToCalendar: 'Add to calendar', seeCalc: 'See how the deadline is calculated', enterDate: 'Enter the date',
+    noDeadlines: 'No deadlines yet. They will appear here when you upload a decision letter.', addLetter: 'Add a letter',
+    findingMissing: 'We are looking for what is missing…', nothingMissing: 'We did not find anything missing in the documents you have added.', nOfM: (a, b) => `${a} of ${b}`, haveBeenObtained: 'have been obtained', allObtained: 'Everything is obtained.', seeFullList: 'See the full list',
+    buildingTimeline: 'We are building the timeline…', noEvents: 'No events yet.', seeTimeline: 'See the timeline',
+    allChecked: 'Is everything checked?', trustSummary: (total, ok, bad) => `We found ${total} ${total === 1 ? 'thing' : 'things'} in your documents. <strong>${ok} checked against the document</strong>${bad ? `, and <strong>${bad} you need to check yourself</strong>` : ''}.`,
+    nothingToCheck: 'There is nothing to check yet.', badHint: 'We show them below, so you can read the letter yourself.', okHint: 'That means the quote we show appears word for word in the document.',
+    stale: 'You have added something new, and the overview is not up to date yet.', updateOverview: 'Update the overview',
+    langStale: (from) => `This overview was written in ${from === 'nb' ? 'Norwegian' : 'English'}. Update it to read it in English.`,
+    tlTitle: 'Timeline', tlLead: 'What has happened, in order. Tap an event to see the quote from the letter.', tlEmpty1: 'The timeline is empty for now. Press “Read through the case” on the overview.', tlEmpty2: 'No events yet. The timeline is built when you have added a document.',
+    docsTitle: 'Documents', docsLead: 'Everything you have added to the case. Tap a document to read it, see the original or correct the text.', pasteInstead: 'Paste text instead',
+    noDocs: 'No documents yet. Take a photo of the first letter and we will get started.', stRead: 'Read', stReview: 'Needs review', receivedOn: (d) => `Received ${d}`, datedOn: (d) => `Dated ${d}`, undated: 'No date',
+    dlTitle: 'Deadlines', dlLead: 'The most urgent comes first. Under each deadline you can see how we arrived at the date. Always check against the letter.',
+    remTitle: 'Get reminders', remText: 'Download a calendar file and open it in your calendar. You get an alert 7 days and 1 day before each deadline.', dlIcs: 'Download calendar file (.ics)',
+    waitingDate: 'Waiting for a date from you', calcAria: 'How the deadline was calculated', youReceived: 'You received the letter', letterDate: 'Date on the letter', deadlineInLetter: 'The deadline in the letter', deadlineWord: 'Deadline',
+    calcNote: 'Calculated by an ordinary calculator, not by AI. Check whether the letter states a date of its own.', notInDoc: 'The date is not in the document.', notInDocText: (d) => `${d} was calculated by AI and has not been checked. Check the letter yourself.`,
+    asInLetter: 'Deadline, as stated in the letter', weNeedDate: 'We need one date from you.', defaultRule: 'The deadline runs from when you received the letter.', whenReceived: 'When did you receive the letter?', calcBtn: 'Calculate the deadline',
+    expired: (n) => `Expired ${n} ${n === 1 ? 'day' : 'days'} ago`, dueToday: 'The deadline is today', inDays: (n) => `In ${n} ${n === 1 ? 'day' : 'days'}`,
+    msTitle: 'What is missing', msLead: 'Things that could strengthen the case, based on what your documents say. Tick them off when you have obtained them.', msNothingYet: 'Nothing to show yet. The list appears when we have read your documents.',
+    progressOf: (a, b) => `<strong>${a} of ${b}</strong> obtained`, stillMissing: 'Still missing', obtained: 'Obtained', allDone: 'Everything on the list has been obtained.', howToGet: 'How to get it:', progressAria: 'Obtained', tickFail: (m) => `Could not save the tick. ${m}`,
+    awTitle: 'Ask and write', awLead: 'The answers are based only on the documents in the case, and show where they come from.', askTitle: 'Ask about the case', askLabel: 'What do you want to know?',
+    askPlaceholder: 'For example: What does the specialist need to write for the insurer to accept it?', askBtn: 'Ask', draftsTitle: 'Drafts', draftsNote: 'Read through and edit before you use them. Drafts are not checked in the same way as the quotes.',
+    appealOn: 'Decision to appeal', noDecisions: 'No decisions added', draftAppeal: 'Write a draft appeal', draftSummary: 'Write a summary as text',
+    busyAsk: 'We are searching the case…', busyDraft: 'We are writing a draft…', busySummary: 'We are writing the summary…', takesTime: 'This can take a little while.', copyText: 'Copy the text', copied: 'Copied',
+    sTitle: 'Your case', sNoDocs: 'No letters have been added yet. The person helping you can add them.', sNotRead: 'We have not read through the letters yet.', sHappened: 'What has happened', sNow: 'What happens now',
+    sNextDeadline: (d) => `The next deadline is ${d}.`, sToday: 'That is today.', sInDays: (n) => `That is in ${n} ${n === 1 ? 'day' : 'days'}.`, sToDo: 'What you need to do', sFinding: 'We are working out what needs to be done…', sReading: 'We are reading the letters…', sNothing: 'You do not need to do anything right now.', sGet: 'Get: ',
+    shBack: 'Back to the case', shTitle: 'Share the case', shLinkTitle: 'Send the link to someone you trust', shLinkText: 'Anyone who has the link can see the case, the documents and the images. They can also add and change things. Share it only with people you trust.',
+    copyLink: 'Copy the link', linkLabel: 'Link to the case', noLogin: 'We do not have sign-in yet. The link is the only thing that gives access.',
+    hoTitle: 'Overview for a lawyer or support service', hoText: 'A tidy page that gathers the timeline, deadlines, documents and what is missing. Every claim has a quote and a source. You can print it or save it as PDF.', openOverview: 'Open the overview',
+    settings: 'Settings', rename: 'Rename the case', deleteCase: 'Delete the case', deleteNote: 'When you delete, all documents and images are removed for good.',
+    hBack: 'Back', hTitle: (n) => `Case overview: ${n}`, hMade: (d) => `Made ${d} by CaseFolder`, hPrint: 'Print or save as PDF',
+    hLegend: 'Every claim has a quote from the document. “Checked” means the quote appears word for word in the document. “Check yourself” means we did not find it. This is not legal advice.',
+    hStands: 'How the case stands', hNow: 'Now:', hDeadlines: 'Deadlines', hNone: 'None found.', hDateMissing: 'Date missing', hTimeline: 'Timeline', hDocs: 'Documents in the case', hMissing: 'Documents that are missing', hObtained: '(obtained)',
+    hNotRead: 'The case has not been read through yet. Go back and press “Read through the case”.', hNothing: 'Nothing found.', hReceived: (d) => `received ${d}`,
+    vChecked: 'Checked against the document', vUnchecked: 'Could not be checked. Check yourself', viewInDoc: 'View in the document', hide: 'Hide', unknownDoc: 'Unknown document', pageN: (n) => `Page ${n}`,
+    howItReads: 'How it reads in the document', quoteNotFound: 'We did not find the quote word for word in the text we read. Open the document and read for yourself.',
+    origCaption: (pg) => `The original${pg ? `, page ${pg}` : ''}. The yellow is marked in the text we read from the letter.`, openFullDoc: 'Open the whole document', originalAlt: (t, pg) => `Original of ${t}${pg ? `, page ${pg}` : ''}`,
+    close: 'Close', datedLower: 'dated', receivedLower: 'received', seeOriginal: (n) => `See the original (${n} ${n === 1 ? 'page' : 'pages'})`, fixText: 'Correct the text if needed', saveChanges: 'Save changes', cancel: 'Cancel',
+    editText: 'Edit the text', deleteDoc: 'Delete the document', newPage: '— new page —', deleteDocConfirm: 'Delete the document and the images from the case?', textSaved: 'The text is saved. Update the overview to include it.', textEmpty: 'The text cannot be empty.', quoteMissing: 'We did not find the quote word for word in the text.',
+    pasteTitle: 'Paste text', titleLabel: 'Title', titlePh: 'For example: Decision from the agency', typeLabel: 'Type', dateOnLetter: 'Date on the letter', dateReceived: 'Date you received it', textLabel: 'Text', addToCase: 'Add to the case', pasteEmpty: 'Write or paste some text first.',
+    inTitle: 'Check that we read the letter correctly', inPreparing: 'We are getting the images ready…', inReading: 'We are reading the letter…', retry: 'Try again', inCut: (n) => `We only read the first ${n} pages.`,
+    inReceivedHint: 'The received date is needed when the deadline runs from when you received the letter.', inTextWeRead: 'The text we read',
+    inCheckThese: '<strong>Check these against the image.</strong> A wrong date or amount gives a wrong deadline. Tap to find them in the text.', inSave: 'Save in the case',
+    inIllegible: (n) => `${n} ${n === 1 ? 'place is' : 'places are'} marked [illegible]. Type the correct text from the image.`, inDiscard: 'Discard the document?', inNoText: 'The document has no text.', inAdded: 'The document has been added. We are reading through the case again.',
+    onlyImagesPdf: 'Only images and PDF are supported.', oneAtATime: 'Add one letter at a time: one PDF, or several photos of the same letter.', cantOpen: (n) => `We could not open the image “${n}”. Use JPEG or PNG.`,
+    pdfLibFail: 'We could not load the PDF reader. Check your connection, or take a photo of the letter instead.', pdfFail: 'We could not read the PDF. Try taking a photo of the letter instead.', pageAlt: (i) => `Page ${i} of the document`,
+    linkCopied: 'The link is copied. Anyone who has it can see and change the case.', selectLink: 'Select the link and copy it yourself.', renamePrompt: 'New name for the case', deleteCaseConfirm: 'Delete the case, all documents and all images for good? This cannot be undone.',
+  },
+  nb: {
+    brand: 'Saksmappen', skip: 'Hopp til innholdet', simpleView: 'Enkel visning', shareBtn: 'Del saken', langBtn: 'English', langAria: 'Switch to English',
+    tabsAria: 'Sakens deler', tab_oversikt: 'Oversikt', tab_tidslinje: 'Tidslinje', tab_dokumenter: 'Dokumenter', tab_frister: 'Frister', tab_mangler: 'Mangler', tab_skriv: 'Spør og skriv',
+    foot: 'Leser og sjekker dokumentene dine med Metas Muse Spark. Ikke juridisk rådgivning.',
+    type_vedtak: 'Vedtak', type_legeerklæring: 'Legeerklæring', type_forsikring: 'Forsikring', type_advokat: 'Advokat', type_innkalling: 'Innkalling', type_notat: 'Eget notat', type_annet: 'Annet',
+    unknownDate: 'ukjent dato',
+    homeTitle: 'Saksmapper', homeLead: 'Samle brevene og dokumentene i en langvarig sak. Vi finner frister og det som mangler, og viser deg hvor vi har det fra.',
+    yourCases: 'Dine saker', noCases: 'Du har ingen saker ennå. Opprett den første under.', removeFromList: 'Fjern fra listen', removeTitle: 'Fjerner bare fra denne listen. Saken slettes ikke.',
+    newCase: 'Ny sak', newPlaceholder: 'For eksempel: Mor, NAV og forsikring', createBtn: 'Opprett saken', trySample: 'Se en fiktiv eksempelsak', defaultCaseName: 'Ny sak', sampleName: 'Eksempelsak: Kari',
+    trustTitle: 'Slik kan du stole på det du ser',
+    trust1: 'Hver ting vi finner har et sitat fra brevet.', trust2: 'Vi sjekker at sitatet faktisk står i dokumentet. Finner vi det ikke, sier vi fra.',
+    trust3: 'Datoer regnes ut av en vanlig kalkulator, ikke av AI.', trust4: 'Vi gir ikke juridisk rådgivning. Vi samler, forklarer og foreslår.',
+    opening: 'Åpner saken…', notFoundTitle: 'Vi fant ikke saken', backToCases: 'Tilbake til sakene dine',
+    welcomeTitle: 'Velkommen til saken', welcomeLead: 'Begynn med det første brevet. Vi leser det, og du får se hva vi fant.',
+    dropTitle: 'Ta bilde eller last opp PDF av brevet', dropHint: 'Du kan også dra filen hit. Flere bilder blir sider i samme brev.',
+    readyTitle: 'Klar til å lese gjennom saken', readyLead: (n) => `Du har lagt inn ${n} ${n === 1 ? 'dokument' : 'dokumenter'}. Vi leser dem og finner frister og det som mangler.`, readBtn: 'Les gjennom saken',
+    attentionTitle: 'Dette trenger oppmerksomhet nå',
+    cardDeadline: 'Neste frist', cardMissing: 'Dette mangler', cardLatest: 'Siste hendelse',
+    findingDeadlines: 'Vi leter etter frister…', needDate: 'Vi trenger en dato', addToCalendar: 'Legg i kalender', seeCalc: 'Se hvordan fristen er regnet ut', enterDate: 'Legg inn datoen',
+    noDeadlines: 'Ingen frister ennå. De vises her når du laster opp et vedtak.', addLetter: 'Legg inn et brev',
+    findingMissing: 'Vi ser etter det som mangler…', nothingMissing: 'Vi fant ikke noe som mangler i dokumentene du har lagt inn.', nOfM: (a, b) => `${a} av ${b}`, haveBeenObtained: 'er skaffet', allObtained: 'Alt er skaffet.', seeFullList: 'Se hele listen',
+    buildingTimeline: 'Vi bygger tidslinjen…', noEvents: 'Ingen hendelser ennå.', seeTimeline: 'Se tidslinjen',
+    allChecked: 'Er alt kontrollert?', trustSummary: (total, ok, bad) => `Vi fant ${total} ${total === 1 ? 'ting' : 'ting'} i dokumentene dine. <strong>${ok} er kontrollert mot dokumentet</strong>${bad ? `, og <strong>${bad} må du sjekke selv</strong>` : ''}.`,
+    nothingToCheck: 'Det er ingenting å kontrollere ennå.', badHint: 'Vi viser dem under, så du kan lese selv i brevet.', okHint: 'Det betyr at sitatet vi viser, står ordrett i dokumentet.',
+    stale: 'Du har lagt inn noe nytt, og oversikten er ikke oppdatert ennå.', updateOverview: 'Oppdater oversikten',
+    langStale: (from) => `Denne oversikten ble skrevet på ${from === 'en' ? 'engelsk' : 'norsk'}. Oppdater den for å lese den på norsk.`,
+    tlTitle: 'Tidslinje', tlLead: 'Hva som har skjedd, i rekkefølge. Trykk på en hendelse for å se sitatet fra brevet.', tlEmpty1: 'Tidslinjen er tom ennå. Trykk «Les gjennom saken» på oversikten.', tlEmpty2: 'Ingen hendelser ennå. Tidslinjen bygges når du har lagt inn et dokument.',
+    docsTitle: 'Dokumenter', docsLead: 'Alt du har lagt inn i saken. Trykk på et dokument for å lese det, se originalen eller rette teksten.', pasteInstead: 'Lim inn tekst i stedet',
+    noDocs: 'Ingen dokumenter ennå. Ta bilde av det første brevet, så begynner vi.', stRead: 'Lest', stReview: 'Trenger gjennomgang', receivedOn: (d) => `Mottatt ${d}`, datedOn: (d) => `Datert ${d}`, undated: 'Uten dato',
+    dlTitle: 'Frister', dlLead: 'Den som haster mest står øverst. Under hver frist ser du hvordan vi kom frem til datoen. Sjekk alltid mot brevet.',
+    remTitle: 'Få påminnelser', remText: 'Last ned en kalenderfil og åpne den i kalenderen din. Du får varsel 7 dager og 1 dag før hver frist.', dlIcs: 'Last ned kalenderfil (.ics)',
+    waitingDate: 'Venter på en dato fra deg', calcAria: 'Slik er fristen regnet ut', youReceived: 'Du mottok brevet', letterDate: 'Datoen på brevet', deadlineInLetter: 'Fristen i brevet', deadlineWord: 'Frist',
+    calcNote: 'Regnet ut av en vanlig kalkulator, ikke av AI. Sjekk om brevet oppgir en egen dato.', notInDoc: 'Datoen står ikke i dokumentet.', notInDocText: (d) => `${d} er regnet ut av AI, og er ikke kontrollert. Sjekk selv i brevet.`,
+    asInLetter: 'Frist, slik det står i brevet', weNeedDate: 'Vi trenger én dato fra deg.', defaultRule: 'Fristen løper fra du mottok brevet.', whenReceived: 'Når mottok du brevet?', calcBtn: 'Regn ut fristen',
+    expired: (n) => `Utløpt for ${n} ${n === 1 ? 'dag' : 'dager'} siden`, dueToday: 'Fristen er i dag', inDays: (n) => `Om ${n} ${n === 1 ? 'dag' : 'dager'}`,
+    msTitle: 'Dette mangler', msLead: 'Ting som kan styrke saken, ut fra det dokumentene dine sier. Kryss av når du har skaffet dem.', msNothingYet: 'Ingenting å vise ennå. Listen kommer når vi har lest dokumentene dine.',
+    progressOf: (a, b) => `<strong>${a} av ${b}</strong> er skaffet`, stillMissing: 'Mangler fortsatt', obtained: 'Skaffet', allDone: 'Alt på listen er skaffet.', howToGet: 'Slik får du den:', progressAria: 'Skaffet', tickFail: (m) => `Kunne ikke lagre avkrysningen. ${m}`,
+    awTitle: 'Spør og skriv', awLead: 'Svarene bygger bare på dokumentene i saken, og viser hvor de kommer fra.', askTitle: 'Spør om saken', askLabel: 'Hva lurer du på?',
+    askPlaceholder: 'For eksempel: Hva må ortopeden skrive for at forsikringen skal godta det?', askBtn: 'Spør', draftsTitle: 'Utkast', draftsNote: 'Les gjennom og rett før du bruker dem. Utkastene er ikke kontrollert på samme måte som sitatene.',
+    appealOn: 'Vedtak å klage på', noDecisions: 'Ingen vedtak lagt inn', draftAppeal: 'Lag utkast til klage', draftSummary: 'Lag oppsummering som tekst',
+    busyAsk: 'Vi leter i saken…', busyDraft: 'Vi skriver et utkast…', busySummary: 'Vi lager oppsummeringen…', takesTime: 'Det kan ta litt tid.', copyText: 'Kopier teksten', copied: 'Kopiert',
+    sTitle: 'Din sak', sNoDocs: 'Det er ikke lagt inn noen brev ennå. Den som hjelper deg kan legge dem inn.', sNotRead: 'Vi har ikke lest gjennom brevene ennå.', sHappened: 'Hva har skjedd', sNow: 'Hva skjer nå',
+    sNextDeadline: (d) => `Neste frist er ${d}.`, sToday: 'Det er i dag.', sInDays: (n) => `Det er om ${n} ${n === 1 ? 'dag' : 'dager'}.`, sToDo: 'Dette må du gjøre', sFinding: 'Vi finner ut hva som må gjøres…', sReading: 'Vi leser brevene…', sNothing: 'Du trenger ikke gjøre noe akkurat nå.', sGet: 'Skaffe: ',
+    shBack: 'Tilbake til saken', shTitle: 'Del saken', shLinkTitle: 'Send lenken til noen du stoler på', shLinkText: 'Alle som har lenken, kan se saken, dokumentene og bildene. De kan også legge til og endre ting. Del den bare med personer du stoler på.',
+    copyLink: 'Kopier lenken', linkLabel: 'Lenke til saken', noLogin: 'Vi har ikke innlogging ennå. Lenken er det eneste som gir tilgang.',
+    hoTitle: 'Oversikt til advokat eller hjelpetjeneste', hoText: 'En ryddig side som samler forløp, frister, dokumenter og det som mangler. Hver påstand har sitat og kilde. Du kan skrive den ut eller lagre den som PDF.', openOverview: 'Åpne oversikten',
+    settings: 'Innstillinger', rename: 'Gi saken nytt navn', deleteCase: 'Slett saken', deleteNote: 'Når du sletter, fjernes alle dokumenter og bilder for godt.',
+    hBack: 'Tilbake', hTitle: (n) => `Saksoversikt: ${n}`, hMade: (d) => `Laget ${d} av Saksmappen`, hPrint: 'Skriv ut eller lagre som PDF',
+    hLegend: 'Hver påstand har et sitat fra dokumentet. «Kontrollert» betyr at sitatet står ordrett i dokumentet. «Sjekk selv» betyr at vi ikke fant det. Dette er ikke juridisk rådgivning.',
+    hStands: 'Slik står saken', hNow: 'Nå:', hDeadlines: 'Frister', hNone: 'Ingen funnet.', hDateMissing: 'Dato mangler', hTimeline: 'Hendelsesforløp', hDocs: 'Dokumenter i saken', hMissing: 'Dokumentasjon som mangler', hObtained: '(skaffet)',
+    hNotRead: 'Saken er ikke lest gjennom ennå. Gå tilbake og trykk «Les gjennom saken».', hNothing: 'Ingenting funnet.', hReceived: (d) => `mottatt ${d}`,
+    vChecked: 'Kontrollert mot dokumentet', vUnchecked: 'Kunne ikke kontrolleres. Sjekk selv', viewInDoc: 'Se i dokumentet', hide: 'Skjul', unknownDoc: 'Ukjent dokument', pageN: (n) => `Side ${n}`,
+    howItReads: 'Slik står det i dokumentet', quoteNotFound: 'Vi fant ikke sitatet ordrett i teksten vi leste. Åpne dokumentet og les selv.',
+    origCaption: (pg) => `Originalen${pg ? `, side ${pg}` : ''}. Det gule er markert i teksten vi leste fra brevet.`, openFullDoc: 'Åpne hele dokumentet', originalAlt: (t, pg) => `Original av ${t}${pg ? `, side ${pg}` : ''}`,
+    close: 'Lukk', datedLower: 'datert', receivedLower: 'mottatt', seeOriginal: (n) => `Se originalen (${n} ${n === 1 ? 'side' : 'sider'})`, fixText: 'Rett teksten ved behov', saveChanges: 'Lagre endringer', cancel: 'Avbryt',
+    editText: 'Rediger teksten', deleteDoc: 'Slett dokumentet', newPage: '— ny side —', deleteDocConfirm: 'Slette dokumentet og bildene fra saken?', textSaved: 'Teksten er lagret. Oppdater oversikten for å ta den med.', textEmpty: 'Teksten kan ikke være tom.', quoteMissing: 'Vi fant ikke sitatet ordrett i teksten.',
+    pasteTitle: 'Lim inn tekst', titleLabel: 'Tittel', titlePh: 'For eksempel: Vedtak fra NAV', typeLabel: 'Type', dateOnLetter: 'Dato på brevet', dateReceived: 'Dato du mottok det', textLabel: 'Tekst', addToCase: 'Legg til i saken', pasteEmpty: 'Skriv eller lim inn tekst først.',
+    inTitle: 'Sjekk at vi har lest brevet riktig', inPreparing: 'Vi gjør bildene klare…', inReading: 'Vi leser brevet…', retry: 'Prøv igjen', inCut: (n) => `Vi leste bare de ${n} første sidene.`,
+    inReceivedHint: 'Mottaksdato trengs når fristen løper fra du mottok brevet.', inTextWeRead: 'Teksten vi leste',
+    inCheckThese: '<strong>Sjekk disse mot bildet.</strong> En feil dato eller et feil beløp gir en feil frist. Trykk for å finne dem i teksten.', inSave: 'Lagre i saken',
+    inIllegible: (n) => `${n} ${n === 1 ? 'sted er' : 'steder er'} merket [uleselig]. Skriv inn riktig tekst fra bildet.`, inDiscard: 'Forkaste dokumentet?', inNoText: 'Dokumentet har ingen tekst.', inAdded: 'Dokumentet er lagt til. Vi leser gjennom saken på nytt.',
+    onlyImagesPdf: 'Bare bilder og PDF støttes.', oneAtATime: 'Legg inn ett brev om gangen: ett PDF, eller flere bilder av samme brev.', cantOpen: (n) => `Vi kunne ikke åpne bildet «${n}». Bruk JPEG eller PNG.`,
+    pdfLibFail: 'Vi kunne ikke laste PDF-leseren. Sjekk nettforbindelsen, eller ta bilde av brevet i stedet.', pdfFail: 'Vi klarte ikke å lese PDF-en. Prøv å ta bilde av brevet i stedet.', pageAlt: (i) => `Side ${i} av dokumentet`,
+    linkCopied: 'Lenken er kopiert. Alle som har den kan se og endre saken.', selectLink: 'Marker lenken og kopier den selv.', renamePrompt: 'Nytt navn på saken', deleteCaseConfirm: 'Slette saken, alle dokumenter og alle bilder for godt? Dette kan ikke angres.',
+  },
+};
+
+/* ---------- Base ---------- */
+const LS_KEY = 'saksmappen_saker_v2', SIMPLE_KEY = 'saksmappen_enkel', LANG_KEY = 'casefolder_lang';
 const TYPES = ['vedtak', 'legeerklæring', 'forsikring', 'advokat', 'innkalling', 'notat', 'annet'];
 const PAGES = ['oversikt', 'tidslinje', 'dokumenter', 'frister', 'mangler', 'skriv', 'del', 'overlevering'];
-const TABS = [['oversikt', 'Oversikt'], ['tidslinje', 'Tidslinje'], ['dokumenter', 'Dokumenter'], ['frister', 'Frister'], ['mangler', 'Mangler'], ['skriv', 'Spør og skriv']];
+const TAB_KEYS = ['oversikt', 'tidslinje', 'dokumenter', 'frister', 'mangler', 'skriv'];
 const MAX_PAGES = 6;
+
+let lang = 'en';
+try { const l = new URLSearchParams(location.search).get('lang') || localStorage.getItem(LANG_KEY); if (l === 'nb' || l === 'en') lang = l; } catch {}
+const t = (k, ...a) => { const v = T[lang][k] ?? T.en[k] ?? k; return typeof v === 'function' ? v(...a) : v; };
+const typeLabel = (k) => t('type_' + k);
 
 const ICONS = {
   folder: '<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>',
@@ -252,47 +392,49 @@ let saker = [];
 try { saker = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch {}
 let simple = false;
 try { simple = localStorage.getItem(SIMPLE_KEY) === '1'; } catch {}
-let st = null;      // åpen sak
-let intake = null;  // pågående dokumentinntak
+let st = null;      // open case
+let intake = null;  // document intake in progress
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const cap = (s) => { s = String(s ?? ''); return s.charAt(0).toUpperCase() + s.slice(1); };
 const capEsc = (s) => esc(cap(s));
-const plural = (n, one, many) => (n === 1 ? one : many);
+const loc = () => (lang === 'nb' ? 'nb-NO' : 'en-US');
 const today = () => { const d = new Date(); d.setHours(12, 0, 0, 0); return d; };
 const daysUntil = (iso) => Math.round((new Date(iso + 'T12:00:00') - today()) / 864e5);
-const fmtLong = (d) => d ? new Date(d + 'T12:00:00').toLocaleDateString('nb-NO', { day: 'numeric', month: 'long', year: 'numeric' }) : 'ukjent dato';
+const fmtLong = (d) => d ? new Date(d + 'T12:00:00').toLocaleDateString(loc(), { day: 'numeric', month: 'long', year: 'numeric' }) : t('unknownDate');
 const fmtShort = (d) => {
-  if (!d) return 'ukjent dato';
+  if (!d) return t('unknownDate');
   const dt = new Date(d + 'T12:00:00'), o = { day: 'numeric', month: 'short' };
   if (dt.getFullYear() !== new Date().getFullYear()) o.year = 'numeric';
-  return dt.toLocaleDateString('nb-NO', o);
+  return dt.toLocaleDateString(loc(), o);
 };
 const docById = (id) => st?.docs.find((d) => d.id === id);
 const ck = (hva) => String(hva).toLowerCase().replace(/\s+/g, ' ').trim().slice(0, 160);
+const ILLEGIBLE = /\[(?:uleselig|illegible)\]/g;
 
 function saveSaker() { try { localStorage.setItem(LS_KEY, JSON.stringify(saker)); } catch {} }
 function remember(token, name) { saker = [{ token, name }, ...saker.filter((s) => s.token !== token)]; saveSaker(); }
 
 let toastTimer;
 function toast(msg) {
-  const t = $('#toast'); t.textContent = msg; t.classList.add('on');
-  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('on'), 5000);
+  const el = $('#toast'); el.textContent = msg; el.classList.add('on');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('on'), 5000);
 }
 
 async function api(method, path, body) {
   const r = await fetch(path, { method, headers: body ? { 'Content-Type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined });
-  const j = await r.json().catch(() => ({ error: 'Uventet svar fra serveren.' }));
-  if (!r.ok || j.error) throw new Error(j.error || 'Noe gikk galt.');
+  const j = await r.json().catch(() => ({ error: 'Unexpected response from the server.' }));
+  if (!r.ok || j.error) throw new Error(j.error || 'Something went wrong.');
   return j;
 }
 const caseApi = (method, sub = '', body) => api(method, `/api/cases/${st.token}${sub}`, body);
+const icsUrl = (i) => `/api/cases/${encodeURIComponent(st.token)}/calendar.ics?lang=${lang}${i === undefined ? '' : `&i=${i}`}`;
 
-/* ---------- Den verifiserte påstanden ---------- */
+/* ---------- The verified claim ---------- */
 function locate(text, quote) {
   if (!quote) return null;
-  const tokens = quote.trim().split(/\s+/).map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const tokens = quote.trim().split(/\s+/).map((x) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
   try {
     const m = new RegExp(tokens.join('[\\s\\f]+'), 'i').exec(text);
     return m ? { i: m.index, len: m[0].length } : null;
@@ -301,32 +443,32 @@ function locate(text, quote) {
 
 function pageOf(d, quote) {
   if (!d || (!d.text.includes('\f') && (d.files?.length || 0) <= 1)) return null;
-  const loc = locate(d.text, quote);
-  return loc ? d.text.slice(0, loc.i).split('\f').length : null;
+  const l = locate(d.text, quote);
+  return l ? d.text.slice(0, l.i).split('\f').length : null;
 }
 
 function evidenceHtml(d, quote) {
-  const loc = locate(d.text, quote), pg = pageOf(d, quote);
+  const l = locate(d.text, quote), pg = pageOf(d, quote);
   let body;
-  if (loc) {
-    const a = Math.max(0, loc.i - 260), b = Math.min(d.text.length, loc.i + loc.len + 260), clean = (s) => esc(s.replace(/\f/g, ''));
-    body = `<p class="excerpt">${a > 0 ? '… ' : ''}${clean(d.text.slice(a, loc.i))}<mark>${clean(d.text.slice(loc.i, loc.i + loc.len))}</mark>${clean(d.text.slice(loc.i + loc.len, b))}${b < d.text.length ? ' …' : ''}</p>`;
-  } else body = `<p>Vi fant ikke sitatet ordrett i teksten vi leste. Åpne dokumentet og les selv.</p>`;
+  if (l) {
+    const a = Math.max(0, l.i - 260), b = Math.min(d.text.length, l.i + l.len + 260), clean = (s) => esc(s.replace(/\f/g, ''));
+    body = `<p class="excerpt">${a > 0 ? '… ' : ''}${clean(d.text.slice(a, l.i))}<mark>${clean(d.text.slice(l.i, l.i + l.len))}</mark>${clean(d.text.slice(l.i + l.len, b))}${b < d.text.length ? ' …' : ''}</p>`;
+  } else body = `<p>${esc(t('quoteNotFound'))}</p>`;
   const img = d.files?.length
-    ? `<figure><img loading="lazy" src="/api/cases/${st.token}/files/${esc(d.files[Math.min((pg || 1) - 1, d.files.length - 1)])}" alt="Original av ${esc(d.title)}${pg ? `, side ${pg}` : ''}"><figcaption class="meta">Originalen${pg ? `, side ${pg}` : ''}. Det gule er markert i teksten vi leste fra brevet.</figcaption></figure>` : '';
-  return `<div class="evidence"><h4>Slik står det i dokumentet</h4>${body}${img}<p style="margin-top:8px"><button class="btn-link" data-act="open-doc" data-id="${esc(d.id)}" data-quote="${esc(quote || '')}">Åpne hele dokumentet</button></p></div>`;
+    ? `<figure><img loading="lazy" src="/api/cases/${st.token}/files/${esc(d.files[Math.min((pg || 1) - 1, d.files.length - 1)])}" alt="${esc(t('originalAlt', d.title, pg))}"><figcaption class="meta">${esc(t('origCaption', pg))}</figcaption></figure>` : '';
+  return `<div class="evidence"><h4>${esc(t('howItReads'))}</h4>${body}${img}<p style="margin-top:8px"><button class="btn-link" data-act="open-doc" data-id="${esc(d.id)}" data-quote="${esc(quote || '')}">${esc(t('openFullDoc'))}</button></p></div>`;
 }
 
-// id: unik nøkkel for visningstilstand. collapsed: tidslinje-stil, åpnes med påstanden som knapp.
+// id: unique key for view state. collapsed: timeline style, opened by the claim as a button.
 function claimCard({ id, claim = '', detail = '', quote = '', dok, verified, collapsed = false, date = '', top = '', after = '' }) {
   const d = docById(dok), open = st.open.has(id), showEv = st.ev.has(id);
-  const vb = verified ? badge('ok', 'check', 'Kontrollert mot dokumentet') : badge('bad', 'alert', 'Kunne ikke kontrolleres. Sjekk selv');
+  const vb = verified ? badge('ok', 'check', t('vChecked')) : badge('bad', 'alert', t('vUnchecked'));
   const pg = d && quote ? pageOf(d, quote) : null;
-  const src = d ? `${esc(d.title)} · ${fmtShort(d.date)}${pg ? ` · Side ${pg}` : ''}` : 'Ukjent dokument';
+  const src = d ? `${esc(d.title)} · ${esc(fmtShort(d.date))}${pg ? ` · ${esc(t('pageN', pg))}` : ''}` : esc(t('unknownDoc'));
   const inner = `
     ${top}${detail ? `<p class="claim-detail">${esc(detail)}</p>` : ''}
     ${quote ? `<blockquote class="quote">«${esc(quote)}»</blockquote>` : ''}
-    ${d ? `<div class="src"><span>${src}</span><button class="btn-link" data-act="evidence" data-id="${esc(id)}" aria-expanded="${showEv}">${showEv ? 'Skjul' : 'Se i dokumentet'} ${icon(showEv ? 'x' : 'arrow', 16)}</button></div>` : ''}
+    ${d ? `<div class="src"><span>${src}</span><button class="btn-link" data-act="evidence" data-id="${esc(id)}" aria-expanded="${showEv}">${esc(showEv ? t('hide') : t('viewInDoc'))} ${icon(showEv ? 'x' : 'arrow', 16)}</button></div>` : ''}
     ${showEv && d ? evidenceHtml(d, quote) : ''}${after}`;
   if (collapsed) {
     return `<article class="claim ${verified ? '' : 'is-bad'}">
@@ -338,67 +480,62 @@ function claimCard({ id, claim = '', detail = '', quote = '', dok, verified, col
   return `<article class="claim ${verified ? '' : 'is-bad'}">${vb}${claim ? `<h3 class="claim-text">${capEsc(claim)}</h3>` : ''}${inner}</article>`;
 }
 
-/* ---------- Uthenting av data fra analysen ---------- */
+/* ---------- Data from the analysis ---------- */
 const A = () => st.analysis || {};
 const datedFrister = () => (A().frister || []).filter((f) => f.dato).sort((x, y) => x.dato.localeCompare(y.dato));
 const nextDeadline = () => datedFrister().find((f) => daysUntil(f.dato) >= 0) || null;
 const needInfo = () => (A().frister || []).filter((f) => !f.dato);
 const wait = (p) => st.pending.includes(p);
 const icsIndex = (f) => datedFrister().indexOf(f);
+const pick = (x) => ({ quote: x.sitat, dok: x.dok, verified: !!x.verifisert });
 
 function flatClaims() {
   const a = A();
   return [
-    ...(a.tidslinje || []).map((x, i) => ({ id: `t${i}`, kind: 'tidslinje', claim: x.tittel, detail: x.beskrivelse, date: x.dato, ...pick(x) })),
-    ...(a.frister || []).map((x, i) => ({ id: `f${i}`, kind: 'frister', claim: x.hva, date: x.dato, ...pick(x) })),
-    ...(a.mangler || []).map((x, i) => ({ id: `m${i}`, kind: 'mangler', claim: x.hva, detail: x.hvorfor, ...pick(x) })),
+    ...(a.tidslinje || []).map((x, i) => ({ id: `t${i}`, claim: x.tittel, detail: x.beskrivelse, date: x.dato, ...pick(x) })),
+    ...(a.frister || []).map((x, i) => ({ id: `f${i}`, claim: x.hva, date: x.dato, ...pick(x) })),
+    ...(a.mangler || []).map((x, i) => ({ id: `m${i}`, claim: x.hva, detail: x.hvorfor, ...pick(x) })),
   ];
 }
-const pick = (x) => ({ quote: x.sitat, dok: x.dok, verified: !!x.verifisert });
 
 const dueBadge = (iso) => {
   const n = daysUntil(iso);
-  if (n < 0) return badge('bad', 'alert', `Utløpt for ${-n} ${plural(-n, 'dag', 'dager')} siden`);
-  if (n === 0) return badge('warn', 'alert', 'Fristen er i dag');
-  if (n <= 14) return badge('warn', 'clock', `Om ${n} ${plural(n, 'dag', 'dager')}`);
-  return badge('neutral', 'clock', `Om ${n} dager`);
+  if (n < 0) return badge('bad', 'alert', t('expired', -n));
+  if (n === 0) return badge('warn', 'alert', t('dueToday'));
+  if (n <= 14) return badge('warn', 'clock', t('inDays', n));
+  return badge('neutral', 'clock', t('inDays', n));
 };
 
 function calcHtml(f) {
   const d = docById(f.dok);
   if (f.beregnet && f.varighet && d) {
-    const fra = f.fra === 'mottak' ? ['Du mottok brevet', fmtShort(d.received)] : ['Datoen på brevet', fmtShort(d.date)];
-    return `<dl class="calc" aria-label="Slik er fristen regnet ut">
-      <div><dt>${fra[0]}</dt><dd>${esc(fra[1])}</dd></div><span class="op" aria-hidden="true">+</span>
-      <div><dt>Fristen i brevet</dt><dd>${esc(f.varighet.antall)} ${esc(f.varighet.enhet)}</dd></div><span class="op" aria-hidden="true">=</span>
-      <div class="res"><dt>Frist</dt><dd>${esc(fmtShort(f.dato))}</dd></div></dl>
-      <p class="meta">Regnet ut av en vanlig kalkulator, ikke av AI. Sjekk om brevet oppgir en egen dato.</p>`;
+    const from = f.fra === 'mottak' ? [t('youReceived'), fmtShort(d.received)] : [t('letterDate'), fmtShort(d.date)];
+    return `<dl class="calc" aria-label="${esc(t('calcAria'))}">
+      <div><dt>${esc(from[0])}</dt><dd>${esc(from[1])}</dd></div><span class="op" aria-hidden="true">+</span>
+      <div><dt>${esc(t('deadlineInLetter'))}</dt><dd>${esc(f.varighet.antall)} ${esc(f.varighet.enhet)}</dd></div><span class="op" aria-hidden="true">=</span>
+      <div class="res"><dt>${esc(t('deadlineWord'))}</dt><dd>${esc(fmtShort(f.dato))}</dd></div></dl>
+      <p class="meta">${esc(t('calcNote'))}</p>`;
   }
-  if (f.dato && f.usikker) {
-    return `<div class="notice" style="margin-top:12px">${icon('alert')}<div><strong>Datoen står ikke i dokumentet.</strong> ${esc(fmtLong(f.dato))} er regnet ut av AI, og er ikke kontrollert. Sjekk selv i brevet.</div></div>`;
-  }
-  if (f.dato) {
-    return `<dl class="calc"><div class="res"><dt>Frist, slik det står i brevet</dt><dd>${esc(fmtShort(f.dato))}</dd></div></dl>`;
-  }
-  return `<div class="notice" style="margin-top:12px">${icon('info')}<div><strong>Vi trenger én dato fra deg.</strong> ${esc(f.regel || 'Fristen løper fra du mottok brevet.')}</div></div>`;
+  if (f.dato && f.usikker) return `<div class="notice" style="margin-top:12px">${icon('alert')}<div><strong>${esc(t('notInDoc'))}</strong> ${esc(t('notInDocText', fmtLong(f.dato)))}</div></div>`;
+  if (f.dato) return `<dl class="calc"><div class="res"><dt>${esc(t('asInLetter'))}</dt><dd>${esc(fmtShort(f.dato))}</dd></div></dl>`;
+  return `<div class="notice" style="margin-top:12px">${icon('info')}<div><strong>${esc(t('weNeedDate'))}</strong> ${esc(f.regel || t('defaultRule'))}</div></div>`;
 }
 
 function receivedForm(f) {
   const d = docById(f.dok);
   if (!d || d.received) return '';
   return `<form class="stack-s" data-form="received" data-id="${esc(d.id)}" style="margin-top:12px">
-    <label for="rc-${esc(d.id)}" style="margin-top:0">Når mottok du brevet?</label>
-    <div class="row"><input id="rc-${esc(d.id)}" type="date" required style="width:auto;min-width:200px"><button class="btn primary" type="submit">Regn ut fristen</button></div></form>`;
+    <label for="rc-${esc(d.id)}" style="margin-top:0">${esc(t('whenReceived'))}</label>
+    <div class="row"><input id="rc-${esc(d.id)}" type="date" required style="width:auto;min-width:200px"><button class="btn primary" type="submit">${esc(t('calcBtn'))}</button></div></form>`;
 }
 
 function dropzone() {
   return `<button class="drop" data-act="upload" id="dropzone" type="button">${icon('camera', 36)}
-    <strong>Ta bilde eller last opp PDF av brevet</strong>
-    <span class="meta">Du kan også dra filen hit. Flere bilder blir sider i samme brev.</span></button>
+    <strong>${esc(t('dropTitle'))}</strong><span class="meta">${esc(t('dropHint'))}</span></button>
     <input id="f-upload" type="file" accept="image/*,application/pdf" multiple hidden>`;
 }
 
-/* ---------- Ruting og ramme ---------- */
+/* ---------- Routing and chrome ---------- */
 function route() {
   const m = location.hash.match(/^#\/s\/([A-Za-z0-9_-]+)(?:\/([a-z-]+))?$/);
   if (!m) return renderHome();
@@ -409,41 +546,47 @@ addEventListener('hashchange', route);
 
 function focusMain() { window.scrollTo(0, 0); const h = $('#app h1'); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); } }
 
+function renderStatic() {
+  document.documentElement.lang = lang;
+  $('#skip').textContent = t('skip');
+  $('#foot').textContent = t('foot');
+  $('#tabs').setAttribute('aria-label', t('tabsAria'));
+}
+
+const langButton = () => `<button class="btn langbtn" data-act="toggle-lang" lang="${lang === 'en' ? 'nb' : 'en'}" aria-label="${esc(t('langAria'))}">${esc(t('langBtn'))}</button>`;
+
 function renderChrome() {
-  const brand = `<a class="brand" href="#/">${icon('folder', 24)}<span>Saksmappen</span></a>`;
-  if (!st) { $('#top').innerHTML = brand; $('#tabs').hidden = true; return; }
-  $('#top').innerHTML = `${brand}<div class="casename" title="${esc(st.c?.name || '')}">${esc(st.c?.name || 'Åpner saken…')}</div>
+  renderStatic();
+  const brand = `<a class="brand" href="#/">${icon('folder', 24)}<span>${esc(t('brand'))}</span></a>`;
+  if (!st) { $('#top').innerHTML = `${brand}<div class="top-actions">${langButton()}</div>`; $('#tabs').hidden = true; return; }
+  $('#top').innerHTML = `${brand}<div class="casename" title="${esc(st.c?.name || '')}">${esc(st.c?.name || t('opening'))}</div>
     <div class="top-actions">
-      <button class="switch" role="switch" aria-checked="${simple}" data-act="toggle-simple"><span class="track"><span class="thumb"></span></span><span>Enkel visning</span></button>
-      <a class="btn primary" href="#/s/${esc(st.token)}/del">${icon('share', 18)} Del saken</a>
+      ${langButton()}
+      <button class="switch" role="switch" aria-checked="${simple}" data-act="toggle-simple"><span class="track"><span class="thumb"></span></span><span>${esc(t('simpleView'))}</span></button>
+      <a class="btn primary share" href="#/s/${esc(st.token)}/del">${icon('share', 18)} ${esc(t('shareBtn'))}</a>
     </div>`;
   const showTabs = !simple && !['del', 'overlevering'].includes(st.page);
   $('#tabs').hidden = !showTabs;
-  $('#tabs').innerHTML = `<ul>${TABS.map(([k, l]) => `<li><a href="#/s/${esc(st.token)}/${k}" ${st.page === k ? 'aria-current="page"' : ''}>${l}</a></li>`).join('')}</ul>`;
+  $('#tabs').innerHTML = `<ul>${TAB_KEYS.map((k) => `<li><a href="#/s/${esc(st.token)}/${k}" ${st.page === k ? 'aria-current="page"' : ''}>${esc(t('tab_' + k))}</a></li>`).join('')}</ul>`;
 }
 
-/* ---------- Forside ---------- */
+/* ---------- Home ---------- */
 function renderHome() {
-  st = null; document.title = 'Saksmappen'; document.body.classList.remove('simple');
+  st = null; document.title = t('brand'); document.body.classList.remove('simple');
   renderChrome();
   $('#app').innerHTML = `<div class="stack">
-    <div class="stack-s"><h1>Saksmapper</h1><p class="lead">Samle brevene og dokumentene i en langvarig sak. Vi finner frister og det som mangler, og viser deg hvor vi har det fra.</p></div>
-    <section class="card" aria-labelledby="h-saker"><h2 id="h-saker">Dine saker</h2>
-      ${saker.length ? `<ul style="list-style:none;margin:16px 0 0;padding:0">${saker.map((s) => `<li class="row between" style="padding:8px 0;border-bottom:1px solid var(--line)"><a class="btn-link" href="#/s/${esc(s.token)}">${esc(s.name)}</a><button class="btn-link" data-act="forget" data-id="${esc(s.token)}" title="Fjerner bare fra denne listen. Saken slettes ikke.">Fjern fra listen</button></li>`).join('')}</ul>` : '<p style="margin-top:8px" class="meta">Du har ingen saker ennå. Opprett den første under.</p>'}
-      <form data-form="new-case"><label for="newname">Ny sak</label>
-        <div class="copyrow"><input id="newname" placeholder="For eksempel: Mor, NAV og forsikring" autocomplete="off"><button class="btn primary" type="submit">Opprett saken</button></div></form>
-      <p style="margin-top:12px"><button class="btn-link" data-act="try-sample">Se en fiktiv eksempelsak</button></p>
+    <div class="stack-s"><h1>${esc(t('homeTitle'))}</h1><p class="lead">${esc(t('homeLead'))}</p></div>
+    <section class="card" aria-labelledby="h-saker"><h2 id="h-saker">${esc(t('yourCases'))}</h2>
+      ${saker.length ? `<ul style="list-style:none;margin:16px 0 0;padding:0">${saker.map((s) => `<li class="row between" style="padding:8px 0;border-bottom:1px solid var(--line)"><a class="btn-link" href="#/s/${esc(s.token)}">${esc(s.name)}</a><button class="btn-link" data-act="forget" data-id="${esc(s.token)}" title="${esc(t('removeTitle'))}">${esc(t('removeFromList'))}</button></li>`).join('')}</ul>` : `<p style="margin-top:8px" class="meta">${esc(t('noCases'))}</p>`}
+      <form data-form="new-case"><label for="newname">${esc(t('newCase'))}</label>
+        <div class="copyrow"><input id="newname" placeholder="${esc(t('newPlaceholder'))}" autocomplete="off"><button class="btn primary" type="submit">${esc(t('createBtn'))}</button></div></form>
+      <p style="margin-top:12px"><button class="btn-link" data-act="try-sample">${esc(t('trySample'))}</button></p>
     </section>
-    <section class="card" aria-labelledby="h-tillit"><h2 id="h-tillit">Slik kan du stole på det du ser</h2>
-      <ul class="plain-list stack-s" style="margin-top:12px">
-        <li>Hver ting vi finner har et sitat fra brevet.</li>
-        <li>Vi sjekker at sitatet faktisk står i dokumentet. Finner vi det ikke, sier vi fra.</li>
-        <li>Datoer regnes ut av en vanlig kalkulator, ikke av AI.</li>
-        <li>Vi gir ikke juridisk rådgivning. Vi samler, forklarer og foreslår.</li>
-      </ul></section></div>`;
+    <section class="card" aria-labelledby="h-trust"><h2 id="h-trust">${esc(t('trustTitle'))}</h2>
+      <ul class="plain-list stack-s" style="margin-top:12px"><li>${esc(t('trust1'))}</li><li>${esc(t('trust2'))}</li><li>${esc(t('trust3'))}</li><li>${esc(t('trust4'))}</li></ul></section></div>`;
 }
 
-/* ---------- Åpne sak ---------- */
+/* ---------- Open a case ---------- */
 async function openCase(token, page = 'oversikt') {
   st = { token, page, c: null, docs: [], analysis: null, aState: 'none', checks: {}, pending: [], open: new Set(), ev: new Set(), answer: null, draft: null, busy: '', err: '' };
   renderCase();
@@ -455,200 +598,202 @@ async function openCase(token, page = 'oversikt') {
     focusMain();
   } catch (e) {
     if (st?.token !== token) return;
-    $('#app').innerHTML = `<div class="stack"><h1>Vi fant ikke saken</h1><div class="notice bad" role="alert">${icon('alert')}<div>${esc(e.message)}</div></div><p><a class="btn" href="#/">Tilbake til sakene dine</a></p></div>`;
+    $('#app').innerHTML = `<div class="stack"><h1>${esc(t('notFoundTitle'))}</h1><div class="notice bad" role="alert">${icon('alert')}<div>${esc(e.message)}</div></div><p><a class="btn" href="#/">${esc(t('backToCases'))}</a></p></div>`;
   }
 }
 
 function applyView(v) {
   st.c = v.case; st.docs = v.documents; st.analysis = v.analysis; st.aState = v.analysisState; st.checks = v.checks || {};
-  document.title = `${v.case.name} · Saksmappen`;
+  document.title = `${v.case.name} · ${t('brand')}`;
   renderCase();
 }
 const reloadCase = async () => applyView(await caseApi('GET'));
 
 function renderCase() { document.body.classList.toggle('simple', simple); renderChrome(); renderPage(); }
 
-function staleBanner() {
-  if (!(st.aState === 'stale' && st.docs.length && !st.pending.length && st.analysis)) return '';
-  return `<div class="notice noprint" style="margin-bottom:24px">${icon('info')}<div>Du har lagt inn noe nytt, og oversikten er ikke oppdatert ennå. <button class="btn-link" data-act="analyze" style="min-height:0">Oppdater oversikten</button></div></div>`;
+function banner() {
+  if (st.pending.length || !st.docs.length || !st.analysis) return '';
+  const aLang = st.analysis._lang;
+  if (aLang && aLang !== lang) return `<div class="notice noprint" style="margin-bottom:24px">${icon('info')}<div>${esc(t('langStale', aLang))} <button class="btn-link" data-act="analyze" style="min-height:0">${esc(t('updateOverview'))}</button></div></div>`;
+  if (st.aState === 'stale') return `<div class="notice noprint" style="margin-bottom:24px">${icon('info')}<div>${esc(t('stale'))} <button class="btn-link" data-act="analyze" style="min-height:0">${esc(t('updateOverview'))}</button></div></div>`;
+  return '';
 }
 
 function renderPage() {
   if (!st) return;
   const el = $('#app');
-  if (!st.c && !st.docs.length && st.page !== 'del') { el.innerHTML = '<p class="skeleton">Åpner saken…</p>'; return; }
+  if (!st.c && !st.docs.length && st.page !== 'del') { el.innerHTML = `<p class="skeleton">${esc(t('opening'))}</p>`; return; }
   const errHtml = st.err ? `<div class="notice bad" role="alert" style="margin-bottom:24px">${icon('alert')}<div>${esc(st.err)}</div></div>` : '';
   let html;
   if (st.page === 'del') html = pageDel();
   else if (st.page === 'overlevering') html = pageOverlevering();
   else if (simple) html = pageEnkel();
   else html = { oversikt: pageOversikt, tidslinje: pageTidslinje, dokumenter: pageDokumenter, frister: pageFrister, mangler: pageMangler, skriv: pageSkriv }[st.page]();
-  el.innerHTML = errHtml + (['del', 'overlevering'].includes(st.page) ? '' : staleBanner()) + html;
+  el.innerHTML = errHtml + (['del', 'overlevering'].includes(st.page) ? '' : banner()) + html;
 }
 
-/* ---------- Skjermer ---------- */
+/* ---------- Screens ---------- */
 function pageOversikt() {
   const a = A();
-  if (!st.docs.length) return `<div class="stack"><div class="stack-s"><h1>Velkommen til saken</h1><p class="lead">Begynn med det første brevet. Vi leser det, og du får se hva vi fant.</p></div>${dropzone()}</div>`;
-  if (!st.analysis) return `<div class="stack"><div class="stack-s"><h1>Klar til å lese gjennom saken</h1><p class="lead">Du har lagt inn ${st.docs.length} ${plural(st.docs.length, 'dokument', 'dokumenter')}. Vi leser dem og finner frister og det som mangler.</p></div>
-    <p><button class="btn primary" data-act="analyze">Les gjennom saken</button></p></div>`;
+  if (!st.docs.length) return `<div class="stack"><div class="stack-s"><h1>${esc(t('welcomeTitle'))}</h1><p class="lead">${esc(t('welcomeLead'))}</p></div>${dropzone()}</div>`;
+  if (!st.analysis) return `<div class="stack"><div class="stack-s"><h1>${esc(t('readyTitle'))}</h1><p class="lead">${esc(t('readyLead', st.docs.length))}</p></div>
+    <p><button class="btn primary" data-act="analyze">${esc(t('readBtn'))}</button></p></div>`;
 
   const deadlineCard = () => {
-    if (wait('b')) return `<p class="skeleton">Vi leter etter frister…</p>`;
+    if (wait('b')) return `<p class="skeleton">${esc(t('findingDeadlines'))}</p>`;
     const f = nextDeadline();
     if (f) return `<p class="bigdate">${esc(fmtShort(f.dato))}</p><p>${dueBadge(f.dato)}</p><p class="grow"><strong>${capEsc(f.hva)}</strong></p>
-      <a class="btn" href="/api/cases/${esc(st.token)}/calendar.ics?i=${icsIndex(f)}" download>${icon('calendar-plus', 18)} Legg i kalender</a>
-      <a class="btn-link" href="#/s/${esc(st.token)}/frister">Se hvordan fristen er regnet ut</a>`;
+      <a class="btn" href="${icsUrl(icsIndex(f))}" download>${icon('calendar-plus', 18)} ${esc(t('addToCalendar'))}</a>
+      <a class="btn-link" href="#/s/${esc(st.token)}/frister">${esc(t('seeCalc'))}</a>`;
     const n = needInfo()[0];
-    if (n) return `<p class="bigdate" style="font-size:1.5rem">Vi trenger en dato</p><p class="grow">${capEsc(n.hva)}. ${esc(n.regel || '')}</p><a class="btn primary" href="#/s/${esc(st.token)}/frister">Legg inn datoen</a>`;
-    return `<p class="grow">Ingen frister ennå. De vises her når du laster opp et vedtak.</p><a class="btn" href="#/s/${esc(st.token)}/dokumenter">Legg inn et brev</a>`;
+    if (n) return `<p class="bigdate" style="font-size:1.5rem">${esc(t('needDate'))}</p><p class="grow">${capEsc(n.hva)}. ${esc(n.regel || '')}</p><a class="btn primary" href="#/s/${esc(st.token)}/frister">${esc(t('enterDate'))}</a>`;
+    return `<p class="grow">${esc(t('noDeadlines'))}</p><a class="btn" href="#/s/${esc(st.token)}/dokumenter">${esc(t('addLetter'))}</a>`;
   };
   const missingCard = () => {
-    if (wait('c')) return `<p class="skeleton">Vi ser etter det som mangler…</p>`;
+    if (wait('c')) return `<p class="skeleton">${esc(t('findingMissing'))}</p>`;
     const m = a.mangler || [], done = m.filter((x) => st.checks[ck(x.hva)]).length, rest = m.filter((x) => !st.checks[ck(x.hva)]);
-    if (!m.length) return `<p class="grow">Vi fant ikke noe som mangler i dokumentene du har lagt inn.</p>`;
-    return `<p><span class="bignum">${done} av ${m.length}</span></p>
-      <div class="progress" role="progressbar" aria-label="Skaffet" aria-valuemin="0" aria-valuemax="${m.length}" aria-valuenow="${done}"><span style="width:${(100 * done) / m.length}%"></span></div>
-      <p class="meta" style="margin-top:-4px">${plural(done, 'ting er skaffet', 'ting er skaffet')}</p>
-      <ul class="plain-list grow">${rest.slice(0, 2).map((x) => `<li>${capEsc(x.hva)}</li>`).join('') || '<li>Alt er skaffet.</li>'}</ul>
-      <a class="btn" href="#/s/${esc(st.token)}/mangler">Se hele listen</a>`;
+    if (!m.length) return `<p class="grow">${esc(t('nothingMissing'))}</p>`;
+    return `<p><span class="bignum">${esc(t('nOfM', done, m.length))}</span></p>
+      <div class="progress" role="progressbar" aria-label="${esc(t('progressAria'))}" aria-valuemin="0" aria-valuemax="${m.length}" aria-valuenow="${done}"><span style="width:${(100 * done) / m.length}%"></span></div>
+      <p class="meta" style="margin-top:-4px">${esc(t('haveBeenObtained'))}</p>
+      <ul class="plain-list grow">${rest.slice(0, 2).map((x) => `<li>${capEsc(x.hva)}</li>`).join('') || `<li>${esc(t('allObtained'))}</li>`}</ul>
+      <a class="btn" href="#/s/${esc(st.token)}/mangler">${esc(t('seeFullList'))}</a>`;
   };
   const latestCard = () => {
-    if (wait('a')) return `<p class="skeleton">Vi bygger tidslinjen…</p>`;
+    if (wait('a')) return `<p class="skeleton">${esc(t('buildingTimeline'))}</p>`;
     const ev = (a.tidslinje || []).filter((e) => e.dato).sort((x, y) => x.dato.localeCompare(y.dato)), past = ev.filter((e) => daysUntil(e.dato) <= 0), e = past.length ? past[past.length - 1] : ev[ev.length - 1];
-    if (!e) return `<p class="grow">Ingen hendelser ennå.</p>`;
-    return `<p class="bigdate" style="font-size:1.5rem">${esc(fmtShort(e.dato))}</p><p class="grow"><strong>${esc(e.tittel)}</strong><br>${esc(e.beskrivelse || '')}</p><a class="btn" href="#/s/${esc(st.token)}/tidslinje">Se tidslinjen</a>`;
+    if (!e) return `<p class="grow">${esc(t('noEvents'))}</p>`;
+    return `<p class="bigdate" style="font-size:1.5rem">${esc(fmtShort(e.dato))}</p><p class="grow"><strong>${capEsc(e.tittel)}</strong><br>${esc(e.beskrivelse || '')}</p><a class="btn" href="#/s/${esc(st.token)}/tidslinje">${esc(t('seeTimeline'))}</a>`;
   };
-  const card = (title, body) => `<section class="card att" aria-label="${title}"><h2 class="eyebrow">${title}</h2>${body}</section>`;
+  const card = (title, body) => `<section class="card att" aria-label="${esc(title)}"><h2 class="eyebrow">${esc(title)}</h2>${body}</section>`;
 
   const claims = flatClaims(), bad = claims.filter((c) => !c.verified), ok = claims.length - bad.length;
   const trust = wait('a') || wait('b') || wait('c') ? '' : `<section class="card" aria-labelledby="h-trust"><div class="trust ${bad.length ? 'some-bad' : ''}">${icon(bad.length ? 'alert' : 'shield', 28)}<div class="stack-s">
-      <h2 id="h-trust">Er alt kontrollert?</h2>
-      <p>${claims.length ? `Vi fant ${claims.length} ting i dokumentene dine. <strong>${ok} er kontrollert mot dokumentet</strong>${bad.length ? `, og <strong>${bad.length} må du sjekke selv</strong>` : ''}.` : 'Det er ingenting å kontrollere ennå.'}</p>
-      ${bad.length ? '<p class="meta">Vi viser dem under, så du kan lese selv i brevet.</p>' : '<p class="meta">Det betyr at sitatet vi viser, står ordrett i dokumentet.</p>'}</div></div></section>
+      <h2 id="h-trust">${esc(t('allChecked'))}</h2>
+      <p>${claims.length ? t('trustSummary', claims.length, ok, bad.length) : esc(t('nothingToCheck'))}</p>
+      <p class="meta">${esc(bad.length ? t('badHint') : t('okHint'))}</p></div></div></section>
     ${bad.map((c) => claimCard(c)).join('<div style="height:16px"></div>')}`;
 
   return `<div class="stack">
-    <div class="stack-s"><h1>Dette trenger oppmerksomhet nå</h1>${wait('a') ? '' : `<p class="lead">${esc(a.status || '')}</p>`}</div>
-    <div class="att-grid">${card('Neste frist', deadlineCard())}${card('Dette mangler', missingCard())}${card('Siste hendelse', latestCard())}</div>
+    <div class="stack-s"><h1>${esc(t('attentionTitle'))}</h1>${wait('a') ? '' : `<p class="lead">${esc(a.status || '')}</p>`}</div>
+    <div class="att-grid">${card(t('cardDeadline'), deadlineCard())}${card(t('cardMissing'), missingCard())}${card(t('cardLatest'), latestCard())}</div>
     ${trust}</div>`;
 }
 
 function pageTidslinje() {
   const ev = (A().tidslinje || []).map((x, i) => ({ x, i })).sort((p, q) => (p.x.dato || '').localeCompare(q.x.dato || ''));
-  const head = `<div class="stack-s"><h1>Tidslinje</h1><p class="lead">Hva som har skjedd, i rekkefølge. Trykk på en hendelse for å se sitatet fra brevet.</p></div>`;
-  if (wait('a')) return `<div class="stack">${head}<p class="skeleton">Vi bygger tidslinjen…</p></div>`;
-  if (!ev.length) return `<div class="stack">${head}<div class="card">${st.docs.length ? '<p>Tidslinjen er tom ennå. Trykk «Les gjennom saken» på oversikten.</p>' : '<p>Ingen hendelser ennå. Tidslinjen bygges når du har lagt inn et dokument.</p>'}</div></div>`;
+  const head = `<div class="stack-s"><h1>${esc(t('tlTitle'))}</h1><p class="lead">${esc(t('tlLead'))}</p></div>`;
+  if (wait('a')) return `<div class="stack">${head}<p class="skeleton">${esc(t('buildingTimeline'))}</p></div>`;
+  if (!ev.length) return `<div class="stack">${head}<div class="card"><p>${esc(st.docs.length ? t('tlEmpty1') : t('tlEmpty2'))}</p></div></div>`;
   return `<div class="stack">${head}<ol class="timeline">${ev.map(({ x, i }) => `<li>${claimCard({ id: `t${i}`, claim: x.tittel, detail: x.beskrivelse, date: x.dato, quote: x.sitat, dok: x.dok, verified: !!x.verifisert, collapsed: true })}</li>`).join('')}</ol></div>`;
 }
 
 function docRow(d) {
-  const needs = d.text.includes('[uleselig]') || !d.date;
+  const needs = ILLEGIBLE.test(d.text) || !d.date; ILLEGIBLE.lastIndex = 0;
   const thumb = d.files?.length ? `<img loading="lazy" alt="" src="/api/cases/${esc(st.token)}/files/${esc(d.files[0])}">` : icon('file', 28);
-  const when = d.received ? `Mottatt ${fmtShort(d.received)}` : d.date ? `Datert ${fmtShort(d.date)}` : 'Uten dato';
+  const when = d.received ? t('receivedOn', fmtShort(d.received)) : d.date ? t('datedOn', fmtShort(d.date)) : t('undated');
   return `<button class="docrow" data-act="open-doc" data-id="${esc(d.id)}"><span class="thumb">${thumb}</span>
-    <span class="grow"><strong>${esc(d.title)}</strong><span class="meta">${esc(d.type)} · ${esc(when)}</span><span style="display:block;margin-top:6px">${needs ? badge('warn', 'alert', 'Trenger gjennomgang') : badge('ok', 'check', 'Lest')}</span></span>${icon('arrow', 20)}</button>`;
+    <span class="grow"><strong>${esc(d.title)}</strong><span class="meta">${esc(typeLabel(d.type))} · ${esc(when)}</span><span style="display:block;margin-top:6px">${needs ? badge('warn', 'alert', t('stReview')) : badge('ok', 'check', t('stRead'))}</span></span>${icon('arrow', 20)}</button>`;
 }
 
 function pageDokumenter() {
-  return `<div class="stack"><div class="stack-s"><h1>Dokumenter</h1><p class="lead">Alt du har lagt inn i saken. Trykk på et dokument for å lese det, se originalen eller rette teksten.</p></div>
-    ${dropzone()}<p><button class="btn-link" data-act="paste-text">Lim inn tekst i stedet</button></p>
-    ${st.docs.length ? `<ul style="list-style:none;margin:0;padding:0" class="stack-s">${st.docs.map((d) => `<li>${docRow(d)}</li>`).join('')}</ul>` : '<div class="card"><p>Ingen dokumenter ennå. Ta bilde av det første brevet, så begynner vi.</p></div>'}</div>`;
+  return `<div class="stack"><div class="stack-s"><h1>${esc(t('docsTitle'))}</h1><p class="lead">${esc(t('docsLead'))}</p></div>
+    ${dropzone()}<p><button class="btn-link" data-act="paste-text">${esc(t('pasteInstead'))}</button></p>
+    ${st.docs.length ? `<ul style="list-style:none;margin:0;padding:0" class="stack-s">${st.docs.map((d) => `<li>${docRow(d)}</li>`).join('')}</ul>` : `<div class="card"><p>${esc(t('noDocs'))}</p></div>`}</div>`;
 }
 
 function fristCard(f, i) {
   return claimCard({ id: `f${i}`, claim: f.hva, quote: f.sitat, dok: f.dok, verified: !!f.verifisert,
-    top: `<div style="margin-top:8px">${f.dato ? dueBadge(f.dato) : badge('warn', 'info', 'Venter på en dato fra deg')}</div>${calcHtml(f)}${f.dato ? '' : receivedForm(f)}`,
-    after: f.dato ? `<p style="margin-top:12px"><a class="btn" href="/api/cases/${esc(st.token)}/calendar.ics?i=${icsIndex(f)}" download>${icon('calendar-plus', 18)} Legg i kalender</a></p>` : '' });
+    top: `<div style="margin-top:8px">${f.dato ? dueBadge(f.dato) : badge('warn', 'info', t('waitingDate'))}</div>${calcHtml(f)}${f.dato ? '' : receivedForm(f)}`,
+    after: f.dato ? `<p style="margin-top:12px"><a class="btn" href="${icsUrl(icsIndex(f))}" download>${icon('calendar-plus', 18)} ${esc(t('addToCalendar'))}</a></p>` : '' });
 }
 
 function pageFrister() {
   const all = (A().frister || []).map((f, i) => ({ f, i }));
   const rank = ({ f }) => (!f.dato ? 0 : daysUntil(f.dato) >= 0 ? 1 : 2);
   all.sort((p, q) => rank(p) - rank(q) || (p.f.dato || '').localeCompare(q.f.dato || ''));
-  const dated = datedFrister().length;
-  const head = `<div class="stack-s"><h1>Frister</h1><p class="lead">Den som haster mest står øverst. Under hver frist ser du hvordan vi kom frem til datoen. Sjekk alltid mot brevet.</p></div>`;
-  if (wait('b')) return `<div class="stack">${head}<p class="skeleton">Vi leter etter frister…</p></div>`;
+  const head = `<div class="stack-s"><h1>${esc(t('dlTitle'))}</h1><p class="lead">${esc(t('dlLead'))}</p></div>`;
+  if (wait('b')) return `<div class="stack">${head}<p class="skeleton">${esc(t('findingDeadlines'))}</p></div>`;
   return `<div class="stack">${head}
-    ${dated ? `<div class="card"><h2>Få påminnelser</h2><p style="margin-top:8px">Last ned en kalenderfil og åpne den i kalenderen din. Du får varsel 7 dager og 1 dag før hver frist.</p><p style="margin-top:16px"><a class="btn primary" href="/api/cases/${esc(st.token)}/calendar.ics" download>${icon('download', 18)} Last ned kalenderfil (.ics)</a></p></div>` : ''}
-    ${all.length ? all.map(({ f, i }) => fristCard(f, i)).join('') : `<div class="card"><p>Ingen frister ennå. De vises her når du laster opp et vedtak.</p></div>`}</div>`;
+    ${datedFrister().length ? `<div class="card"><h2>${esc(t('remTitle'))}</h2><p style="margin-top:8px">${esc(t('remText'))}</p><p style="margin-top:16px"><a class="btn primary" href="${icsUrl()}" download>${icon('download', 18)} ${esc(t('dlIcs'))}</a></p></div>` : ''}
+    ${all.length ? all.map(({ f, i }) => fristCard(f, i)).join('') : `<div class="card"><p>${esc(t('noDeadlines'))}</p></div>`}</div>`;
 }
 
 function pageMangler() {
   const m = (A().mangler || []).map((x, i) => ({ x, i, done: !!st.checks[ck(x.hva)] }));
-  const head = `<div class="stack-s"><h1>Dette mangler</h1><p class="lead">Ting som kan styrke saken, ut fra det dokumentene dine sier. Kryss av når du har skaffet dem.</p></div>`;
-  if (wait('c')) return `<div class="stack">${head}<p class="skeleton">Vi ser etter det som mangler…</p></div>`;
-  if (!m.length) return `<div class="stack">${head}<div class="card"><p>${st.analysis ? 'Vi fant ikke noe som mangler i dokumentene du har lagt inn.' : 'Ingenting å vise ennå. Listen kommer når vi har lest dokumentene dine.'}</p></div></div>`;
+  const head = `<div class="stack-s"><h1>${esc(t('msTitle'))}</h1><p class="lead">${esc(t('msLead'))}</p></div>`;
+  if (wait('c')) return `<div class="stack">${head}<p class="skeleton">${esc(t('findingMissing'))}</p></div>`;
+  if (!m.length) return `<div class="stack">${head}<div class="card"><p>${esc(st.analysis ? t('nothingMissing') : t('msNothingYet'))}</p></div></div>`;
   const done = m.filter((r) => r.done).length;
   const item = ({ x, i, done: d }) => `<div class="check ${d ? 'done' : ''}"><input type="checkbox" id="ck-${i}" data-check="${esc(ck(x.hva))}" ${d ? 'checked' : ''}>
-    <div class="grow"><label class="ck-title" for="ck-${i}">${capEsc(x.hva)}</label><p>${esc(x.hvorfor)}</p>${x.hvordan ? `<p class="meta" style="margin-top:4px">Slik får du den: ${esc(x.hvordan)}</p>` : ''}
-    <div style="margin-top:8px">${claimCard({ id: `m${i}`, quote: x.sitat, dok: x.dok, verified: !!x.verifisert }).replace('class="claim ', 'class="claim ').replace(/<article class="claim ([^"]*)">/, '<article class="claim $1" style="padding:12px 16px">')}</div></div></div>`;
+    <div class="grow"><label class="ck-title" for="ck-${i}">${capEsc(x.hva)}</label><p>${esc(x.hvorfor)}</p>${x.hvordan ? `<p class="meta" style="margin-top:4px">${esc(t('howToGet'))} ${esc(x.hvordan)}</p>` : ''}
+    <div style="margin-top:8px">${claimCard({ id: `m${i}`, quote: x.sitat, dok: x.dok, verified: !!x.verifisert }).replace(/<article class="claim ([^"]*)">/, '<article class="claim $1" style="padding:12px 16px">')}</div></div></div>`;
   const open = m.filter((r) => !r.done), closed = m.filter((r) => r.done);
   return `<div class="stack">${head}
-    <div class="card"><p><strong>${done} av ${m.length}</strong> er skaffet</p><div class="progress" role="progressbar" aria-label="Skaffet" aria-valuemin="0" aria-valuemax="${m.length}" aria-valuenow="${done}" style="margin-top:8px"><span style="width:${(100 * done) / m.length}%"></span></div></div>
-    ${open.length ? `<section class="card" aria-label="Mangler fortsatt"><h2>Mangler fortsatt</h2>${open.map(item).join('')}</section>` : '<div class="card"><p>Alt på listen er skaffet.</p></div>'}
-    ${closed.length ? `<section class="card" aria-label="Skaffet"><h2>Skaffet</h2>${closed.map(item).join('')}</section>` : ''}</div>`;
+    <div class="card"><p>${t('progressOf', done, m.length)}</p><div class="progress" role="progressbar" aria-label="${esc(t('progressAria'))}" aria-valuemin="0" aria-valuemax="${m.length}" aria-valuenow="${done}" style="margin-top:8px"><span style="width:${(100 * done) / m.length}%"></span></div></div>
+    ${open.length ? `<section class="card" aria-label="${esc(t('stillMissing'))}"><h2>${esc(t('stillMissing'))}</h2>${open.map(item).join('')}</section>` : `<div class="card"><p>${esc(t('allDone'))}</p></div>`}
+    ${closed.length ? `<section class="card" aria-label="${esc(t('obtained'))}"><h2>${esc(t('obtained'))}</h2>${closed.map(item).join('')}</section>` : ''}</div>`;
 }
 
 function pageSkriv() {
   const ans = st.answer, vedtak = st.docs.filter((d) => ['vedtak', 'forsikring'].includes(d.type));
-  const busy = st.busy ? `<p class="skeleton" role="status" style="margin-top:16px">${esc(st.busy)} Det kan ta litt tid.</p>` : '';
-  return `<div class="stack"><div class="stack-s"><h1>Spør og skriv</h1><p class="lead">Svarene bygger bare på dokumentene i saken, og viser hvor de kommer fra.</p>${busy}</div>
-    <section class="card" aria-labelledby="h-spor"><h2 id="h-spor">Spør om saken</h2>
-      <form data-form="ask"><label for="q">Hva lurer du på?</label><div class="copyrow"><input id="q" placeholder="For eksempel: Hva må ortopeden skrive for at forsikringen skal godta det?"><button class="btn primary" type="submit" ${st.busy ? 'disabled' : ''}>Spør</button></div></form>
+  const busy = st.busy ? `<p class="skeleton" role="status" style="margin-top:16px">${esc(st.busy)} ${esc(t('takesTime'))}</p>` : '';
+  return `<div class="stack"><div class="stack-s"><h1>${esc(t('awTitle'))}</h1><p class="lead">${esc(t('awLead'))}</p>${busy}</div>
+    <section class="card" aria-labelledby="h-spor"><h2 id="h-spor">${esc(t('askTitle'))}</h2>
+      <form data-form="ask"><label for="q">${esc(t('askLabel'))}</label><div class="copyrow"><input id="q" placeholder="${esc(t('askPlaceholder'))}"><button class="btn primary" type="submit" ${st.busy ? 'disabled' : ''}>${esc(t('askBtn'))}</button></div></form>
       ${ans ? `<div class="stack-s" style="margin-top:24px"><p style="font-size:1.125rem">${esc(ans.svar)}</p>${(ans.kilder || []).map((k, i) => claimCard({ id: `a${i}`, quote: k.sitat, dok: k.dok, verified: !!k.verifisert })).join('')}</div>` : ''}</section>
-    <section class="card" aria-labelledby="h-utkast"><h2 id="h-utkast">Utkast</h2>
-      <p class="meta" style="margin-top:4px">Les gjennom og rett før du bruker dem. Utkastene er ikke kontrollert på samme måte som sitatene.</p>
-      <label for="d-doc">Vedtak å klage på</label>
-      <select id="d-doc">${vedtak.map((d) => `<option value="${esc(d.id)}">${esc(d.title)}</option>`).join('') || '<option value="">Ingen vedtak lagt inn</option>'}</select>
-      <div class="row" style="margin-top:16px"><button class="btn" data-act="d-klage" ${vedtak.length && !st.busy ? '' : 'disabled'}>Lag utkast til klage</button><button class="btn" data-act="d-over" ${st.docs.length && !st.busy ? '' : 'disabled'}>Lag oppsummering som tekst</button></div>
-      ${st.draft ? `<div class="out">${esc(st.draft)}</div><p style="margin-top:12px"><button class="btn" data-act="copy">Kopier teksten</button></p>` : ''}</section></div>`;
+    <section class="card" aria-labelledby="h-utkast"><h2 id="h-utkast">${esc(t('draftsTitle'))}</h2>
+      <p class="meta" style="margin-top:4px">${esc(t('draftsNote'))}</p>
+      <label for="d-doc">${esc(t('appealOn'))}</label>
+      <select id="d-doc">${vedtak.map((d) => `<option value="${esc(d.id)}">${esc(d.title)}</option>`).join('') || `<option value="">${esc(t('noDecisions'))}</option>`}</select>
+      <div class="row" style="margin-top:16px"><button class="btn" data-act="d-klage" ${vedtak.length && !st.busy ? '' : 'disabled'}>${esc(t('draftAppeal'))}</button><button class="btn" data-act="d-over" ${st.docs.length && !st.busy ? '' : 'disabled'}>${esc(t('draftSummary'))}</button></div>
+      ${st.draft ? `<div class="out">${esc(st.draft)}</div><p style="margin-top:12px"><button class="btn" data-act="copy">${esc(t('copyText'))}</button></p>` : ''}</section></div>`;
 }
 
 function pageEnkel() {
   const a = A();
-  if (!st.docs.length) return `<h1>Din sak</h1><p style="margin-top:16px">Det er ikke lagt inn noen brev ennå. Den som hjelper deg kan legge dem inn.</p>`;
-  if (!st.analysis) return `<h1>Din sak</h1><p style="margin-top:16px">Vi har ikke lest gjennom brevene ennå.</p><p style="margin-top:24px"><button class="btn primary" data-act="analyze">Les gjennom saken</button></p>`;
+  if (!st.docs.length) return `<h1>${esc(t('sTitle'))}</h1><p style="margin-top:16px">${esc(t('sNoDocs'))}</p>`;
+  if (!st.analysis) return `<h1>${esc(t('sTitle'))}</h1><p style="margin-top:16px">${esc(t('sNotRead'))}</p><p style="margin-top:24px"><button class="btn primary" data-act="analyze">${esc(t('readBtn'))}</button></p>`;
   const next = nextDeadline(), n = next && daysUntil(next.dato);
-  const steps = [...(a.neste_steg || []).map((s) => s.steg), ...(a.mangler || []).filter((x) => !st.checks[ck(x.hva)]).map((x) => `Skaffe: ${x.hva}`)];
-  return `<h1>Din sak</h1>
-    <h2>Hva har skjedd</h2><p>${wait('a') ? 'Vi leser brevene…' : esc(a.sammendrag || '')}</p>
-    <h2>Hva skjer nå</h2><p>${wait('a') ? '' : esc(a.status || '')}</p>
-    ${next ? `<p style="margin-top:16px"><strong>Neste frist er ${esc(fmtLong(next.dato))}.</strong> ${n === 0 ? 'Det er i dag.' : `Det er om ${n} ${plural(n, 'dag', 'dager')}.`}<br>${esc(next.hva)}</p>` : ''}
-    <h2>Dette må du gjøre</h2>${wait('b') || wait('c') ? '<p>Vi finner ut hva som må gjøres…</p>' : steps.length ? `<ol class="simple-list">${steps.map((s) => `<li>${capEsc(s)}</li>`).join('')}</ol>` : '<p>Du trenger ikke gjøre noe akkurat nå.</p>'}`;
+  const steps = [...(a.neste_steg || []).map((s) => s.steg), ...(a.mangler || []).filter((x) => !st.checks[ck(x.hva)]).map((x) => `${t('sGet')}${x.hva}`)];
+  return `<h1>${esc(t('sTitle'))}</h1>
+    <h2>${esc(t('sHappened'))}</h2><p>${wait('a') ? esc(t('sReading')) : esc(a.sammendrag || '')}</p>
+    <h2>${esc(t('sNow'))}</h2><p>${wait('a') ? '' : esc(a.status || '')}</p>
+    ${next ? `<p style="margin-top:16px"><strong>${esc(t('sNextDeadline', fmtLong(next.dato)))}</strong> ${esc(n === 0 ? t('sToday') : t('sInDays', n))}<br>${capEsc(next.hva)}</p>` : ''}
+    <h2>${esc(t('sToDo'))}</h2>${wait('b') || wait('c') ? `<p>${esc(t('sFinding'))}</p>` : steps.length ? `<ol class="simple-list">${steps.map((s) => `<li>${capEsc(s)}</li>`).join('')}</ol>` : `<p>${esc(t('sNothing'))}</p>`}`;
 }
 
 function pageDel() {
   const url = `${location.origin}/#/s/${st.token}`;
-  return `<div class="stack"><div class="stack-s"><a class="btn-link" href="#/s/${esc(st.token)}">← Tilbake til saken</a><h1>Del saken</h1></div>
-    <section class="card" aria-labelledby="h-lenke"><h2 id="h-lenke">Send lenken til noen du stoler på</h2>
-      <p style="margin-top:8px">Alle som har lenken, kan se saken, dokumentene og bildene. De kan også legge til og endre ting. Del den bare med personer du stoler på.</p>
-      <div class="copyrow" style="margin-top:16px"><input id="sharelink" readonly value="${esc(url)}" aria-label="Lenke til saken"><button class="btn primary" data-act="share">${icon('link', 18)} Kopier lenken</button></div>
-      <p class="meta" style="margin-top:12px">Vi har ikke innlogging ennå. Lenken er det eneste som gir tilgang.</p></section>
-    <section class="card" aria-labelledby="h-adv"><h2 id="h-adv">Oversikt til advokat eller hjelpetjeneste</h2>
-      <p style="margin-top:8px">En ryddig side som samler forløp, frister, dokumenter og det som mangler. Hver påstand har sitat og kilde. Du kan skrive den ut eller lagre den som PDF.</p>
-      <p style="margin-top:16px"><a class="btn" href="#/s/${esc(st.token)}/overlevering">Åpne oversikten</a></p></section>
-    <section class="card" aria-labelledby="h-inn"><h2 id="h-inn">Innstillinger</h2>
-      <div class="row" style="margin-top:16px"><button class="btn" data-act="rename">${icon('pencil', 18)} Gi saken nytt navn</button><button class="btn danger" data-act="delete-case">${icon('trash', 18)} Slett saken</button></div>
-      <p class="meta" style="margin-top:12px">Når du sletter, fjernes alle dokumenter og bilder for godt.</p></section></div>`;
+  return `<div class="stack"><div class="stack-s"><a class="btn-link" href="#/s/${esc(st.token)}">← ${esc(t('shBack'))}</a><h1>${esc(t('shTitle'))}</h1></div>
+    <section class="card" aria-labelledby="h-lenke"><h2 id="h-lenke">${esc(t('shLinkTitle'))}</h2>
+      <p style="margin-top:8px">${esc(t('shLinkText'))}</p>
+      <div class="copyrow" style="margin-top:16px"><input id="sharelink" readonly value="${esc(url)}" aria-label="${esc(t('linkLabel'))}"><button class="btn primary" data-act="share">${icon('link', 18)} ${esc(t('copyLink'))}</button></div>
+      <p class="meta" style="margin-top:12px">${esc(t('noLogin'))}</p></section>
+    <section class="card" aria-labelledby="h-adv"><h2 id="h-adv">${esc(t('hoTitle'))}</h2>
+      <p style="margin-top:8px">${esc(t('hoText'))}</p>
+      <p style="margin-top:16px"><a class="btn" href="#/s/${esc(st.token)}/overlevering">${esc(t('openOverview'))}</a></p></section>
+    <section class="card" aria-labelledby="h-inn"><h2 id="h-inn">${esc(t('settings'))}</h2>
+      <div class="row" style="margin-top:16px"><button class="btn" data-act="rename">${icon('pencil', 18)} ${esc(t('rename'))}</button><button class="btn danger" data-act="delete-case">${icon('trash', 18)} ${esc(t('deleteCase'))}</button></div>
+      <p class="meta" style="margin-top:12px">${esc(t('deleteNote'))}</p></section></div>`;
 }
 
 function pageOverlevering() {
   const a = A(), c = st.c, docs = st.docs;
   const fr = (a.frister || []).slice().sort((x, y) => (x.dato || '9999').localeCompare(y.dato || '9999'));
   const ev = (a.tidslinje || []).slice().sort((x, y) => (x.dato || '').localeCompare(y.dato || ''));
-  const body = !st.analysis ? '<div class="card"><p>Saken er ikke lest gjennom ennå. Gå tilbake og trykk «Les gjennom saken».</p></div>' : `
-    <section><h2>Slik står saken</h2><p style="margin-top:8px">${esc(a.sammendrag || '')}</p><p style="margin-top:8px"><strong>Nå:</strong> ${esc(a.status || '')}</p></section>
-    <section><h2>Frister</h2><div class="stack-s" style="margin-top:12px">${fr.length ? fr.map((f, i) => claimCard({ id: `hf${i}`, claim: f.hva, quote: f.sitat, dok: f.dok, verified: !!f.verifisert, top: `<div style="margin-top:8px">${f.dato ? dueBadge(f.dato) : badge('warn', 'info', 'Dato mangler')}</div>${calcHtml(f)}` })).join('') : '<p>Ingen frister funnet.</p>'}</div></section>
-    <section><h2>Hendelsesforløp</h2><div class="stack-s" style="margin-top:12px">${ev.map((x, i) => claimCard({ id: `ht${i}`, claim: `${fmtShort(x.dato)}: ${x.tittel}`, detail: x.beskrivelse, quote: x.sitat, dok: x.dok, verified: !!x.verifisert })).join('')}</div></section>
-    <section><h2>Dokumenter i saken</h2><ul class="plain-list" style="margin-top:12px">${docs.map((d) => `<li>${esc(d.title)} (${esc(d.type)}, ${fmtShort(d.date)}${d.received ? `, mottatt ${fmtShort(d.received)}` : ''})</li>`).join('')}</ul></section>
-    <section><h2>Dokumentasjon som mangler</h2><ul class="plain-list" style="margin-top:12px">${(a.mangler || []).map((x) => `<li>${st.checks[ck(x.hva)] ? '<span class="meta">(skaffet)</span> ' : ''}<strong>${capEsc(x.hva)}</strong>. ${esc(x.hvorfor)}</li>`).join('') || '<li>Ingenting funnet.</li>'}</ul></section>`;
-  return `<div class="handover"><div class="noprint stack-s"><a class="btn-link" href="#/s/${esc(st.token)}/del">← Tilbake</a></div>
-    <div class="row between" style="margin-top:8px"><div class="stack-s"><h1>Saksoversikt: ${esc(c?.name || '')}</h1><p class="meta">Laget ${esc(fmtLong(new Date().toISOString().slice(0, 10)))} av Saksmappen</p></div><button class="btn primary noprint" data-act="print">${icon('printer', 18)} Skriv ut eller lagre som PDF</button></div>
-    <div class="notice" style="margin-top:24px">${icon('info')}<div>Hver påstand har et sitat fra dokumentet. «Kontrollert» betyr at sitatet står ordrett i dokumentet. «Sjekk selv» betyr at vi ikke fant det. Dette er ikke juridisk rådgivning.</div></div>${body}</div>`;
+  const body = !st.analysis ? `<div class="card"><p>${esc(t('hNotRead'))}</p></div>` : `
+    <section><h2>${esc(t('hStands'))}</h2><p style="margin-top:8px">${esc(a.sammendrag || '')}</p><p style="margin-top:8px"><strong>${esc(t('hNow'))}</strong> ${esc(a.status || '')}</p></section>
+    <section><h2>${esc(t('hDeadlines'))}</h2><div class="stack-s" style="margin-top:12px">${fr.length ? fr.map((f, i) => claimCard({ id: `hf${i}`, claim: f.hva, quote: f.sitat, dok: f.dok, verified: !!f.verifisert, top: `<div style="margin-top:8px">${f.dato ? dueBadge(f.dato) : badge('warn', 'info', t('hDateMissing'))}</div>${calcHtml(f)}` })).join('') : `<p>${esc(t('hNone'))}</p>`}</div></section>
+    <section><h2>${esc(t('hTimeline'))}</h2><div class="stack-s" style="margin-top:12px">${ev.map((x, i) => claimCard({ id: `ht${i}`, claim: `${fmtShort(x.dato)}: ${x.tittel}`, detail: x.beskrivelse, quote: x.sitat, dok: x.dok, verified: !!x.verifisert })).join('')}</div></section>
+    <section><h2>${esc(t('hDocs'))}</h2><ul class="plain-list" style="margin-top:12px">${docs.map((d) => `<li>${esc(d.title)} (${esc(typeLabel(d.type))}, ${esc(fmtShort(d.date))}${d.received ? `, ${esc(t('hReceived', fmtShort(d.received)))}` : ''})</li>`).join('')}</ul></section>
+    <section><h2>${esc(t('hMissing'))}</h2><ul class="plain-list" style="margin-top:12px">${(a.mangler || []).map((x) => `<li>${st.checks[ck(x.hva)] ? `<span class="meta">${esc(t('hObtained'))}</span> ` : ''}<strong>${capEsc(x.hva)}</strong>. ${esc(x.hvorfor)}</li>`).join('') || `<li>${esc(t('hNothing'))}</li>`}</ul></section>`;
+  return `<div class="handover"><div class="noprint stack-s"><a class="btn-link" href="#/s/${esc(st.token)}/del">← ${esc(t('hBack'))}</a></div>
+    <div class="row between" style="margin-top:8px"><div class="stack-s"><h1>${esc(t('hTitle', c?.name || ''))}</h1><p class="meta">${esc(t('hMade', fmtLong(new Date().toISOString().slice(0, 10))))}</p></div><button class="btn primary noprint" data-act="print">${icon('printer', 18)} ${esc(t('hPrint'))}</button></div>
+    <div class="notice" style="margin-top:24px">${icon('info')}<div>${esc(t('hLegend'))}</div></div>${body}</div>`;
 }
 
-/* ---------- Handlinger ---------- */
+/* ---------- Actions ---------- */
 async function guarded(label, fn) {
   st.busy = label; st.err = ''; renderPage();
   try { await fn(); } catch (e) { st.err = e.message; }
@@ -661,8 +806,8 @@ async function analyze() {
   st.err = ''; st.analysis = {}; st.pending = ['a', 'b', 'c']; renderPage();
   let ok = false;
   try {
-    const r = await fetch(`/api/cases/${token}/analyze`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
-    if (!r.ok || !r.body) throw new Error((await r.json().catch(() => ({}))).error || 'Noe gikk galt.');
+    const r = await fetch(`/api/cases/${token}/analyze`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lang }) });
+    if (!r.ok || !r.body) throw new Error((await r.json().catch(() => ({}))).error || 'Something went wrong.');
     const reader = r.body.getReader(), dec = new TextDecoder();
     let buf = '';
     for (;;) {
@@ -700,35 +845,35 @@ async function setReceived(docId, value) {
 async function setCheck(key, done, id) {
   st.checks[key] = done; if (!done) delete st.checks[key];
   renderPage(); document.getElementById(id)?.focus();
-  try { await caseApi('PUT', '/checks', { key, done }); } catch (e) { toast('Kunne ikke lagre avkryssingen. ' + e.message); }
+  try { await caseApi('PUT', '/checks', { key, done }); } catch (e) { toast(t('tickFail', e.message)); }
 }
 
 function openDoc(id, quote, editing = false) {
   const d = docById(id); if (!d) return;
-  const loc = quote ? locate(d.text, quote) : null, clean = (s) => esc(s.replace(/\f/g, '\n— ny side —\n'));
+  const l = quote ? locate(d.text, quote) : null, clean = (s) => esc(s.replace(/\f/g, `\n${t('newPage')}\n`));
   const body = editing
-    ? `<label for="v-edit">Rett teksten ved behov</label><textarea id="v-edit" class="big">${esc(d.text.replace(/\f/g, ''))}</textarea>
-       <div class="row" style="margin-top:16px"><button class="btn primary" data-act="save-edit" data-id="${esc(id)}">Lagre endringer</button><button class="btn" data-act="open-doc" data-id="${esc(id)}">Avbryt</button></div>`
-    : `${quote && !loc ? '<p class="meta" style="margin-top:12px">Vi fant ikke sitatet ordrett i teksten.</p>' : ''}
-       <pre class="text">${loc ? `${clean(d.text.slice(0, loc.i))}<mark>${clean(d.text.slice(loc.i, loc.i + loc.len))}</mark>${clean(d.text.slice(loc.i + loc.len))}` : clean(d.text)}</pre>
-       <div class="row" style="margin-top:16px"><button class="btn" data-act="edit-doc" data-id="${esc(id)}">${icon('pencil', 18)} Rediger teksten</button><button class="btn danger" data-act="del-doc" data-id="${esc(id)}">${icon('trash', 18)} Slett dokumentet</button></div>`;
+    ? `<label for="v-edit">${esc(t('fixText'))}</label><textarea id="v-edit" class="big">${esc(d.text.replace(/\f/g, ''))}</textarea>
+       <div class="row" style="margin-top:16px"><button class="btn primary" data-act="save-edit" data-id="${esc(id)}">${esc(t('saveChanges'))}</button><button class="btn" data-act="open-doc" data-id="${esc(id)}">${esc(t('cancel'))}</button></div>`
+    : `${quote && !l ? `<p class="meta" style="margin-top:12px">${esc(t('quoteMissing'))}</p>` : ''}
+       <pre class="text">${l ? `${clean(d.text.slice(0, l.i))}<mark>${clean(d.text.slice(l.i, l.i + l.len))}</mark>${clean(d.text.slice(l.i + l.len))}` : clean(d.text)}</pre>
+       <div class="row" style="margin-top:16px"><button class="btn" data-act="edit-doc" data-id="${esc(id)}">${icon('pencil', 18)} ${esc(t('editText'))}</button><button class="btn danger" data-act="del-doc" data-id="${esc(id)}">${icon('trash', 18)} ${esc(t('deleteDoc'))}</button></div>`;
   $('#viewer').innerHTML = `
-    <div class="row between"><h2>${esc(d.title)}</h2><button class="btn" data-act="close" data-id="viewer">${icon('x', 18)} Lukk</button></div>
-    <p class="meta" style="margin-top:4px">${esc(d.type)} · datert ${fmtShort(d.date)}${d.received ? ` · mottatt ${fmtShort(d.received)}` : ''}</p>
-    ${d.files?.length ? `<details class="orig"><summary>Se originalen (${d.files.length} ${plural(d.files.length, 'side', 'sider')})</summary>${d.files.map((f, i) => `<img loading="lazy" alt="Original, side ${i + 1}" src="/api/cases/${esc(st.token)}/files/${esc(f)}">`).join('')}</details>` : ''}
+    <div class="row between"><h2>${esc(d.title)}</h2><button class="btn" data-act="close" data-id="viewer">${icon('x', 18)} ${esc(t('close'))}</button></div>
+    <p class="meta" style="margin-top:4px">${esc(typeLabel(d.type))} · ${esc(t('datedLower'))} ${esc(fmtShort(d.date))}${d.received ? ` · ${esc(t('receivedLower'))} ${esc(fmtShort(d.received))}` : ''}</p>
+    ${d.files?.length ? `<details class="orig"><summary>${esc(t('seeOriginal', d.files.length))}</summary>${d.files.map((f, i) => `<img loading="lazy" alt="${esc(t('pageAlt', i + 1))}" src="/api/cases/${esc(st.token)}/files/${esc(f)}">`).join('')}</details>` : ''}
     ${body}`;
   if (!$('#viewer').open) $('#viewer').showModal();
   $('#viewer').querySelector('mark')?.scrollIntoView({ block: 'center' });
 }
 
-/* ---------- Dokumentinntak: bilde og PDF ---------- */
+/* ---------- Document intake: image and PDF ---------- */
 function toJpeg(file, maxDim = 1800, q = 0.85) {
   return createImageBitmap(file).then((bmp) => {
     const s = Math.min(1, maxDim / Math.max(bmp.width, bmp.height));
     const c = document.createElement('canvas'); c.width = Math.round(bmp.width * s); c.height = Math.round(bmp.height * s);
     c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
     return c.toDataURL('image/jpeg', q);
-  }).catch(() => { throw new Error(`Vi kunne ikke åpne bildet «${file.name}». Bruk JPEG eller PNG.`); });
+  }).catch(() => { throw new Error(t('cantOpen', file.name)); });
 }
 
 function loadPdfJs() {
@@ -737,16 +882,16 @@ function loadPdfJs() {
   return new Promise((res, rej) => {
     const s = document.createElement('script'); s.src = base + 'pdf.min.js';
     s.onload = () => { pdfjsLib.GlobalWorkerOptions.workerSrc = base + 'pdf.worker.min.js'; res(pdfjsLib); };
-    s.onerror = () => rej(new Error('Vi kunne ikke laste PDF-leseren. Sjekk nettforbindelsen, eller ta bilde av brevet i stedet.'));
+    s.onerror = () => rej(new Error(t('pdfLibFail')));
     document.head.appendChild(s);
   });
 }
 
-const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('Vi klarte ikke å lese PDF-en. Prøv å ta bilde av brevet i stedet.')), ms))]);
+const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error(t('pdfFail'))), ms))]);
 
 async function pdfToPages(file) {
   const lib = await loadPdfJs();
-  // Den innebygde bildedekoderen kan henge i enkelte nettlesere. pdf.js sin egen dekoder er tryggere.
+  // The built-in image decoder can hang in some browsers. pdf.js's own decoder is safer.
   const pdf = await withTimeout(lib.getDocument({ data: await file.arrayBuffer(), isImageDecoderSupported: false }).promise, 20000);
   const n = Math.min(pdf.numPages, MAX_PAGES), images = [], texts = [];
   for (let p = 1; p <= n; p++) {
@@ -759,7 +904,7 @@ async function pdfToPages(file) {
     texts.push(tc.items.map((it) => it.str + (it.hasEOL ? '\n' : ' ')).join('').replace(/[ \t]+/g, ' ').trim());
   }
   let text = texts.join('\n\f\n');
-  // Skannet PDF uten tekstlag: la serveren lese bildene i stedet.
+  // Scanned PDF without a text layer: let the server read the images instead.
   if (text.replace(/\s/g, '').length < 80 * n) text = '';
   return { images, text, cut: pdf.numPages > MAX_PAGES };
 }
@@ -768,8 +913,8 @@ async function startIntake(fileList) {
   const files = [...fileList];
   if (!files.length) return;
   const pdfs = files.filter((f) => f.type === 'application/pdf'), imgs = files.filter((f) => f.type.startsWith('image/'));
-  if (pdfs.length + imgs.length !== files.length) return toast('Bare bilder og PDF støttes.');
-  if (pdfs.length > 1 || (pdfs.length && imgs.length)) return toast('Legg inn ett brev om gangen: ett PDF, eller flere bilder av samme brev.');
+  if (pdfs.length + imgs.length !== files.length) return toast(t('onlyImagesPdf'));
+  if (pdfs.length > 1 || (pdfs.length && imgs.length)) return toast(t('oneAtATime'));
   intake = { phase: 'reading', source: pdfs.length ? 'pdf' : 'bilde', files, pages: [], fileIds: [], form: null, error: '', cut: false };
   renderIntake(); $('#intake').showModal();
   await runRead();
@@ -783,7 +928,7 @@ async function runRead() {
     if (it.source === 'pdf') { const r = await pdfToPages(it.files[0]); images = r.images; text = r.text; it.cut = r.cut; }
     else { if (it.files.length > MAX_PAGES) it.cut = true; images = await Promise.all(it.files.slice(0, MAX_PAGES).map((f) => toJpeg(f))); }
     it.pages = images; renderIntake();
-    const out = await api('POST', `/api/cases/${token}/read`, { images, text });
+    const out = await api('POST', `/api/cases/${token}/read`, { images, text, lang });
     if (intake !== it) return;
     it.fileIds = out.files;
     it.form = { title: out.forslag.tittel, type: out.forslag.type, date: out.forslag.dato, received: '', text: out.text };
@@ -795,106 +940,117 @@ async function runRead() {
   renderIntake();
 }
 
+const MONTH_RE = 'januar|februar|mars|april|mai|juni|juli|august|september|oktober|november|desember|january|february|march|may|june|july|october|december|jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec';
 const FLAG_PATTERNS = [
-  /\b\d{1,2}\.\s?(?:januar|februar|mars|april|mai|juni|juli|august|september|oktober|november|desember)\s?\d{4}\b/gi,
+  new RegExp(`\\b\\d{1,2}\\.\\s?(?:${MONTH_RE})\\s?\\d{4}\\b`, 'gi'),
+  new RegExp(`\\b(?:${MONTH_RE})\\.?\\s\\d{1,2}(?:st|nd|rd|th)?,?\\s\\d{4}\\b`, 'gi'),
+  new RegExp(`\\b\\d{1,2}(?:st|nd|rd|th)?\\s(?:${MONTH_RE})\\.?,?\\s\\d{4}\\b`, 'gi'),
   /\b\d{1,2}\.\d{1,2}\.\d{2,4}\b/g,
+  /\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/g,
   /\b\d{4}-\d{2}-\d{2}\b/g,
+  /\$\s?\d{1,3}(?:,\d{3})*(?:\.\d{1,2})?/g,
   /\bkr\.?\s?\d{1,3}(?:[  .]\d{3})*(?:,\d{1,2})?/gi,
   /\b\d{1,3}(?:[  .]\d{3})*(?:,\d{1,2})?\s?(?:kr|kroner|NOK)\b/gi,
   /\b[A-ZÆØÅ]{1,6}[-/]\d[\dA-Z-/]{2,}\b/g,
 ];
 function renderChips() {
   const el = $('#chips'); if (!el) return;
-  const t = $('#i-text').value, seen = new Set(), unread = (t.match(/\[uleselig\]/g) || []).length;
-  for (const re of FLAG_PATTERNS) for (const m of t.matchAll(re)) seen.add(m[0].trim());
-  el.innerHTML = (unread ? `<div class="notice" style="width:100%">${icon('alert')}<div>${unread} ${plural(unread, 'sted', 'steder')} er merket [uleselig]. Skriv inn riktig tekst fra bildet.</div></div>` : '')
+  const tx = $('#i-text').value, seen = new Set(), unread = (tx.match(ILLEGIBLE) || []).length;
+  for (const re of FLAG_PATTERNS) for (const m of tx.matchAll(re)) seen.add(m[0].trim());
+  el.innerHTML = (unread ? `<div class="notice" style="width:100%">${icon('alert')}<div>${esc(t('inIllegible', unread))}</div></div>` : '')
     + [...seen].slice(0, 14).map((f) => `<button type="button" data-act="chip" data-id="${esc(f)}">${esc(f)}</button>`).join('');
 }
 
 function renderIntake() {
   const it = intake, d = $('#intake'); if (!it) return;
-  const pages = it.pages.length ? `<div class="pages">${it.pages.map((p, i) => `<img src="${p}" alt="Side ${i + 1} av dokumentet">`).join('')}</div>` : '';
+  const pages = it.pages.length ? `<div class="pages">${it.pages.map((p, i) => `<img src="${p}" alt="${esc(t('pageAlt', i + 1))}">`).join('')}</div>` : '';
   let right = '';
-  if (it.phase === 'reading') right = `<p class="skeleton" role="status">${it.pages.length ? 'Vi leser brevet…' : 'Vi gjør bildene klare…'}</p>`;
-  else if (it.phase === 'error') right = `<div class="notice bad" role="alert">${icon('alert')}<div>${esc(it.error)}</div></div><div class="row" style="margin-top:16px"><button class="btn primary" data-act="i-retry">Prøv igjen</button><button class="btn" data-act="i-cancel">Avbryt</button></div>`;
+  if (it.phase === 'reading') right = `<p class="skeleton" role="status">${esc(it.pages.length ? t('inReading') : t('inPreparing'))}</p>`;
+  else if (it.phase === 'error') right = `<div class="notice bad" role="alert">${icon('alert')}<div>${esc(it.error)}</div></div><div class="row" style="margin-top:16px"><button class="btn primary" data-act="i-retry">${esc(t('retry'))}</button><button class="btn" data-act="i-cancel">${esc(t('cancel'))}</button></div>`;
   else {
     const f = it.form;
-    right = `${it.cut ? `<div class="notice" style="margin-bottom:16px">${icon('info')}<div>Vi leste bare de ${MAX_PAGES} første sidene.</div></div>` : ''}
-      <label for="i-title" style="margin-top:0">Tittel</label><input id="i-title" value="${esc(f.title)}">
-      <label for="i-type">Type</label><select id="i-type">${TYPES.map((t) => `<option ${t === f.type ? 'selected' : ''}>${t}</option>`).join('')}</select>
-      <label for="i-date">Dato på brevet</label><input id="i-date" type="date" value="${esc(f.date)}">
-      <label for="i-received">Dato du mottok det</label><input id="i-received" type="date" value="${esc(f.received)}">
-      <p class="meta" style="margin-top:6px">Mottaksdato trengs når fristen løper fra du mottok brevet.</p>
-      <label for="i-text">Teksten vi leste</label><textarea id="i-text" class="big">${esc(f.text.replace(/\f/g, '\n\f'))}</textarea>
-      <p style="margin-top:12px"><strong>Sjekk disse mot bildet.</strong> En feil dato eller et feil beløp gir en feil frist. Trykk for å finne dem i teksten.</p>
+    right = `${it.cut ? `<div class="notice" style="margin-bottom:16px">${icon('info')}<div>${esc(t('inCut', MAX_PAGES))}</div></div>` : ''}
+      <label for="i-title" style="margin-top:0">${esc(t('titleLabel'))}</label><input id="i-title" value="${esc(f.title)}">
+      <label for="i-type">${esc(t('typeLabel'))}</label><select id="i-type">${TYPES.map((x) => `<option value="${x}" ${x === f.type ? 'selected' : ''}>${esc(typeLabel(x))}</option>`).join('')}</select>
+      <label for="i-date">${esc(t('dateOnLetter'))}</label><input id="i-date" type="date" value="${esc(f.date)}">
+      <label for="i-received">${esc(t('dateReceived'))}</label><input id="i-received" type="date" value="${esc(f.received)}">
+      <p class="meta" style="margin-top:6px">${esc(t('inReceivedHint'))}</p>
+      <label for="i-text">${esc(t('inTextWeRead'))}</label><textarea id="i-text" class="big">${esc(f.text.replace(/\f/g, '\n\f'))}</textarea>
+      <p style="margin-top:12px">${t('inCheckThese')}</p>
       <div class="chips" id="chips"></div>
-      <div class="row" style="margin-top:24px"><button class="btn primary" data-act="i-save">Lagre i saken</button><button class="btn" data-act="i-cancel">Avbryt</button></div>`;
+      <div class="row" style="margin-top:24px"><button class="btn primary" data-act="i-save">${esc(t('inSave'))}</button><button class="btn" data-act="i-cancel">${esc(t('cancel'))}</button></div>`;
   }
-  d.innerHTML = `<div class="row between"><h2>Sjekk at vi har lest brevet riktig</h2><button class="btn" data-act="i-cancel" aria-label="Lukk">${icon('x', 18)}</button></div>
+  d.innerHTML = `<div class="row between"><h2>${esc(t('inTitle'))}</h2><button class="btn" data-act="i-cancel" aria-label="${esc(t('close'))}">${icon('x', 18)}</button></div>
     <div class="intake"><div>${pages}</div><div>${right}</div></div>`;
   renderChips();
 }
 
 async function saveIntake() {
   const it = intake, text = $('#i-text').value.replace(/\n\f/g, '\f').trim();
-  if (!text) return toast('Dokumentet har ingen tekst.');
+  if (!text) return toast(t('inNoText'));
   try {
     await caseApi('POST', '/documents', { title: $('#i-title').value, type: $('#i-type').value, date: $('#i-date').value, received: $('#i-received').value, text, source: it.source, fileIds: it.fileIds });
   } catch (e) { return toast(e.message); }
   $('#intake').close(); intake = null;
-  toast('Dokumentet er lagt til. Vi leser gjennom saken på nytt.');
+  toast(t('inAdded'));
   await reloadCase();
   analyze();
 }
 
-/* ---------- Hendelser ---------- */
+/* ---------- Events ---------- */
+function setLang(l) {
+  lang = l; try { localStorage.setItem(LANG_KEY, l); } catch {}
+  if (st) { if (st.c) document.title = `${st.c.name} · ${t('brand')}`; renderCase(); } else renderHome();
+}
+
 const acts = {
+  'toggle-lang': () => setLang(lang === 'en' ? 'nb' : 'en'),
   forget: (id) => { saker = saker.filter((s) => s.token !== id); saveSaker(); renderHome(); },
-  'try-sample': async () => { const { token } = await api('POST', '/api/cases/sample'); remember(token, 'Eksempelsak: Kari'); location.hash = `#/s/${token}`; },
+  'try-sample': async () => { const { token } = await api('POST', '/api/cases/sample', { lang }); remember(token, t('sampleName')); location.hash = `#/s/${token}`; },
   'toggle-simple': () => {
     simple = !simple; try { localStorage.setItem(SIMPLE_KEY, simple ? '1' : '0'); } catch {}
-    if (st && ['del', 'overlevering'].includes(st.page) === false) st.page = 'oversikt';
+    if (st && !['del', 'overlevering'].includes(st.page)) st.page = 'oversikt';
     renderCase(); focusMain();
   },
   'toggle-claim': (id) => { st.open.has(id) ? st.open.delete(id) : st.open.add(id); renderPage(); document.querySelector(`[data-act="toggle-claim"][data-id="${CSS.escape(id)}"]`)?.focus(); },
   evidence: (id) => { st.ev.has(id) ? st.ev.delete(id) : st.ev.add(id); renderPage(); document.querySelector(`[data-act="evidence"][data-id="${CSS.escape(id)}"]`)?.focus(); },
   upload: () => $('#f-upload').click(),
   'paste-text': () => {
-    $('#viewer').innerHTML = `<div class="row between"><h2>Lim inn tekst</h2><button class="btn" data-act="close" data-id="viewer">${icon('x', 18)} Lukk</button></div>
-      <form data-form="paste"><label for="p-title">Tittel</label><input id="p-title" placeholder="For eksempel: Vedtak fra NAV">
-      <label for="p-type">Type</label><select id="p-type">${TYPES.map((t) => `<option>${t}</option>`).join('')}</select>
-      <label for="p-date">Dato på brevet</label><input id="p-date" type="date">
-      <label for="p-received">Dato du mottok det</label><input id="p-received" type="date">
-      <label for="p-text">Tekst</label><textarea id="p-text" class="big" required></textarea>
-      <div class="row" style="margin-top:24px"><button class="btn primary" type="submit">Legg til i saken</button></div></form>`;
+    $('#viewer').innerHTML = `<div class="row between"><h2>${esc(t('pasteTitle'))}</h2><button class="btn" data-act="close" data-id="viewer">${icon('x', 18)} ${esc(t('close'))}</button></div>
+      <form data-form="paste"><label for="p-title">${esc(t('titleLabel'))}</label><input id="p-title" placeholder="${esc(t('titlePh'))}">
+      <label for="p-type">${esc(t('typeLabel'))}</label><select id="p-type">${TYPES.map((x) => `<option value="${x}">${esc(typeLabel(x))}</option>`).join('')}</select>
+      <label for="p-date">${esc(t('dateOnLetter'))}</label><input id="p-date" type="date">
+      <label for="p-received">${esc(t('dateReceived'))}</label><input id="p-received" type="date">
+      <label for="p-text">${esc(t('textLabel'))}</label><textarea id="p-text" class="big" required></textarea>
+      <div class="row" style="margin-top:24px"><button class="btn primary" type="submit">${esc(t('addToCase'))}</button></div></form>`;
     $('#viewer').showModal(); $('#p-title').focus();
   },
   analyze: () => analyze(),
   'open-doc': (id, el) => openDoc(id, el?.dataset.quote || ''),
   'edit-doc': (id) => openDoc(id, '', true),
   'save-edit': async (id) => {
-    const d = docById(id), text = $('#v-edit').value.trim(); if (!text) return toast('Teksten kan ikke være tom.');
+    const d = docById(id), text = $('#v-edit').value.trim(); if (!text) return toast(t('textEmpty'));
     await caseApi('PUT', `/documents/${id}`, { title: d.title, type: d.type, date: d.date, received: d.received, text, source: d.source });
-    await reloadCase(); openDoc(id, ''); toast('Teksten er lagret. Oppdater oversikten for å ta den med.');
+    await reloadCase(); openDoc(id, ''); toast(t('textSaved'));
   },
   'del-doc': async (id) => {
-    if (!confirm('Slette dokumentet og bildene fra saken?')) return;
+    if (!confirm(t('deleteDocConfirm'))) return;
     await caseApi('DELETE', `/documents/${id}`); $('#viewer').close(); await reloadCase();
   },
-  'd-klage': () => guarded('Vi skriver et utkast…', async () => { st.draft = (await caseApi('POST', '/draft', { kind: 'klage', docId: $('#d-doc').value })).tekst; }),
-  'd-over': () => guarded('Vi lager oppsummeringen…', async () => { st.draft = (await caseApi('POST', '/draft', { kind: 'overlevering' })).tekst; }),
-  copy: (id, el) => navigator.clipboard?.writeText(st.draft).then(() => { el.textContent = 'Kopiert'; }),
+  'd-klage': () => guarded(t('busyDraft'), async () => { st.draft = (await caseApi('POST', '/draft', { kind: 'klage', docId: $('#d-doc').value, lang })).tekst; }),
+  'd-over': () => guarded(t('busySummary'), async () => { st.draft = (await caseApi('POST', '/draft', { kind: 'overlevering', lang })).tekst; }),
+  copy: (id, el) => navigator.clipboard?.writeText(st.draft).then(() => { el.textContent = t('copied'); }),
   share: async () => {
     const url = `${location.origin}/#/s/${st.token}`;
-    try { await navigator.clipboard.writeText(url); toast('Lenken er kopiert. Alle som har den kan se og endre saken.'); }
-    catch { $('#sharelink')?.select(); toast('Marker lenken og kopier den selv.'); }
+    try { await navigator.clipboard.writeText(url); toast(t('linkCopied')); }
+    catch { $('#sharelink')?.select(); toast(t('selectLink')); }
   },
   rename: async () => {
-    const name = prompt('Nytt navn på saken', st.c.name); if (!name?.trim()) return;
+    const name = prompt(t('renamePrompt'), st.c.name); if (!name?.trim()) return;
     await caseApi('PUT', '', { name: name.trim(), person: st.c.person }); remember(st.token, name.trim()); await reloadCase();
   },
   'delete-case': async () => {
-    if (!confirm('Slette saken, alle dokumenter og alle bilder for godt? Dette kan ikke angres.')) return;
+    if (!confirm(t('deleteCaseConfirm'))) return;
     await caseApi('DELETE'); saker = saker.filter((s) => s.token !== st.token); saveSaker(); location.hash = '#/';
   },
   print: () => window.print(),
@@ -920,14 +1076,14 @@ document.addEventListener('submit', async (e) => {
   e.preventDefault();
   try {
     if (f.dataset.form === 'new-case') {
-      const name = $('#newname').value.trim() || 'Ny sak';
+      const name = $('#newname').value.trim() || t('defaultCaseName');
       const { token } = await api('POST', '/api/cases', { name }); remember(token, name); location.hash = `#/s/${token}`;
     } else if (f.dataset.form === 'received') {
       await setReceived(f.dataset.id, f.querySelector('input').value);
     } else if (f.dataset.form === 'ask') {
-      const q = $('#q').value.trim(); if (q) await guarded('Vi leter i saken…', async () => { st.answer = await caseApi('POST', '/ask', { question: q }); });
+      const q = $('#q').value.trim(); if (q) await guarded(t('busyAsk'), async () => { st.answer = await caseApi('POST', '/ask', { question: q, lang }); });
     } else if (f.dataset.form === 'paste') {
-      const text = $('#p-text').value.trim(); if (!text) return;
+      const text = $('#p-text').value.trim(); if (!text) return toast(t('pasteEmpty'));
       await caseApi('POST', '/documents', { title: $('#p-title').value, type: $('#p-type').value, date: $('#p-date').value, received: $('#p-received').value, text, source: 'tekst' });
       $('#viewer').close(); await reloadCase(); analyze();
     }
@@ -935,9 +1091,9 @@ document.addEventListener('submit', async (e) => {
 });
 
 document.addEventListener('change', async (e) => {
-  const t = e.target;
-  if (t.id === 'f-upload') { const files = t.files; await startIntake(files); t.value = ''; }
-  else if (t.dataset?.check !== undefined) await setCheck(t.dataset.check, t.checked, t.id);
+  const el = e.target;
+  if (el.id === 'f-upload') { const files = el.files; await startIntake(files); el.value = ''; }
+  else if (el.dataset?.check !== undefined) await setCheck(el.dataset.check, el.checked, el.id);
 });
 document.addEventListener('input', (e) => { if (e.target.id === 'i-text') renderChips(); });
 
@@ -949,7 +1105,7 @@ document.addEventListener('drop', async (e) => {
   await startIntake(e.dataTransfer.files);
 });
 
-$('#intake').addEventListener('cancel', (e) => { if (intake?.phase === 'ready' && !confirm('Forkaste dokumentet?')) e.preventDefault(); });
+$('#intake').addEventListener('cancel', (e) => { if (intake?.phase === 'ready' && !confirm(t('inDiscard'))) e.preventDefault(); });
 
 route();
 </script>

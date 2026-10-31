@@ -1,0 +1,180 @@
+{
+ "mangler": [
+  {
+   "hva": "Specialist statement on permanent impairment",
+   "hvorfor": "“Letter from Example Insurance Co.” (September 30, 2026) denies lost income and permanent injury for now because there is no specialist statement. It asks for it by November 30, 2026. “Appointment notice from orthopedic clinic” (October 20, 2026) shows an appointment on November 18, 2026.",
+   "hvordan": "Go to the appointment on November 18, 2026. Bring MRI images and medication list. Ask for a written statement about permanent medical impairment to send to the insurer before November 30, 2026.",
+   "dok": "d2",
+   "sitat": "We need a statement from an orthopedic specialist by November 30, 2026.",
+   "verifisert": true
+  },
+  {
+   "hva": "Description of work tasks unable to perform",
+   "hvorfor": "“Decision from the State Disability Agency: application denied” (October 14, 2026) says work ability reduced by at least half is not documented. It says the statement from March 12, 2026 describes diagnosis but not work tasks.",
+   "hvordan": "Ask the family doctor or the specialist to write which work tasks cannot be done and how much work ability is reduced.",
+   "dok": "d3",
+   "sitat": "We find that it has not been documented that your ability to work is reduced by at least half because of illness or injury.",
+   "verifisert": true
+  },
+  {
+   "hva": "Written confirmation from employer",
+   "hvorfor": "“My note after talking to the employer” (October 25, 2026) says the job requires heavy lifting and long periods of standing and sitting and adjustment is not possible. This is not yet in writing.",
+   "hvordan": "Ask the employer to confirm in writing what the job requires and that part-time or adjusted work is not possible.",
+   "dok": "d5",
+   "sitat": "The employer has not put this in writing.",
+   "verifisert": true
+  },
+  {
+   "hva": "Summary of lost income with receipts",
+   "hvorfor": "“My note after talking to the employer” (October 25, 2026) says there has been no income since May and no summary exists. “Letter from Example Insurance Co.” (September 30, 2026) has denied lost income for now.",
+   "hvordan": "Collect pay slips, bank statements and employer confirmation for the period without income. Make a simple dated summary with receipts.",
+   "dok": "d5",
+   "sitat": "We have not collected receipts or a summary of the lost income.",
+   "verifisert": true
+  }
+ ],
+ "ordliste": [
+  {
+   "begrep": "whiplash injury",
+   "forklaring": "Neck injury after sudden movement. Often from being hit from behind in a car."
+  },
+  {
+   "begrep": "orthopedic specialist",
+   "forklaring": "Doctor who checks bones, joints, neck and back."
+  },
+  {
+   "begrep": "permanent medical impairment",
+   "forklaring": "Lasting harm to the body after injury. A specialist must describe it."
+  },
+  {
+   "begrep": "disability benefits",
+   "forklaring": "Money from the state if illness or injury lowers work ability a lot."
+  },
+  {
+   "begrep": "appeal",
+   "forklaring": "Ask for a new review of a denial. There is a time limit."
+  }
+ ],
+ "_lang": "en",
+ "sammendrag": "Jordan Example was in a car accident on February 3, 2026. A doctor diagnosed whiplash injury to the neck and lower back. The case is described in “Medical statement from family doctor” (March 12, 2026). The insurer has paid for treatment but has denied lost income for now. The disability agency has denied disability benefits. A specialist appointment is set for November 18, 2026.",
+ "status": "The insurer is waiting for a specialist statement by November 30, 2026. The disability denial can be appealed within 60 days from receipt.",
+ "tidslinje": [
+  {
+   "dato": "2026-02-03",
+   "tittel": "Car accident",
+   "beskrivelse": "Jordan was rear-ended. Pain when sitting and lifting was later reported.",
+   "dok": "d1",
+   "sitat": "The patient was rear-ended in a car accident on February 3, 2026.",
+   "verifisert": true
+  },
+  {
+   "dato": "2026-03-12",
+   "tittel": "Doctor statement",
+   "beskrivelse": "The doctor diagnosed whiplash injury. Jordan has been fully off work since the accident.",
+   "dok": "d1",
+   "sitat": "The patient has been fully off work since February 3, 2026.",
+   "verifisert": true
+  },
+  {
+   "dato": "2026-09-30",
+   "tittel": "Insurance decision",
+   "beskrivelse": "The insurer approved treatment costs. Lost income and permanent injury were denied for now.",
+   "dok": "d2",
+   "sitat": "We have approved coverage of treatment costs totaling $14,200.",
+   "verifisert": true
+  },
+  {
+   "dato": "2026-10-14",
+   "tittel": "Disability denial",
+   "beskrivelse": "The agency denied benefits. It said reduced work ability was not documented. Appeal time is 60 days from receipt.",
+   "dok": "d3",
+   "sitat": "We find that it has not been documented that your ability to work is reduced by at least half because of illness or injury.",
+   "verifisert": true
+  },
+  {
+   "dato": "2026-10-25",
+   "tittel": "Employer contact",
+   "beskrivelse": "The employer said part-time work was not possible. This is not in writing. No lawyer has been contacted yet.",
+   "dok": "d5",
+   "sitat": "They say they cannot adjust the work so that Jordan can work part time.",
+   "verifisert": true
+  },
+  {
+   "dato": "2026-11-18",
+   "tittel": "Specialist appointment",
+   "beskrivelse": "An orthopedic appointment is scheduled. MRI images and medication list should be brought.",
+   "dok": "d4",
+   "sitat": "You are scheduled for an appointment on November 18, 2026 at 10:30 AM.",
+   "verifisert": true
+  },
+  {
+   "dato": "2026-11-30",
+   "tittel": "Insurer deadline",
+   "beskrivelse": "The insurer needs a specialist statement by this date. If missing, the claim will be closed.",
+   "dok": "d2",
+   "sitat": "We need a statement from an orthopedic specialist by November 30, 2026.",
+   "verifisert": true
+  }
+ ],
+ "frister": [
+  {
+   "dato": "2026-11-18",
+   "fra": null,
+   "hva": "Attend orthopedic appointment",
+   "regel": "You are scheduled for an appointment on November 18, 2026 at 10:30 AM.",
+   "dok": "d4",
+   "sitat": "You are scheduled for an appointment on November 18, 2026 at 10:30 AM.",
+   "viktighet": "høy",
+   "verifisert": true,
+   "usikker": false
+  },
+  {
+   "dato": "2026-11-30",
+   "fra": null,
+   "hva": "Provide statement from orthopedic specialist to insurer",
+   "regel": "If we do not receive it by that date, the claim will be closed.",
+   "dok": "d2",
+   "sitat": "We need a statement from an orthopedic specialist by November 30, 2026.",
+   "viktighet": "høy",
+   "verifisert": true,
+   "usikker": false
+  },
+  {
+   "dato": null,
+   "varighet": {
+    "antall": 60,
+    "enhet": "days"
+   },
+   "fra": "mottak",
+   "hva": "File appeal of disability denial",
+   "regel": "60 days from the date you receive this notice",
+   "dok": "d3",
+   "sitat": "You have 60 days from the date you receive this notice to file an appeal.",
+   "viktighet": "høy",
+   "verifisert": true,
+   "beregnet": false
+  }
+ ],
+ "neste_steg": [
+  {
+   "steg": "Attend appointment at orthopedic clinic on November 18, 2026 and bring MRI images and list of medications",
+   "hvorfor": "Needed to get specialist statement required in “Letter from Example Insurance Co.” (September 30, 2026)",
+   "innen": "2026-11-18"
+  },
+  {
+   "steg": "Ask orthopedic specialist for written statement and send it to insurer before November 30, 2026",
+   "hvorfor": "Insurer will close claim if statement is missing",
+   "innen": "2026-11-30"
+  },
+  {
+   "steg": "File appeal of denial in “Decision from the State Disability Agency: application denied” (October 14, 2026)",
+   "hvorfor": "Deadline is 60 days from receipt",
+   "innen": null
+  },
+  {
+   "steg": "Get written confirmation from employer about no adjustments and collect receipts and summary of lost income",
+   "hvorfor": "Described as missing in “My note after talking to the employer” (October 25, 2026)",
+   "innen": null
+  }
+ ]
+}

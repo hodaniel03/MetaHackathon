@@ -119,21 +119,27 @@ function icsFold(line) {
   return out.join('\r\n');
 }
 
-function buildIcs(c, docs, frister) {
+const ICS_TEXT = {
+  nb: { cal: 'Frister: ', deadline: 'Frist: ', case: 'Sak: ', source: 'Kilde: ', quote: 'Sitat: ', check: 'Sjekk alltid fristen mot brevet.', week: 'Frist om en uke', day: 'Frist i morgen' },
+  en: { cal: 'Deadlines: ', deadline: 'Deadline: ', case: 'Case: ', source: 'Source: ', quote: 'Quote: ', check: 'Always check the deadline against the letter.', week: 'Deadline in one week', day: 'Deadline tomorrow' },
+};
+
+function buildIcs(c, docs, frister, lang) {
+  const X = ICS_TEXT[lang];
   const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
-  const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Saksmappen//NO', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', `X-WR-CALNAME:${icsEsc('Frister: ' + c.name)}`];
+  const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//CaseFolder//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', `X-WR-CALNAME:${icsEsc(X.cal + c.name)}`];
   for (const f of frister) {
     const next = new Date(`${f.dato}T12:00:00Z`);
     next.setUTCDate(next.getUTCDate() + 1);
     const doc = docs.find((x) => x.id === f.dok);
     const uid = crypto.createHash('sha1').update(c.token + f.dato + f.hva).digest('hex').slice(0, 20) + '@saksmappen';
-    const desc = [`Sak: ${c.name}`, doc && `Kilde: ${doc.title}`, f.sitat && `Sitat: «${f.sitat}»`, 'Sjekk alltid fristen mot brevet.'].filter(Boolean).join('\n');
+    const desc = [`${X.case}${c.name}`, doc && `${X.source}${doc.title}`, f.sitat && `${X.quote}«${f.sitat}»`, X.check].filter(Boolean).join('\n');
     L.push(
       'BEGIN:VEVENT', `UID:${uid}`, `DTSTAMP:${stamp}`,
       `DTSTART;VALUE=DATE:${f.dato.replace(/-/g, '')}`, `DTEND;VALUE=DATE:${next.toISOString().slice(0, 10).replace(/-/g, '')}`,
-      `SUMMARY:${icsEsc('Frist: ' + f.hva)}`, `DESCRIPTION:${icsEsc(desc)}`,
-      'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Frist om en uke', 'TRIGGER:-P7D', 'END:VALARM',
-      'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Frist i morgen', 'TRIGGER:-P1D', 'END:VALARM',
+      `SUMMARY:${icsEsc(X.deadline + f.hva)}`, `DESCRIPTION:${icsEsc(desc)}`,
+      'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${icsEsc(X.week)}`, 'TRIGGER:-P7D', 'END:VALARM',
+      'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${icsEsc(X.day)}`, 'TRIGGER:-P1D', 'END:VALARM',
       'END:VEVENT',
     );
   }
@@ -143,15 +149,15 @@ function buildIcs(c, docs, frister) {
 
 const PART_FIELDS = { a: ['sammendrag', 'status', 'tidslinje'], b: ['frister', 'neste_steg'], c: ['mangler', 'ordliste'] };
 
-function createSample() {
-  const s = JSON.parse(fs.readFileSync(path.join(root, 'sample.json'), 'utf8'));
-  const token = db.createCase('Eksempelsak: Kari', 'Kari Eksempel (fiktiv)');
+function createSample(lang) {
+  const s = JSON.parse(fs.readFileSync(path.join(root, 'samples', `${lang}.json`), 'utf8'));
+  const token = db.createCase(s.caseName || (lang === 'nb' ? 'Eksempelsak: Kari' : 'Sample case'), s.person || (lang === 'nb' ? 'Kari Eksempel (fiktiv)' : 'Fictional'));
   const idMap = {};
   for (const d of s.documents) {
     idMap[d.id] = db.addDocument(token, { title: d.title, type: d.type, date: d.date || '', received: '', text: d.text, source: 'tekst' });
   }
   try {
-    const analysis = JSON.parse(fs.readFileSync(path.join(root, 'sample-analysis.json'), 'utf8'));
+    const analysis = JSON.parse(fs.readFileSync(path.join(root, 'samples', `${lang}.analysis.json`), 'utf8'));
     for (const k of ['tidslinje', 'frister', 'mangler']) for (const it of analysis[k] || []) it.dok = idMap[it.dok] || it.dok;
     const hash = db.docsHash(db.documents(token));
     for (const [part, fields] of Object.entries(PART_FIELDS)) {
@@ -161,7 +167,7 @@ function createSample() {
   return token;
 }
 
-function streamAnalysis(res, token) {
+function streamAnalysis(res, token, lang) {
   const docs = loadDocs(token);
   const hash = db.docsHash(docs);
   res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-store' });
@@ -169,7 +175,7 @@ function streamAnalysis(res, token) {
   ai.analyzeParts(docs, (part, data) => {
     db.saveAnalysisPart(token, part, data, hash);
     line({ part, data });
-  })
+  }, lang)
     .catch((e) => {
       console.error(e.message);
       line({ error: e.message });
@@ -190,7 +196,7 @@ async function readImages(token, body) {
   const text = str(body.text, MAX_CHARS);
   if (!images.length && !text.trim()) throw new HttpError(400, 'Ingenting å lese.');
   const files = images.map((img, i) => db.addFile(token, img.mime, img.buf, i + 1));
-  const out = await ai.readDocument({ images, text });
+  const out = await ai.readDocument({ images, text, lang: ai.normLang(body.lang) });
   return { files, ...out };
 }
 
@@ -215,7 +221,7 @@ http
         const b = await readBody(req);
         return sendJson(res, { token: db.createCase(str(b.name, 120).trim() || 'Ny sak', str(b.person, 120).trim()) });
       }
-      if (token === 'sample' && req.method === 'POST') return sendJson(res, { token: createSample() });
+      if (token === 'sample' && req.method === 'POST') return sendJson(res, { token: createSample(ai.normLang((await readBody(req)).lang)) });
 
       caseOr404(token);
 
@@ -267,10 +273,10 @@ http
       if (sub === 'calendar.ics' && req.method === 'GET') {
         const docs = db.documents(token);
         const frister = (db.analysis(token, db.docsHash(docs), ai.PART_KEYS).data?.frister || []).filter((f) => f.dato).sort((x, y) => x.dato.localeCompare(y.dato));
-        const i = new URL(req.url, 'http://x').searchParams.get('i');
+        const q = new URL(req.url, 'http://x').searchParams, i = q.get('i'), lang = ai.normLang(q.get('lang'));
         const list = i !== null && frister[Number(i)] ? [frister[Number(i)]] : frister;
-        if (!list.length) throw new HttpError(404, 'Ingen frister med dato ennå.');
-        return send(res, 200, buildIcs(db.getCase(token), docs, list), 'text/calendar; charset=utf-8', { 'Content-Disposition': 'attachment; filename="saksmappen-frister.ics"' });
+        if (!list.length) throw new HttpError(404, lang === 'nb' ? 'Ingen frister med dato ennå.' : 'No deadlines with a date yet.');
+        return send(res, 200, buildIcs(db.getCase(token), docs, list, lang), 'text/calendar; charset=utf-8', { 'Content-Disposition': `attachment; filename="${lang === 'nb' ? 'saksmappen' : 'casefolder'}-deadlines.ics"` });
       }
 
       if (sub === 'read' && req.method === 'POST') return sendJson(res, await readImages(token, await readBody(req, 25_000_000)));
@@ -278,10 +284,11 @@ http
       if (req.method === 'POST' && ['analyze', 'ask', 'draft'].includes(sub)) {
         requireKey();
         const body = await readBody(req);
-        if (sub === 'analyze') return streamAnalysis(res, token);
+        const lang = ai.normLang(body.lang);
+        if (sub === 'analyze') return streamAnalysis(res, token, lang);
         const docs = loadDocs(token);
-        if (sub === 'ask') return sendJson(res, await ai.ask(docs, str(body.question, 1000)));
-        return sendJson(res, { tekst: await ai.draft(docs, body.kind, body.docId) });
+        if (sub === 'ask') return sendJson(res, await ai.ask(docs, str(body.question, 1000), lang));
+        return sendJson(res, { tekst: await ai.draft(docs, body.kind, body.docId, lang) });
       }
 
       throw new HttpError(404, 'Ikke funnet.');

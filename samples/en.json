@@ -1,0 +1,42 @@
+{
+  "_note": "Fictional sample case. All names, dates and amounts are made up. It follows no country's real rules.",
+  "caseName": "Sample case: Jordan",
+  "person": "Jordan Example (fictional)",
+  "documents": [
+    {
+      "id": "d1",
+      "title": "Medical statement from family doctor",
+      "type": "legeerklæring",
+      "date": "2026-03-12",
+      "text": "MEDICAL STATEMENT\nPatient: Jordan Example, born 1991.\nPhysician: Dr. Sam Fictional, Example Family Clinic.\n\nThe patient was rear-ended in a car accident on February 3, 2026. Diagnosis: whiplash injury to the neck and lower back. The patient has pain when sitting longer than 30 minutes and when lifting.\nThe patient has been fully off work since February 3, 2026.\nThe patient has been referred to an orthopedic specialist. The estimated wait is about eight weeks.\nThe expected duration of inability to work is uncertain.\n\nSincerely,\nDr. Sam Fictional"
+    },
+    {
+      "id": "d2",
+      "title": "Letter from Example Insurance Co.",
+      "type": "forsikring",
+      "date": "2026-09-30",
+      "text": "EXAMPLE INSURANCE CO.\nClaim number: EI-2026-48213\nDate: September 30, 2026\n\nWe have reviewed your claim for compensation following the accident on February 3, 2026.\n\nWe have approved coverage of treatment costs totaling $14,200.\n\nYour claim for lost income and compensation for permanent injury is denied for now. The reason is that we have no specialist statement about permanent medical impairment.\n\nWe need a statement from an orthopedic specialist by November 30, 2026. If we do not receive it by that date, the claim will be closed.\n\nYou may appeal this decision. Information about how to appeal is enclosed.\n\nSincerely,\nClaims Department"
+    },
+    {
+      "id": "d3",
+      "title": "Decision from the State Disability Agency: application denied",
+      "type": "vedtak",
+      "date": "2026-10-14",
+      "text": "STATE DISABILITY AGENCY\nNOTICE OF DECISION\nDate: October 14, 2026\n\nWe have denied your application for disability benefits.\n\nReason: We find that it has not been documented that your ability to work is reduced by at least half because of illness or injury. The medical statement dated March 12, 2026 describes a diagnosis, but not which work tasks you are unable to perform.\n\nYou have the right to appeal. You have 60 days from the date you receive this notice to file an appeal.\nYou may ask for a copy of the documents in your case.\n\nSincerely,\nState Disability Agency"
+    },
+    {
+      "id": "d4",
+      "title": "Appointment notice from orthopedic clinic",
+      "type": "innkalling",
+      "date": "2026-10-20",
+      "text": "ORTHOPEDIC CLINIC\nAppointment notice\n\nYou are scheduled for an appointment on November 18, 2026 at 10:30 AM.\nPlease bring any MRI images and a list of your medications.\nIf you cannot attend, you must cancel at least 48 hours before the appointment."
+    },
+    {
+      "id": "d5",
+      "title": "My note after talking to the employer",
+      "type": "notat",
+      "date": "2026-10-25",
+      "text": "Spoke with the employer today. They say they cannot adjust the work so that Jordan can work part time. The job requires heavy lifting and long periods of standing and sitting.\nThe employer has not put this in writing. I have not contacted a lawyer yet.\nJordan has had no income since May. We have not collected receipts or a summary of the lost income."
+    }
+  ]
+}
