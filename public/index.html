@@ -195,6 +195,23 @@ details.orig summary { cursor: pointer; min-height: 44px; display: flex; align-i
 #toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 10px; opacity: 0; pointer-events: none; transition: opacity .2s; max-width: 90vw; z-index: 30; }
 #toast.on { opacity: 1; }
 
+/* PDF, trust hero, voice note, handover options */
+.pdfbox { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; padding: 32px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--quote-bg); }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 12px; }
+@media (max-width: 640px) { .stats { grid-template-columns: 1fr; } }
+.stat { display: flex; flex-direction: column; gap: 2px; }
+.stat .numrow { display: flex; align-items: center; gap: 8px; }
+.stat .num { font-size: 2.5rem; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
+.stat .lbl { color: var(--ink); }
+.stat.okc { color: var(--ok); }
+.stat.badc { color: var(--bad); }
+.rec-live { display: flex; align-items: center; gap: 8px; font-size: 1.125rem; }
+.rec-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--bad); animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .rec-dot { animation: none; } }
+.check-row { display: flex; gap: 16px; align-items: flex-start; cursor: pointer; margin: 0; font-weight: 400; font-size: 1rem; }
+.check-row input { width: 24px; height: 24px; min-height: 24px; margin-top: 4px; padding: 0; accent-color: var(--primary); flex: none; }
+
 /* Handover and print */
 .handover section { margin-top: 32px; }
 .handover .claim { break-inside: avoid; }
@@ -285,6 +302,16 @@ const T = {
     onlyImagesPdf: 'Only images and PDF are supported.', oneAtATime: 'Add one letter at a time: one PDF, or several photos of the same letter.', cantOpen: (n) => `We could not open the image “${n}”. Use JPEG or PNG.`,
     pdfLibFail: 'We could not load the PDF reader. Check your connection, or take a photo of the letter instead.', pdfFail: 'We could not read the PDF. Try taking a photo of the letter instead.', pageAlt: (i) => `Page ${i} of the document`,
     linkCopied: 'The link is copied. Anyone who has it can see and change the case.', selectLink: 'Select the link and copy it yourself.', renamePrompt: 'New name for the case', deleteCaseConfirm: 'Delete the case, all documents and all images for good? This cannot be undone.',
+    voiceNote: 'Voice note', recordBtn: 'Record a voice note', recTitle: 'Voice note',
+    recIntro: 'Tell us what was said, for example after a phone call. We turn your voice into text, and you check it before it is saved. The recording itself is not saved.',
+    recStart: 'Start recording', recStop: 'Stop and turn into text', recRecording: 'Recording…', recTranscribing: 'We are turning your voice into text…',
+    recReview: 'Check what we heard', recCaveat: 'This is what you said, not an official document. Check names, dates and amounts, and fix anything we heard wrong.',
+    recMicFail: 'We could not use the microphone. Allow microphone access in your browser, or paste text instead.', recTooShort: 'That was too short. Try again.', recTooLong: 'The recording reached 5 minutes and was stopped.',
+    recDefaultTitle: (d) => `Voice note, ${d}`, vCheckedVoice: 'Checked against your voice note', voiceCaveat: 'From your voice note, not an official document.',
+    openPdf: 'Open the original PDF', openPdfPage: (n) => `Open the original PDF, page ${n}`, pdfPreviewNote: 'The PDF opens in a new tab.', pdfTooBig: 'That PDF is too large (limit 14 MB). Try a photo instead.',
+    repeated: (w) => `Said twice? “${w}”`, asInVoice: 'Deadline, as you said in your voice note', confirmWriting: 'This comes from what you said, not from a letter. Ask for it in writing.',
+    heroClaims: (n) => (n === 1 ? 'claim' : 'claims'), heroChecked: 'checked against the document', heroUnchecked: 'could not be checked',
+    hideIds: 'Hide ID numbers', hideIdsHint: 'Hides personal ID numbers we recognize, such as Norwegian national ID numbers and US Social Security numbers. It can miss others, so check before you share.', idHidden: '[ID number hidden]', hLegendHidden: 'Personal ID numbers we recognize have been hidden.',
   },
   nb: {
     brand: 'Saksmappen', skip: 'Hopp til innholdet', simpleView: 'Enkel visning', shareBtn: 'Del saken', langBtn: 'English', langAria: 'Switch to English',
@@ -350,6 +377,16 @@ const T = {
     onlyImagesPdf: 'Bare bilder og PDF støttes.', oneAtATime: 'Legg inn ett brev om gangen: ett PDF, eller flere bilder av samme brev.', cantOpen: (n) => `Vi kunne ikke åpne bildet «${n}». Bruk JPEG eller PNG.`,
     pdfLibFail: 'Vi kunne ikke laste PDF-leseren. Sjekk nettforbindelsen, eller ta bilde av brevet i stedet.', pdfFail: 'Vi klarte ikke å lese PDF-en. Prøv å ta bilde av brevet i stedet.', pageAlt: (i) => `Side ${i} av dokumentet`,
     linkCopied: 'Lenken er kopiert. Alle som har den kan se og endre saken.', selectLink: 'Marker lenken og kopier den selv.', renamePrompt: 'Nytt navn på saken', deleteCaseConfirm: 'Slette saken, alle dokumenter og alle bilder for godt? Dette kan ikke angres.',
+    voiceNote: 'Talenotat', recordBtn: 'Ta opp et talenotat', recTitle: 'Talenotat',
+    recIntro: 'Fortell hva som ble sagt, for eksempel etter en telefonsamtale. Vi gjør stemmen din om til tekst, og du sjekker den før den lagres. Selve opptaket lagres ikke.',
+    recStart: 'Start opptak', recStop: 'Stopp og gjør om til tekst', recRecording: 'Tar opp…', recTranscribing: 'Vi gjør stemmen din om til tekst…',
+    recReview: 'Sjekk hva vi hørte', recCaveat: 'Dette er det du sa, ikke et offisielt dokument. Sjekk navn, datoer og beløp, og rett det vi hørte feil.',
+    recMicFail: 'Vi kunne ikke bruke mikrofonen. Gi nettleseren tilgang til mikrofonen, eller lim inn tekst i stedet.', recTooShort: 'Det var for kort. Prøv igjen.', recTooLong: 'Opptaket nådde 5 minutter og ble stoppet.',
+    recDefaultTitle: (d) => `Talenotat, ${d}`, vCheckedVoice: 'Kontrollert mot talenotatet ditt', voiceCaveat: 'Fra talenotatet ditt, ikke et offisielt dokument.',
+    openPdf: 'Åpne original-PDF', openPdfPage: (n) => `Åpne original-PDF, side ${n}`, pdfPreviewNote: 'PDF-en åpnes i en ny fane.', pdfTooBig: 'PDF-en er for stor (grense 14 MB). Prøv et bilde i stedet.',
+    repeated: (w) => `Sagt to ganger? «${w}»`, asInVoice: 'Frist, slik du sa det i talenotatet', confirmWriting: 'Dette kommer fra det du sa, ikke fra et brev. Be om det skriftlig.',
+    heroClaims: () => 'funn', heroChecked: 'kontrollert mot dokumentet', heroUnchecked: 'kunne ikke kontrolleres',
+    hideIds: 'Skjul personnumre', hideIdsHint: 'Skjuler personnumre vi kjenner igjen, som norske fødselsnumre og amerikanske Social Security-numre. Vi kan overse andre, så sjekk før du deler.', idHidden: '[personnummer skjult]', hLegendHidden: 'Personnumre vi kjenner igjen er skjult.',
   },
 };
 
@@ -364,6 +401,7 @@ let lang = 'en';
 try { const l = new URLSearchParams(location.search).get('lang') || localStorage.getItem(LANG_KEY); if (l === 'nb' || l === 'en') lang = l; } catch {}
 const t = (k, ...a) => { const v = T[lang][k] ?? T.en[k] ?? k; return typeof v === 'function' ? v(...a) : v; };
 const typeLabel = (k) => t('type_' + k);
+const docKind = (d) => (d.source === 'tale' ? t('voiceNote') : typeLabel(d.type));
 
 const ICONS = {
   folder: '<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>',
@@ -385,7 +423,8 @@ const ICONS = {
   pencil: '<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/>',
   shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
 };
-const icon = (n, size = 20) => `<svg class="ic" viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ''}</svg>`;
+ICONS.mic = '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/>';
+const icon = (n, size = 20) =>`<svg class="ic" viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ''}</svg>`;
 const badge = (kind, ic, text) => `<span class="badge ${kind}">${icon(ic, 16)}<span>${esc(text)}</span></span>`;
 
 let saker = [];
@@ -456,28 +495,31 @@ function evidenceHtml(d, quote) {
   } else body = `<p>${esc(t('quoteNotFound'))}</p>`;
   const img = d.files?.length
     ? `<figure><img loading="lazy" src="/api/cases/${st.token}/files/${esc(d.files[Math.min((pg || 1) - 1, d.files.length - 1)])}" alt="${esc(t('originalAlt', d.title, pg))}"><figcaption class="meta">${esc(t('origCaption', pg))}</figcaption></figure>` : '';
-  return `<div class="evidence"><h4>${esc(t('howItReads'))}</h4>${body}${img}<p style="margin-top:8px"><button class="btn-link" data-act="open-doc" data-id="${esc(d.id)}" data-quote="${esc(quote || '')}">${esc(t('openFullDoc'))}</button></p></div>`;
+  const pdfLink = d.pdf ? `<p style="margin-top:8px"><a class="btn-link" href="/api/cases/${st.token}/files/${esc(d.pdf)}${pg ? `#page=${pg}` : ''}" target="_blank" rel="noopener">${esc(pg ? t('openPdfPage', pg) : t('openPdf'))}</a></p>` : '';
+  return `<div class="evidence"><h4>${esc(t('howItReads'))}</h4>${body}${img}${pdfLink}<p style="margin-top:8px"><button class="btn-link" data-act="open-doc" data-id="${esc(d.id)}" data-quote="${esc(quote || '')}">${esc(t('openFullDoc'))}</button></p></div>`;
 }
 
 // id: unique key for view state. collapsed: timeline style, opened by the claim as a button.
-function claimCard({ id, claim = '', detail = '', quote = '', dok, verified, collapsed = false, date = '', top = '', after = '' }) {
-  const d = docById(dok), open = st.open.has(id), showEv = st.ev.has(id);
-  const vb = verified ? badge('ok', 'check', t('vChecked')) : badge('bad', 'alert', t('vUnchecked'));
+// rd: text filter (used to hide ID numbers). plain: no evidence button (used on the printable handover).
+function claimCard({ id, claim = '', detail = '', quote = '', dok, verified, collapsed = false, date = '', top = '', after = '', rd = (x) => x, plain = false }) {
+  const d = docById(dok), open = st.open.has(id), showEv = st.ev.has(id) && !plain, voice = d?.source === 'tale';
+  const vb = verified ? badge('ok', 'check', t(voice ? 'vCheckedVoice' : 'vChecked')) : badge('bad', 'alert', t('vUnchecked'));
   const pg = d && quote ? pageOf(d, quote) : null;
   const src = d ? `${esc(d.title)} · ${esc(fmtShort(d.date))}${pg ? ` · ${esc(t('pageN', pg))}` : ''}` : esc(t('unknownDoc'));
   const inner = `
-    ${top}${detail ? `<p class="claim-detail">${esc(detail)}</p>` : ''}
-    ${quote ? `<blockquote class="quote">«${esc(quote)}»</blockquote>` : ''}
-    ${d ? `<div class="src"><span>${src}</span><button class="btn-link" data-act="evidence" data-id="${esc(id)}" aria-expanded="${showEv}">${esc(showEv ? t('hide') : t('viewInDoc'))} ${icon(showEv ? 'x' : 'arrow', 16)}</button></div>` : ''}
+    ${top}${detail ? `<p class="claim-detail">${esc(rd(detail))}</p>` : ''}
+    ${quote ? `<blockquote class="quote">«${esc(rd(quote))}»</blockquote>` : ''}
+    ${voice && quote ? `<p class="meta" style="margin-top:6px">${esc(t('voiceCaveat'))}</p>` : ''}
+    ${d ? `<div class="src"><span>${src}</span>${plain ? '' : `<button class="btn-link" data-act="evidence" data-id="${esc(id)}" aria-expanded="${showEv}">${esc(showEv ? t('hide') : t('viewInDoc'))} ${icon(showEv ? 'x' : 'arrow', 16)}</button>`}</div>` : ''}
     ${showEv && d ? evidenceHtml(d, quote) : ''}${after}`;
   if (collapsed) {
     return `<article class="claim ${verified ? '' : 'is-bad'}">
       <button class="claim-toggle" data-act="toggle-claim" data-id="${esc(id)}" aria-expanded="${open}" aria-controls="cb-${esc(id)}">
-        <span class="when">${esc(fmtShort(date))}</span><span class="ttl">${capEsc(claim)}</span>${icon('chevron', 20).replace('class="ic"', 'class="ic chev"')}
+        <span class="when">${esc(fmtShort(date))}</span><span class="ttl">${capEsc(rd(claim))}</span>${icon('chevron', 20).replace('class="ic"', 'class="ic chev"')}
       </button>
       <div class="claim-body" id="cb-${esc(id)}" ${open ? '' : 'hidden'}>${vb}${inner}</div></article>`;
   }
-  return `<article class="claim ${verified ? '' : 'is-bad'}">${vb}${claim ? `<h3 class="claim-text">${capEsc(claim)}</h3>` : ''}${inner}</article>`;
+  return `<article class="claim ${verified ? '' : 'is-bad'}">${vb}${claim ? `<h3 class="claim-text">${capEsc(rd(claim))}</h3>` : ''}${inner}</article>`;
 }
 
 /* ---------- Data from the analysis ---------- */
@@ -517,6 +559,7 @@ function calcHtml(f) {
       <p class="meta">${esc(t('calcNote'))}</p>`;
   }
   if (f.dato && f.usikker) return `<div class="notice" style="margin-top:12px">${icon('alert')}<div><strong>${esc(t('notInDoc'))}</strong> ${esc(t('notInDocText', fmtLong(f.dato)))}</div></div>`;
+  if (f.dato && d?.source === 'tale') return `<dl class="calc"><div class="res"><dt>${esc(t('asInVoice'))}</dt><dd>${esc(fmtShort(f.dato))}</dd></div></dl><p class="meta">${esc(t('confirmWriting'))}</p>`;
   if (f.dato) return `<dl class="calc"><div class="res"><dt>${esc(t('asInLetter'))}</dt><dd>${esc(fmtShort(f.dato))}</dd></div></dl>`;
   return `<div class="notice" style="margin-top:12px">${icon('info')}<div><strong>${esc(t('weNeedDate'))}</strong> ${esc(f.regel || t('defaultRule'))}</div></div>`;
 }
@@ -588,7 +631,7 @@ function renderHome() {
 
 /* ---------- Open a case ---------- */
 async function openCase(token, page = 'oversikt') {
-  st = { token, page, c: null, docs: [], analysis: null, aState: 'none', checks: {}, pending: [], open: new Set(), ev: new Set(), answer: null, draft: null, busy: '', err: '' };
+  st = { token, page, hideIds: true, c: null, docs: [], analysis: null, aState: 'none', checks: {}, pending: [], open: new Set(), ev: new Set(), answer: null, draft: null, busy: '', err: '' };
   renderCase();
   try {
     const v = await api('GET', `/api/cases/${token}`);
@@ -635,9 +678,10 @@ function renderPage() {
 /* ---------- Screens ---------- */
 function pageOversikt() {
   const a = A();
-  if (!st.docs.length) return `<div class="stack"><div class="stack-s"><h1>${esc(t('welcomeTitle'))}</h1><p class="lead">${esc(t('welcomeLead'))}</p></div>${dropzone()}</div>`;
+  const recordBtn = `<button class="btn" data-act="record">${icon('mic', 18)} ${esc(t('recordBtn'))}</button>`;
+  if (!st.docs.length) return `<div class="stack"><div class="stack-s"><h1>${esc(t('welcomeTitle'))}</h1><p class="lead">${esc(t('welcomeLead'))}</p></div>${dropzone()}<p>${recordBtn}</p></div>`;
   if (!st.analysis) return `<div class="stack"><div class="stack-s"><h1>${esc(t('readyTitle'))}</h1><p class="lead">${esc(t('readyLead', st.docs.length))}</p></div>
-    <p><button class="btn primary" data-act="analyze">${esc(t('readBtn'))}</button></p></div>`;
+    <div class="row"><button class="btn primary" data-act="analyze">${esc(t('readBtn'))}</button>${recordBtn}</div></div>`;
 
   const deadlineCard = () => {
     if (wait('b')) return `<p class="skeleton">${esc(t('findingDeadlines'))}</p>`;
@@ -668,16 +712,20 @@ function pageOversikt() {
   const card = (title, body) => `<section class="card att" aria-label="${esc(title)}"><h2 class="eyebrow">${esc(title)}</h2>${body}</section>`;
 
   const claims = flatClaims(), bad = claims.filter((c) => !c.verified), ok = claims.length - bad.length;
-  const trust = wait('a') || wait('b') || wait('c') ? '' : `<section class="card" aria-labelledby="h-trust"><div class="trust ${bad.length ? 'some-bad' : ''}">${icon(bad.length ? 'alert' : 'shield', 28)}<div class="stack-s">
-      <h2 id="h-trust">${esc(t('allChecked'))}</h2>
-      <p>${claims.length ? t('trustSummary', claims.length, ok, bad.length) : esc(t('nothingToCheck'))}</p>
-      <p class="meta">${esc(bad.length ? t('badHint') : t('okHint'))}</p></div></div></section>
+  const hero = wait('a') || wait('b') || wait('c') ? '' : `<section class="card hero" aria-labelledby="h-trust"><h2 id="h-trust" class="eyebrow">${esc(t('allChecked'))}</h2>
+      <div class="stats">
+        <div class="stat"><span class="numrow"><span class="num">${claims.length}</span></span><span class="lbl">${esc(t('heroClaims', claims.length))}</span></div>
+        <div class="stat okc"><span class="numrow">${icon('check', 28)}<span class="num">${ok}</span></span><span class="lbl">${esc(t('heroChecked'))}</span></div>
+        <div class="stat ${bad.length ? 'badc' : 'okc'}"><span class="numrow">${icon(bad.length ? 'alert' : 'check', 28)}<span class="num">${bad.length}</span></span><span class="lbl">${esc(t('heroUnchecked'))}</span></div>
+      </div>
+      <p class="meta" style="margin-top:12px">${esc(bad.length ? t('badHint') : t('okHint'))}</p></section>
     ${bad.map((c) => claimCard(c)).join('<div style="height:16px"></div>')}`;
 
   return `<div class="stack">
     <div class="stack-s"><h1>${esc(t('attentionTitle'))}</h1>${wait('a') ? '' : `<p class="lead">${esc(a.status || '')}</p>`}</div>
+    ${hero}
     <div class="att-grid">${card(t('cardDeadline'), deadlineCard())}${card(t('cardMissing'), missingCard())}${card(t('cardLatest'), latestCard())}</div>
-    ${trust}</div>`;
+    <p class="row">${recordBtn}</p></div>`;
 }
 
 function pageTidslinje() {
@@ -690,15 +738,15 @@ function pageTidslinje() {
 
 function docRow(d) {
   const needs = ILLEGIBLE.test(d.text) || !d.date; ILLEGIBLE.lastIndex = 0;
-  const thumb = d.files?.length ? `<img loading="lazy" alt="" src="/api/cases/${esc(st.token)}/files/${esc(d.files[0])}">` : icon('file', 28);
+  const thumb = d.files?.length ? `<img loading="lazy" alt="" src="/api/cases/${esc(st.token)}/files/${esc(d.files[0])}">` : icon(d.source === 'tale' ? 'mic' : 'file', 28);
   const when = d.received ? t('receivedOn', fmtShort(d.received)) : d.date ? t('datedOn', fmtShort(d.date)) : t('undated');
   return `<button class="docrow" data-act="open-doc" data-id="${esc(d.id)}"><span class="thumb">${thumb}</span>
-    <span class="grow"><strong>${esc(d.title)}</strong><span class="meta">${esc(typeLabel(d.type))} · ${esc(when)}</span><span style="display:block;margin-top:6px">${needs ? badge('warn', 'alert', t('stReview')) : badge('ok', 'check', t('stRead'))}</span></span>${icon('arrow', 20)}</button>`;
+    <span class="grow"><strong>${esc(d.title)}</strong><span class="meta">${esc(docKind(d))} · ${esc(when)}</span><span style="display:block;margin-top:6px">${needs ? badge('warn', 'alert', t('stReview')) : badge('ok', 'check', t('stRead'))}</span></span>${icon('arrow', 20)}</button>`;
 }
 
 function pageDokumenter() {
   return `<div class="stack"><div class="stack-s"><h1>${esc(t('docsTitle'))}</h1><p class="lead">${esc(t('docsLead'))}</p></div>
-    ${dropzone()}<p><button class="btn-link" data-act="paste-text">${esc(t('pasteInstead'))}</button></p>
+    ${dropzone()}<div class="row"><button class="btn" data-act="record">${icon('mic', 18)} ${esc(t('recordBtn'))}</button><button class="btn-link" data-act="paste-text">${esc(t('pasteInstead'))}</button></div>
     ${st.docs.length ? `<ul style="list-style:none;margin:0;padding:0" class="stack-s">${st.docs.map((d) => `<li>${docRow(d)}</li>`).join('')}</ul>` : `<div class="card"><p>${esc(t('noDocs'))}</p></div>`}</div>`;
 }
 
@@ -780,17 +828,19 @@ function pageDel() {
 
 function pageOverlevering() {
   const a = A(), c = st.c, docs = st.docs;
+  const rd = st.hideIds ? redact : (x) => x, shared = { rd, plain: true };
   const fr = (a.frister || []).slice().sort((x, y) => (x.dato || '9999').localeCompare(y.dato || '9999'));
   const ev = (a.tidslinje || []).slice().sort((x, y) => (x.dato || '').localeCompare(y.dato || ''));
   const body = !st.analysis ? `<div class="card"><p>${esc(t('hNotRead'))}</p></div>` : `
-    <section><h2>${esc(t('hStands'))}</h2><p style="margin-top:8px">${esc(a.sammendrag || '')}</p><p style="margin-top:8px"><strong>${esc(t('hNow'))}</strong> ${esc(a.status || '')}</p></section>
-    <section><h2>${esc(t('hDeadlines'))}</h2><div class="stack-s" style="margin-top:12px">${fr.length ? fr.map((f, i) => claimCard({ id: `hf${i}`, claim: f.hva, quote: f.sitat, dok: f.dok, verified: !!f.verifisert, top: `<div style="margin-top:8px">${f.dato ? dueBadge(f.dato) : badge('warn', 'info', t('hDateMissing'))}</div>${calcHtml(f)}` })).join('') : `<p>${esc(t('hNone'))}</p>`}</div></section>
-    <section><h2>${esc(t('hTimeline'))}</h2><div class="stack-s" style="margin-top:12px">${ev.map((x, i) => claimCard({ id: `ht${i}`, claim: `${fmtShort(x.dato)}: ${x.tittel}`, detail: x.beskrivelse, quote: x.sitat, dok: x.dok, verified: !!x.verifisert })).join('')}</div></section>
-    <section><h2>${esc(t('hDocs'))}</h2><ul class="plain-list" style="margin-top:12px">${docs.map((d) => `<li>${esc(d.title)} (${esc(typeLabel(d.type))}, ${esc(fmtShort(d.date))}${d.received ? `, ${esc(t('hReceived', fmtShort(d.received)))}` : ''})</li>`).join('')}</ul></section>
-    <section><h2>${esc(t('hMissing'))}</h2><ul class="plain-list" style="margin-top:12px">${(a.mangler || []).map((x) => `<li>${st.checks[ck(x.hva)] ? `<span class="meta">${esc(t('hObtained'))}</span> ` : ''}<strong>${capEsc(x.hva)}</strong>. ${esc(x.hvorfor)}</li>`).join('') || `<li>${esc(t('hNothing'))}</li>`}</ul></section>`;
+    <section><h2>${esc(t('hStands'))}</h2><p style="margin-top:8px">${esc(rd(a.sammendrag || ''))}</p><p style="margin-top:8px"><strong>${esc(t('hNow'))}</strong> ${esc(rd(a.status || ''))}</p></section>
+    <section><h2>${esc(t('hDeadlines'))}</h2><div class="stack-s" style="margin-top:12px">${fr.length ? fr.map((f, i) => claimCard({ id: `hf${i}`, claim: f.hva, quote: f.sitat, dok: f.dok, verified: !!f.verifisert, ...shared, top: `<div style="margin-top:8px">${f.dato ? dueBadge(f.dato) : badge('warn', 'info', t('hDateMissing'))}</div>${calcHtml(f)}` })).join('') : `<p>${esc(t('hNone'))}</p>`}</div></section>
+    <section><h2>${esc(t('hTimeline'))}</h2><div class="stack-s" style="margin-top:12px">${ev.map((x, i) => claimCard({ id: `ht${i}`, claim: `${fmtShort(x.dato)}: ${x.tittel}`, detail: x.beskrivelse, quote: x.sitat, dok: x.dok, verified: !!x.verifisert, ...shared })).join('')}</div></section>
+    <section><h2>${esc(t('hDocs'))}</h2><ul class="plain-list" style="margin-top:12px">${docs.map((d) => `<li>${esc(rd(d.title))} (${esc(docKind(d))}, ${esc(fmtShort(d.date))}${d.received ? `, ${esc(t('hReceived', fmtShort(d.received)))}` : ''})</li>`).join('')}</ul></section>
+    <section><h2>${esc(t('hMissing'))}</h2><ul class="plain-list" style="margin-top:12px">${(a.mangler || []).map((x) => `<li>${st.checks[ck(x.hva)] ? `<span class="meta">${esc(t('hObtained'))}</span> ` : ''}<strong>${esc(cap(rd(x.hva)))}</strong>. ${esc(rd(x.hvorfor))}</li>`).join('') || `<li>${esc(t('hNothing'))}</li>`}</ul></section>`;
   return `<div class="handover"><div class="noprint stack-s"><a class="btn-link" href="#/s/${esc(st.token)}/del">← ${esc(t('hBack'))}</a></div>
-    <div class="row between" style="margin-top:8px"><div class="stack-s"><h1>${esc(t('hTitle', c?.name || ''))}</h1><p class="meta">${esc(t('hMade', fmtLong(new Date().toISOString().slice(0, 10))))}</p></div><button class="btn primary noprint" data-act="print">${icon('printer', 18)} ${esc(t('hPrint'))}</button></div>
-    <div class="notice" style="margin-top:24px">${icon('info')}<div>${esc(t('hLegend'))}</div></div>${body}</div>`;
+    <div class="row between" style="margin-top:8px"><div class="stack-s"><h1>${esc(t('hTitle', c?.name || ''))}</h1><p class="meta">${esc(t('hMade', fmtLong(localIso())))}</p></div><button class="btn primary noprint" data-act="print">${icon('printer', 18)} ${esc(t('hPrint'))}</button></div>
+    <div class="card noprint" style="margin-top:24px"><label class="check-row" for="hide-ids"><input type="checkbox" id="hide-ids" ${st.hideIds ? 'checked' : ''}><span><strong>${esc(t('hideIds'))}</strong><br><span class="meta">${esc(t('hideIdsHint'))}</span></span></label></div>
+    <div class="notice" style="margin-top:24px">${icon('info')}<div>${esc(t('hLegend'))}${st.hideIds ? ` ${esc(t('hLegendHidden'))}` : ''}</div></div>${body}</div>`;
 }
 
 /* ---------- Actions ---------- */
@@ -859,8 +909,9 @@ function openDoc(id, quote, editing = false) {
        <div class="row" style="margin-top:16px"><button class="btn" data-act="edit-doc" data-id="${esc(id)}">${icon('pencil', 18)} ${esc(t('editText'))}</button><button class="btn danger" data-act="del-doc" data-id="${esc(id)}">${icon('trash', 18)} ${esc(t('deleteDoc'))}</button></div>`;
   $('#viewer').innerHTML = `
     <div class="row between"><h2>${esc(d.title)}</h2><button class="btn" data-act="close" data-id="viewer">${icon('x', 18)} ${esc(t('close'))}</button></div>
-    <p class="meta" style="margin-top:4px">${esc(typeLabel(d.type))} · ${esc(t('datedLower'))} ${esc(fmtShort(d.date))}${d.received ? ` · ${esc(t('receivedLower'))} ${esc(fmtShort(d.received))}` : ''}</p>
+    <p class="meta" style="margin-top:4px">${esc(docKind(d))} · ${esc(t('datedLower'))} ${esc(fmtShort(d.date))}${d.received ? ` · ${esc(t('receivedLower'))} ${esc(fmtShort(d.received))}` : ''}</p>
     ${d.files?.length ? `<details class="orig"><summary>${esc(t('seeOriginal', d.files.length))}</summary>${d.files.map((f, i) => `<img loading="lazy" alt="${esc(t('pageAlt', i + 1))}" src="/api/cases/${esc(st.token)}/files/${esc(f)}">`).join('')}</details>` : ''}
+    ${d.pdf ? `<p style="margin-top:12px"><a class="btn-link" href="/api/cases/${esc(st.token)}/files/${esc(d.pdf)}" target="_blank" rel="noopener">${esc(t('openPdf'))}</a></p>` : ''}
     ${body}`;
   if (!$('#viewer').open) $('#viewer').showModal();
   $('#viewer').querySelector('mark')?.scrollIntoView({ block: 'center' });
@@ -889,25 +940,31 @@ function loadPdfJs() {
 
 const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error(t('pdfFail'))), ms))]);
 
-async function pdfToPages(file) {
-  const lib = await loadPdfJs();
-  // The built-in image decoder can hang in some browsers. pdf.js's own decoder is safer.
-  const pdf = await withTimeout(lib.getDocument({ data: await file.arrayBuffer(), isImageDecoderSupported: false }).promise, 20000);
-  const n = Math.min(pdf.numPages, MAX_PAGES), images = [], texts = [];
-  for (let p = 1; p <= n; p++) {
-    const page = await withTimeout(pdf.getPage(p), 20000);
-    const vp = page.getViewport({ scale: 1 }), view = page.getViewport({ scale: Math.min(2, 1500 / vp.width) });
-    const c = document.createElement('canvas'); c.width = Math.round(view.width); c.height = Math.round(view.height);
-    await withTimeout(page.render({ canvasContext: c.getContext('2d'), viewport: view }).promise, 20000);
-    images.push(c.toDataURL('image/jpeg', 0.82));
-    const tc = await withTimeout(page.getTextContent(), 20000);
-    texts.push(tc.items.map((it) => it.str + (it.hasEOL ? '\n' : ' ')).join('').replace(/[ \t]+/g, ' ').trim());
-  }
-  let text = texts.join('\n\f\n');
-  // Scanned PDF without a text layer: let the server read the images instead.
-  if (text.replace(/\s/g, '').length < 80 * n) text = '';
-  return { images, text, cut: pdf.numPages > MAX_PAGES };
+// Reads only the text layer of a PDF. The pages are not drawn, because drawing can hang in some browsers.
+// A scanned PDF has no text layer, and then the whole file goes to the model instead.
+async function pdfText(file) {
+  try {
+    const lib = await loadPdfJs();
+    const pdf = await withTimeout(lib.getDocument({ data: await file.arrayBuffer(), isImageDecoderSupported: false }).promise, 15000);
+    const n = Math.min(pdf.numPages, MAX_PAGES), texts = [];
+    for (let p = 1; p <= n; p++) {
+      const tc = await withTimeout((await pdf.getPage(p)).getTextContent(), 15000);
+      texts.push(tc.items.map((it) => it.str + (it.hasEOL ? '\n' : ' ')).join('').replace(/[ \t]+/g, ' ').trim());
+    }
+    let text = texts.join('\n\f\n');
+    if (text.replace(/\s/g, '').length < 80 * n) text = '';
+    return { text, cut: pdf.numPages > MAX_PAGES };
+  } catch { return { text: '', cut: false }; }
 }
+
+const fileToDataUrl = (file) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = () => rej(new Error(t('cantOpen', file.name))); r.readAsDataURL(file); });
+
+function localIso() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+const fmtTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+
+// Personal ID numbers we recognize: Norwegian national ID (11 digits), US Social Security number, Norwegian bank account.
+const ID_RE = /\b\d{6}\s?\d{5}\b|\b\d{3}-\d{2}-\d{4}\b|\b\d{4}\.\d{2}\.\d{5}\b/g;
+const redact = (s) => String(s ?? '').replace(ID_RE, t('idHidden'));
 
 async function startIntake(fileList) {
   const files = [...fileList];
@@ -915,7 +972,8 @@ async function startIntake(fileList) {
   const pdfs = files.filter((f) => f.type === 'application/pdf'), imgs = files.filter((f) => f.type.startsWith('image/'));
   if (pdfs.length + imgs.length !== files.length) return toast(t('onlyImagesPdf'));
   if (pdfs.length > 1 || (pdfs.length && imgs.length)) return toast(t('oneAtATime'));
-  intake = { phase: 'reading', source: pdfs.length ? 'pdf' : 'bilde', files, pages: [], fileIds: [], form: null, error: '', cut: false };
+  if (pdfs[0] && pdfs[0].size > 14e6) return toast(t('pdfTooBig'));
+  intake = { phase: 'reading', source: pdfs.length ? 'pdf' : 'bilde', files, pages: [], fileIds: [], form: null, error: '', cut: false, pdfUrl: pdfs.length ? URL.createObjectURL(pdfs[0]) : '' };
   renderIntake(); $('#intake').showModal();
   await runRead();
 }
@@ -924,11 +982,17 @@ async function runRead() {
   const it = intake, token = st.token;
   it.phase = 'reading'; it.error = ''; renderIntake();
   try {
-    let images, text = '';
-    if (it.source === 'pdf') { const r = await pdfToPages(it.files[0]); images = r.images; text = r.text; it.cut = r.cut; }
-    else { if (it.files.length > MAX_PAGES) it.cut = true; images = await Promise.all(it.files.slice(0, MAX_PAGES).map((f) => toJpeg(f))); }
-    it.pages = images; renderIntake();
-    const out = await api('POST', `/api/cases/${token}/read`, { images, text, lang });
+    let body;
+    if (it.source === 'pdf') {
+      const r = await pdfText(it.files[0]); it.cut = r.cut;
+      body = { pdf: await fileToDataUrl(it.files[0]), text: r.text, lang };
+    } else {
+      if (it.files.length > MAX_PAGES) it.cut = true;
+      const images = await Promise.all(it.files.slice(0, MAX_PAGES).map((f) => toJpeg(f)));
+      it.pages = images; renderIntake();
+      body = { images, text: '', lang };
+    }
+    const out = await api('POST', `/api/cases/${token}/read`, body);
     if (intake !== it) return;
     it.fileIds = out.files;
     it.form = { title: out.forslag.tittel, type: out.forslag.type, date: out.forslag.dato, received: '', text: out.text };
@@ -955,17 +1019,21 @@ const FLAG_PATTERNS = [
 ];
 function renderChips() {
   const el = $('#chips'); if (!el) return;
-  const tx = $('#i-text').value, seen = new Set(), unread = (tx.match(ILLEGIBLE) || []).length;
-  for (const re of FLAG_PATTERNS) for (const m of tx.matchAll(re)) seen.add(m[0].trim());
+  const tx = $('#i-text').value, seen = new Map(), unread = (tx.match(ILLEGIBLE) || []).length;
+  for (const re of FLAG_PATTERNS) for (const m of tx.matchAll(re)) seen.set(m[0].trim(), m[0].trim());
+  // The speech model sometimes says a word twice. Point it out, so the user can fix it.
+  for (const m of tx.matchAll(/\b(\p{L}{2,})\s+\1\b/giu)) seen.set(m[0], t('repeated', m[0]));
   el.innerHTML = (unread ? `<div class="notice" style="width:100%">${icon('alert')}<div>${esc(t('inIllegible', unread))}</div></div>` : '')
-    + [...seen].slice(0, 14).map((f) => `<button type="button" data-act="chip" data-id="${esc(f)}">${esc(f)}</button>`).join('');
+    + [...seen].slice(0, 14).map(([find, label]) => `<button type="button" data-act="chip" data-id="${esc(find)}">${esc(label)}</button>`).join('');
 }
 
 function renderIntake() {
   const it = intake, d = $('#intake'); if (!it) return;
+  if (it.source === 'tale') return renderVoice();
   const pages = it.pages.length ? `<div class="pages">${it.pages.map((p, i) => `<img src="${p}" alt="${esc(t('pageAlt', i + 1))}">`).join('')}</div>` : '';
+  const pdfPanel = it.pdfUrl ? `<div class="pdfbox">${icon('file', 36)}<p><strong>${esc(it.files[0].name)}</strong></p><p class="meta">${esc(t('pdfPreviewNote'))}</p><a class="btn" href="${it.pdfUrl}" target="_blank" rel="noopener">${esc(t('openPdf'))}</a></div>` : '';
   let right = '';
-  if (it.phase === 'reading') right = `<p class="skeleton" role="status">${esc(it.pages.length ? t('inReading') : t('inPreparing'))}</p>`;
+  if (it.phase === 'reading') right = `<p class="skeleton" role="status">${esc(it.pages.length || it.source === 'pdf' ? t('inReading') : t('inPreparing'))}</p>`;
   else if (it.phase === 'error') right = `<div class="notice bad" role="alert">${icon('alert')}<div>${esc(it.error)}</div></div><div class="row" style="margin-top:16px"><button class="btn primary" data-act="i-retry">${esc(t('retry'))}</button><button class="btn" data-act="i-cancel">${esc(t('cancel'))}</button></div>`;
   else {
     const f = it.form;
@@ -981,7 +1049,93 @@ function renderIntake() {
       <div class="row" style="margin-top:24px"><button class="btn primary" data-act="i-save">${esc(t('inSave'))}</button><button class="btn" data-act="i-cancel">${esc(t('cancel'))}</button></div>`;
   }
   d.innerHTML = `<div class="row between"><h2>${esc(t('inTitle'))}</h2><button class="btn" data-act="i-cancel" aria-label="${esc(t('close'))}">${icon('x', 18)}</button></div>
-    <div class="intake"><div>${pages}</div><div>${right}</div></div>`;
+    <div class="intake"><div>${pages || pdfPanel}</div><div>${right}</div></div>`;
+  renderChips();
+}
+
+/* ---------- Voice note ---------- */
+const REC_RATE = 24000, REC_MAX = 300;
+let rec = null;
+
+function abortRec() {
+  if (!rec) return;
+  clearInterval(rec.timer); rec.stream.getTracks().forEach((tr) => tr.stop()); try { rec.node.disconnect(); rec.ctx.close(); } catch {}
+  rec = null;
+}
+
+function startVoice() {
+  intake = { source: 'tale', phase: 'idle', secs: 0, form: null, fileIds: [], error: '' };
+  renderIntake(); $('#intake').showModal();
+}
+
+async function beginRec() {
+  const it = intake;
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true } });
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const url = URL.createObjectURL(new Blob(['class R extends AudioWorkletProcessor{process(i){const c=i[0][0];if(c)this.port.postMessage(c.slice());return true}}registerProcessor("r",R)'], { type: 'application/javascript' }));
+    await ctx.audioWorklet.addModule(url); URL.revokeObjectURL(url);
+    const node = new AudioWorkletNode(ctx, 'r'), chunks = [];
+    node.port.onmessage = (e) => chunks.push(e.data);
+    ctx.createMediaStreamSource(stream).connect(node);
+    const start = Date.now();
+    rec = { stream, ctx, node, chunks, timer: setInterval(() => {
+      it.secs = Math.floor((Date.now() - start) / 1000);
+      const el = $('#rec-time'); if (el) el.textContent = fmtTime(it.secs);
+      if (it.secs >= REC_MAX) { toast(t('recTooLong')); endRec(); }
+    }, 250) };
+    it.phase = 'recording'; renderIntake();
+  } catch { it.phase = 'error'; it.error = t('recMicFail'); renderIntake(); }
+}
+
+// Resamples to 24 kHz, 16-bit mono, and wraps it as a WAV file (base64), which is what the API accepts.
+function floatsToWav(chunks, n, rate) {
+  const all = new Float32Array(n); let o = 0; for (const c of chunks) { all.set(c, o); o += c.length; }
+  const ratio = rate / REC_RATE, len = Math.floor(n / ratio), pcm = new Int16Array(len);
+  for (let i = 0; i < len; i++) {
+    const pos = i * ratio, i0 = Math.floor(pos), f = pos - i0, s = all[i0] * (1 - f) + (all[i0 + 1] ?? all[i0]) * f;
+    pcm[i] = Math.max(-1, Math.min(1, s)) * 0x7fff;
+  }
+  const buf = new ArrayBuffer(44 + pcm.length * 2), v = new DataView(buf), w = (off, s) => [...s].forEach((ch, k) => v.setUint8(off + k, ch.charCodeAt(0)));
+  w(0, 'RIFF'); v.setUint32(4, 36 + pcm.length * 2, true); w(8, 'WAVE'); w(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, REC_RATE, true); v.setUint32(28, REC_RATE * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, 'data'); v.setUint32(40, pcm.length * 2, true);
+  new Int16Array(buf, 44).set(pcm);
+  const bytes = new Uint8Array(buf); let bin = ''; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+
+async function endRec() {
+  const it = intake; if (!rec || !it) return;
+  const { chunks } = rec, rate = rec.ctx.sampleRate, n = chunks.reduce((a, c) => a + c.length, 0);
+  abortRec();
+  if (n / rate < 1) { it.phase = 'idle'; renderIntake(); return toast(t('recTooShort')); }
+  it.phase = 'reading'; renderIntake();
+  try {
+    const out = await api('POST', `/api/cases/${st.token}/voice`, { wav: floatsToWav(chunks, n, rate) });
+    if (intake !== it) return;
+    it.form = { title: t('recDefaultTitle', fmtShort(localIso())), type: 'notat', date: localIso(), received: '', text: out.text };
+    it.phase = 'ready';
+  } catch (e) { if (intake !== it) return; it.phase = 'error'; it.error = e.message; }
+  renderIntake();
+}
+
+function renderVoice() {
+  const it = intake, d = $('#intake');
+  let body;
+  if (it.phase === 'idle') body = `<p style="margin-top:12px">${esc(t('recIntro'))}</p><p style="margin-top:20px"><button class="btn primary" data-act="rec-start">${icon('mic', 18)} ${esc(t('recStart'))}</button></p>`;
+  else if (it.phase === 'recording') body = `<p class="rec-live" role="status" style="margin-top:12px"><span class="rec-dot" aria-hidden="true"></span>${esc(t('recRecording'))} <strong id="rec-time">${fmtTime(it.secs)}</strong></p><p style="margin-top:20px"><button class="btn primary" data-act="rec-stop">${esc(t('recStop'))}</button></p>`;
+  else if (it.phase === 'reading') body = `<p class="skeleton" role="status" style="margin-top:12px">${esc(t('recTranscribing'))}</p>`;
+  else if (it.phase === 'error') body = `<div class="notice bad" role="alert" style="margin-top:12px">${icon('alert')}<div>${esc(it.error)}</div></div><div class="row" style="margin-top:16px"><button class="btn primary" data-act="rec-again">${esc(t('retry'))}</button><button class="btn" data-act="i-cancel">${esc(t('cancel'))}</button></div>`;
+  else {
+    const f = it.form;
+    body = `<div class="notice" style="margin-top:12px">${icon('info')}<div>${esc(t('recCaveat'))}</div></div>
+      <label for="i-title">${esc(t('titleLabel'))}</label><input id="i-title" value="${esc(f.title)}">
+      <label for="i-date">${esc(t('dateOnLetter'))}</label><input id="i-date" type="date" value="${esc(f.date)}">
+      <label for="i-text">${esc(t('recReview'))}</label><textarea id="i-text" class="big">${esc(f.text)}</textarea>
+      <div class="chips" id="chips"></div>
+      <div class="row" style="margin-top:24px"><button class="btn primary" data-act="i-save">${esc(t('inSave'))}</button><button class="btn" data-act="i-cancel">${esc(t('cancel'))}</button></div>`;
+  }
+  d.innerHTML = `<div class="row between"><h2>${esc(t('recTitle'))}</h2><button class="btn" data-act="i-cancel" aria-label="${esc(t('close'))}">${icon('x', 18)}</button></div>${body}`;
   renderChips();
 }
 
@@ -989,7 +1143,7 @@ async function saveIntake() {
   const it = intake, text = $('#i-text').value.replace(/\n\f/g, '\f').trim();
   if (!text) return toast(t('inNoText'));
   try {
-    await caseApi('POST', '/documents', { title: $('#i-title').value, type: $('#i-type').value, date: $('#i-date').value, received: $('#i-received').value, text, source: it.source, fileIds: it.fileIds });
+    await caseApi('POST', '/documents', { title: $('#i-title').value, type: $('#i-type')?.value || it.form.type, date: $('#i-date').value, received: $('#i-received')?.value || '', text, source: it.source, fileIds: it.fileIds });
   } catch (e) { return toast(e.message); }
   $('#intake').close(); intake = null;
   toast(t('inAdded'));
@@ -1005,6 +1159,10 @@ function setLang(l) {
 
 const acts = {
   'toggle-lang': () => setLang(lang === 'en' ? 'nb' : 'en'),
+  record: () => startVoice(),
+  'rec-start': () => beginRec(),
+  'rec-stop': () => endRec(),
+  'rec-again': () => { intake.phase = 'idle'; renderIntake(); },
   forget: (id) => { saker = saker.filter((s) => s.token !== id); saveSaker(); renderHome(); },
   'try-sample': async () => { const { token } = await api('POST', '/api/cases/sample', { lang }); remember(token, t('sampleName')); location.hash = `#/s/${token}`; },
   'toggle-simple': () => {
@@ -1062,7 +1220,7 @@ const acts = {
   },
   'i-save': () => saveIntake(),
   'i-retry': () => runRead(),
-  'i-cancel': () => { $('#intake').close(); intake = null; },
+  'i-cancel': () => { abortRec(); $('#intake').close(); intake = null; },
 };
 
 document.addEventListener('click', async (e) => {
@@ -1094,6 +1252,7 @@ document.addEventListener('change', async (e) => {
   const el = e.target;
   if (el.id === 'f-upload') { const files = el.files; await startIntake(files); el.value = ''; }
   else if (el.dataset?.check !== undefined) await setCheck(el.dataset.check, el.checked, el.id);
+  else if (el.id === 'hide-ids') { st.hideIds = el.checked; renderPage(); document.getElementById('hide-ids')?.focus(); }
 });
 document.addEventListener('input', (e) => { if (e.target.id === 'i-text') renderChips(); });
 
@@ -1105,6 +1264,7 @@ document.addEventListener('drop', async (e) => {
   await startIntake(e.dataTransfer.files);
 });
 
+$('#intake').addEventListener('close', abortRec);
 $('#intake').addEventListener('cancel', (e) => { if (intake?.phase === 'ready' && !confirm(t('inDiscard'))) e.preventDefault(); });
 
 route();

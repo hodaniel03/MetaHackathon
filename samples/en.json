@@ -33,10 +33,11 @@
     },
     {
       "id": "d5",
-      "title": "My note after talking to the employer",
+      "title": "Voice note: talk with the employer",
       "type": "notat",
       "date": "2026-10-25",
-      "text": "Spoke with the employer today. They say they cannot adjust the work so that Jordan can work part time. The job requires heavy lifting and long periods of standing and sitting.\nThe employer has not put this in writing. I have not contacted a lawyer yet.\nJordan has had no income since May. We have not collected receipts or a summary of the lost income."
+      "text": "I spoke with the employer today. They said they cannot adjust the work so that Jordan can work part time. The job needs heavy lifting and long periods of standing and sitting. They have not put this in writing. I have not contacted a lawyer yet. Jordan has had no income since May, and we have not collected receipts or a summary of the lost income.",
+      "source": "tale"
     }
   ]
 }

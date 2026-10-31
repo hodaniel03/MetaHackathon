@@ -31,10 +31,11 @@
     },
     {
       "id": "d5",
-      "title": "Mitt notat etter samtale med arbeidsgiver",
+      "title": "Talenotat: samtale med arbeidsgiver",
       "type": "notat",
       "date": "2026-10-25",
-      "text": "Snakket med arbeidsgiver i dag. De sier de ikke kan tilrettelegge arbeidet slik at Kari kan jobbe delvis. Jobben krever tungt løft og lange perioder med stående og sittende arbeid.\nArbeidsgiver har ikke skrevet noe om dette. Jeg har ikke kontaktet advokat ennå.\nKari har ikke hatt inntekt siden mai. Vi har ikke samlet kvitteringer eller oversikt over tapt inntekt."
+      "text": "Snakket med arbeidsgiveren i dag. De sier de ikke kan tilrettelegge arbeidet slik at Kari kan jobbe delvis. Jobben krever tungt løft og lange perioder med stående og sittende arbeid. De har ikke skrevet noe om dette. Jeg har ikke kontaktet advokat ennå. Kari har ikke hatt inntekt siden mai, og vi har ikke samlet kvitteringer eller oversikt over tapt inntekt.",
+      "source": "tale"
     }
   ]
 }

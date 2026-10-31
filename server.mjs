@@ -154,7 +154,7 @@ function createSample(lang) {
   const token = db.createCase(s.caseName || (lang === 'nb' ? 'Eksempelsak: Kari' : 'Sample case'), s.person || (lang === 'nb' ? 'Kari Eksempel (fiktiv)' : 'Fictional'));
   const idMap = {};
   for (const d of s.documents) {
-    idMap[d.id] = db.addDocument(token, { title: d.title, type: d.type, date: d.date || '', received: '', text: d.text, source: 'tekst' });
+    idMap[d.id] = db.addDocument(token, { title: d.title, type: d.type, date: d.date || '', received: '', text: d.text, source: SOURCES.includes(d.source) ? d.source : 'tekst' });
   }
   try {
     const analysis = JSON.parse(fs.readFileSync(path.join(root, 'samples', `${lang}.analysis.json`), 'utf8'));
@@ -194,9 +194,14 @@ async function readImages(token, body) {
     return { mime: m[1], b64: m[2], buf };
   });
   const text = str(body.text, MAX_CHARS);
-  if (!images.length && !text.trim()) throw new HttpError(400, 'Ingenting å lese.');
+  // En PDF lagres som original, og sendes til modellen som fil hvis den ikke har tekstlag.
+  const pm = typeof body.pdf === 'string' ? /^data:application\/pdf;base64,([A-Za-z0-9+/=]+)$/.exec(body.pdf) : null;
+  const pdfBuf = pm ? Buffer.from(pm[1], 'base64') : null;
+  if (pdfBuf && pdfBuf.length > 15_000_000) throw new HttpError(413, 'PDF-en er for stor.');
+  if (!images.length && !text.trim() && !pdfBuf) throw new HttpError(400, 'Ingenting å lese.');
   const files = images.map((img, i) => db.addFile(token, img.mime, img.buf, i + 1));
-  const out = await ai.readDocument({ images, text, lang: ai.normLang(body.lang) });
+  if (pdfBuf) files.push(db.addFile(token, 'application/pdf', pdfBuf, 1));
+  const out = await ai.readDocument({ images, text, pdf: pm ? { b64: pm[1] } : null, lang: ai.normLang(body.lang) });
   return { files, ...out };
 }
 
@@ -277,6 +282,20 @@ http
         const list = i !== null && frister[Number(i)] ? [frister[Number(i)]] : frister;
         if (!list.length) throw new HttpError(404, lang === 'nb' ? 'Ingen frister med dato ennå.' : 'No deadlines with a date yet.');
         return send(res, 200, buildIcs(db.getCase(token), docs, list, lang), 'text/calendar; charset=utf-8', { 'Content-Disposition': `attachment; filename="${lang === 'nb' ? 'saksmappen' : 'casefolder'}-deadlines.ics"` });
+      }
+
+      if (sub === 'voice' && req.method === 'POST') {
+        requireKey();
+        const b = await readBody(req, 30_000_000);
+        const wav = typeof b.wav === 'string' ? Buffer.from(b.wav, 'base64') : null;
+        if (!wav || wav.length < 1000 || wav.toString('latin1', 0, 4) !== 'RIFF') throw new HttpError(400, 'Ugyldig lydopptak.');
+        if (wav.length > 20_000_000) throw new HttpError(413, 'Opptaket er for langt.');
+        // Lyden lagres ikke. Bare teksten kommer tilbake, og brukeren velger om den lagres.
+        try {
+          return sendJson(res, await ai.transcribeWav(wav));
+        } catch (e) {
+          throw new HttpError(502, e.message);
+        }
       }
 
       if (sub === 'read' && req.method === 'POST') return sendJson(res, await readImages(token, await readBody(req, 25_000_000)));
