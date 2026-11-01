@@ -355,6 +355,13 @@ footer.foot p { margin: 0; }
 /* ---------- Texts. Missing Norwegian keys fall back to English. ---------- */
 const T = {
   en: {
+    notCalc: 'We do not calculate this kind of deadline.', notCalcText: 'The letter counts working days or months in a way we do not calculate, and a wrong date is worse than no date. Read the letter and put the date in your calendar yourself.',
+    evQc: (a, b, c, d) => `Quote checker on its own: ${a} of ${b} altered quotes rejected, ${c} of ${d} harmless reformattings accepted`, evQcLimit: 'The checker cannot tell whether a true quote supports the claim it is attached to.',
+    evFixed: 'The first run found 2 wrong dates (a deadline in working days and one at the end of a month). The app now refuses to calculate those and says so.', homeLimits: 'Limits: there is no sign-in yet, so a link is the only protection. The sources in the profile demo are simulated and the programs are fictional. CaseAlly organizes and explains. It is not legal advice.',
+    evTitle: 'How well does it work?', evLead: (n) => `We ran the real analysis on ${n} synthetic, fictional cases that we wrote ourselves, with the right answers written down first.`,
+    evDeadlines: (c, e, pct) => `Deadlines found: ${c} of ${e} (${pct}%)`, evFalse: (n, k) => `Invented deadline dates: ${n} (in ${k} ${k === 1 ? 'case' : 'cases'})`, evAsk: (a, n) => `Asked for the received date instead of guessing: ${a} of ${n}`, evIll: (i, n) => `Dates invented where the text was unreadable: ${i} of ${n}`,
+    evMissing: (c, e, pct) => `Missing documents found: ${c} of ${e} (${pct}%)`, evQuotes: (f, n, pct) => `Quotes not found word for word: ${f} of ${n} (${pct}%)`, evTime: (m) => `About ${m} seconds per case`,
+    evLimits: 'This is a small test of our own making, not a benchmark. The cases are synthetic and the answers were written by us. It says nothing about real letters, photos or other languages. Deadline dates are calculated by code, so a missed date means the model did not report the duration or the received date was missing.', evRan: (d, m) => `Run ${d} with ${m}`, evDetails: 'See each case',
     tab_profil: 'Profile', pfTitle: 'Verified profile', pfLead: 'The facts programs ask for again and again, each with where it comes from. Share them once, with your consent, for as long as you choose.',
     pfDemo: 'Demo limits: the sources (tax, payroll, population register) and the programs are simulated. They return made-up values and no real agency is contacted. There is no sign-in yet, so anyone with a link can see what that link shows. This is not legal advice.',
     pfSource: 'From a source', pfSim: 'SIMULATED', pfFetched: (n, d) => `${n} · fetched ${d}`, pfClaimed: 'Claimed, not verified at a source', pfClaimedBy: 'The family says', pfEmpty: 'No value yet', pfNoteDoc: 'Quote found in a document', pfNoteVoice: 'From a voice note, not an official document', pfNoteUser: 'Entered by you', pfNoteOther: 'Not checked',
@@ -468,6 +475,13 @@ const T = {
     hideIds: 'Hide ID numbers', hideIdsHint: 'Hides personal ID numbers we recognize, such as Norwegian national ID numbers and US Social Security numbers. It can miss others, so check before you share.', idHidden: '[ID number hidden]', hLegendHidden: 'Personal ID numbers we recognize have been hidden.',
   },
   nb: {
+    notCalc: 'Vi regner ikke ut denne typen frist.', notCalcText: 'Brevet teller arbeidsdager eller måneder på en måte vi ikke regner ut, og en feil dato er verre enn ingen dato. Les brevet og legg datoen inn i kalenderen selv.',
+    evQc: (a, b, c, d) => `Sitatsjekken alene: ${a} av ${b} endrede sitater avvist, ${c} av ${d} harmløse omformateringer godtatt`, evQcLimit: 'Sjekken kan ikke si om et sant sitat støtter påstanden det er knyttet til.',
+    evFixed: 'Første kjøring fant 2 feil datoer (en frist i arbeidsdager og en ved månedsslutt). Appen nekter nå å regne ut slike og sier fra.', homeLimits: 'Begrensninger: det finnes ingen innlogging ennå, så en lenke er eneste beskyttelse. Kildene i profil-demoen er simulert og programmene er fiktive. CaseAlly organiserer og forklarer. Det er ikke juridisk rådgivning.',
+    evTitle: 'Hvor godt fungerer det?', evLead: (n) => `Vi kjørte den ekte analysen på ${n} syntetiske, fiktive saker vi skrev selv, med de riktige svarene nedskrevet først.`,
+    evDeadlines: (c, e, pct) => `Frister funnet: ${c} av ${e} (${pct} %)`, evFalse: (n, k) => `Oppdiktede fristdatoer: ${n} (i ${k} ${k === 1 ? 'sak' : 'saker'})`, evAsk: (a, n) => `Spurte om mottaksdato i stedet for å gjette: ${a} av ${n}`, evIll: (i, n) => `Oppdiktede datoer der teksten var uleselig: ${i} av ${n}`,
+    evMissing: (c, e, pct) => `Manglende dokumenter funnet: ${c} av ${e} (${pct} %)`, evQuotes: (f, n, pct) => `Sitater som ikke står ordrett: ${f} av ${n} (${pct} %)`, evTime: (m) => `Omtrent ${m} sekunder per sak`,
+    evLimits: 'Dette er en liten test vi har laget selv, ikke en benchmark. Sakene er syntetiske og fasiten er skrevet av oss. Den sier ingenting om ekte brev, bilder eller andre språk. Fristdatoer regnes ut av kode, så en tapt dato betyr at modellen ikke oppga varigheten, eller at mottaksdatoen manglet.', evRan: (d, m) => `Kjørt ${d} med ${m}`, evDetails: 'Se hver sak',
     tab_profil: 'Profil', pfTitle: 'Verifisert profil', pfLead: 'Opplysningene programmer ber om igjen og igjen, hver med hvor den kommer fra. Del dem én gang, med ditt samtykke, så lenge du velger.',
     pfDemo: 'Begrensninger i demoen: kildene (skatt, lønn, folkeregister) og programmene er simulert. De gir oppdiktede verdier, og ingen ekte etat kontaktes. Det finnes ingen innlogging ennå, så alle med en lenke kan se det lenken viser. Dette er ikke juridisk rådgivning.',
     pfSource: 'Fra en kilde', pfSim: 'SIMULERT', pfFetched: (n, d) => `${n} · hentet ${d}`, pfClaimed: 'Påstått, ikke verifisert hos en kilde', pfClaimedBy: 'Familien sier', pfEmpty: 'Ingen verdi ennå', pfNoteDoc: 'Sitatet står i et dokument', pfNoteVoice: 'Fra et talenotat, ikke et offisielt dokument', pfNoteUser: 'Skrevet inn av deg', pfNoteOther: 'Ikke sjekket',
@@ -589,7 +603,7 @@ const PAGES = ['oversikt', 'tidslinje', 'dokumenter', 'frister', 'mangler', 'fak
 const TAB_KEYS = ['oversikt', 'tidslinje', 'dokumenter', 'frister', 'mangler', 'fakta', 'profil', 'skriv'];
 const MAX_PAGES = 6;
 
-let lang = 'en';
+let lang = 'nb'; // Norwegian first. English with ?lang=en or the language button, and the choice is remembered.
 try { const l = new URLSearchParams(location.search).get('lang') || localStorage.getItem(LANG_KEY); if (l === 'nb' || l === 'en') lang = l; } catch {}
 const t = (k, ...a) => { const v = T[lang][k] ?? T.en[k] ?? k; return typeof v === 'function' ? v(...a) : v; };
 const typeLabel = (k) => t('type_' + k);
@@ -790,6 +804,7 @@ function calcHtml(f) {
   if (f.dato && f.usikker) return `<div class="notice" style="margin-top:12px">${icon('alert')}<div><strong>${esc(t('notInDoc'))}</strong> ${esc(t('notInDocText', fmtLong(f.dato)))}</div></div>`;
   if (f.dato && d?.source === 'tale') return `<dl class="calc"><div class="res"><dt>${esc(t('asInVoice'))}</dt><dd>${esc(fmtShort(f.dato))}</dd></div></dl><p class="meta">${esc(t('confirmWriting'))}</p>`;
   if (f.dato) return `<dl class="calc"><div class="res"><dt>${esc(t('asInLetter'))}</dt><dd>${esc(fmtShort(f.dato))}</dd></div></dl>`;
+  if (f.ikkeStottet) return `<div class="notice" style="margin-top:12px">${icon('alert')}<div><strong>${esc(t('notCalc'))}</strong> ${esc(t('notCalcText'))}</div></div>`;
   return `<div class="notice" style="margin-top:12px">${icon('info')}<div><strong>${esc(t('weNeedDate'))}</strong> ${esc(f.regel || t('defaultRule'))}</div></div>`;
 }
 
@@ -849,11 +864,34 @@ function renderChrome() {
 }
 
 /* ---------- Home ---------- */
+let EVAL = null;
+fetch('/eval.json').then((r) => (r.ok ? r.json() : null)).then((j) => { EVAL = j; if (document.querySelector('[data-form="new-case"]')) renderHome(); }).catch(() => {});
+const pctOf = (a, b) => Math.round((100 * a) / Math.max(1, b));
+function qcLine() {
+  const q = EVAL?.quoteCheckTest?.tests; if (!q) return '';
+  const sum = (want) => Object.values(q).filter((x) => x.expected === want).reduce((a, x) => [a[0] + x.correct, a[1] + x.tried], [0, 0]);
+  const [ra, rb] = sum('rejected'), [aa, ab] = sum('accepted');
+  return t('evQc', ra, rb, aa, ab);
+}
+function evalCard() {
+  if (!EVAL) return '';
+  const s = EVAL.summary, q = s.quoteCheck, d = s.deadlines, rows = [
+    t('evDeadlines', d.caught, d.expected, pctOf(d.caught, d.expected)), t('evFalse', d.falseDated, d.casesWithFalseDated),
+    s.needsReceived.cases ? t('evAsk', s.needsReceived.askedForReceivedDate, s.needsReceived.cases) : '', s.illegibleDate.cases ? t('evIll', s.illegibleDate.invented, s.illegibleDate.cases) : '',
+    t('evMissing', s.missing.caught, s.missing.expected, pctOf(s.missing.caught, s.missing.expected)), t('evQuotes', q.notFoundWordForWord, q.quotes, pctOf(q.notFoundWordForWord, q.quotes)), t('evTime', s.seconds.mean), qcLine(), t('evQcLimit'), t('evFixed')].filter(Boolean);
+  return `<section class="card" aria-labelledby="h-eval"><h2 id="h-eval">${esc(t('evTitle'))}</h2><p style="margin-top:8px">${esc(t('evLead', s.cases))}</p>
+    <ul class="plain-list" style="margin-top:12px">${rows.map((r) => `<li>${esc(r)}</li>`).join('')}</ul>
+    <div class="notice" style="margin-top:16px;background:var(--neutral-bg);color:var(--ink);border-color:var(--line)">${icon('info')}<div>${esc(t('evLimits'))}</div></div>
+    <p class="meta" style="margin-top:12px">${esc(t('evRan', s.ran.slice(0, 10), s.model))}</p>
+    <details style="margin-top:8px"><summary class="btn-link" style="display:inline-flex">${esc(t('evDetails'))}</summary><ul class="plain-list" style="margin-top:8px">${EVAL.cases.map((c) => `<li><strong>${esc(c.id)}</strong>: ${esc(c.line)}</li>`).join('')}</ul></details></section>`;
+}
+
 function renderHome() {
   st = null; document.title = t('brand'); document.body.classList.remove('simple');
   renderChrome();
   $('#app').innerHTML = `<div class="stack">
     <div class="stack-s"><h1>${esc(t('homeTitle'))}</h1><p class="lead">${esc(t('homeLead'))}</p></div>
+    <div class="notice" style="background:var(--neutral-bg);color:var(--ink);border-color:var(--line)">${icon('info')}<div>${esc(t('homeLimits'))}</div></div>
     <section class="card" aria-labelledby="h-saker"><h2 id="h-saker">${esc(t('yourCases'))}</h2>
       ${saker.length ? `<ul style="list-style:none;margin:16px 0 0;padding:0">${saker.map((s) => `<li class="row between" style="padding:8px 0;border-bottom:1px solid var(--line)"><a class="btn-link" href="#/s/${esc(s.token)}">${esc(s.name)}</a><button class="btn-link" data-act="forget" data-id="${esc(s.token)}" title="${esc(t('removeTitle'))}">${esc(t('removeFromList'))}</button></li>`).join('')}</ul>` : `<p style="margin-top:8px" class="meta">${esc(t('noCases'))}</p>`}
       <form data-form="new-case"><label for="newname">${esc(t('newCase'))}</label>
@@ -861,6 +899,7 @@ function renderHome() {
       <p style="margin-top:12px"><button class="btn-link" data-act="try-sample">${esc(t('trySample'))}</button></p>
       ${SRV.needsCode ? `<p class="meta" style="margin-top:8px">${esc(t('homeCode'))}</p>` : ''}
     </section>
+    ${evalCard()}
     <section class="card" aria-labelledby="h-trust"><h2 id="h-trust">${esc(t('trustTitle'))}</h2>
       <ul class="plain-list stack-s" style="margin-top:12px"><li>${esc(t('trust1'))}</li><li>${esc(t('trust2'))}</li><li>${esc(t('trust3'))}</li><li>${esc(t('trust4'))}</li></ul></section></div>`;
 }

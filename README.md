@@ -1,10 +1,10 @@
-# Case Ally (Saksmappen)
+# CaseAlly (Saksmappen)
 
 **A case folder for the family member who runs a long benefits or insurance case for someone else.**
 
 You add the letters, decisions and medical statements as they arrive, by photo, PDF, pasted text or a voice note. Case Ally reads them, builds a timeline, finds the deadlines, lists what is still missing, and drafts an appeal. Every claim it makes comes with a **word-for-word quote from your document, and the server checks that the quote really is there.**
 
-The app is in English by default and also works in Norwegian (called *Saksmappen*). It was built for the Meta Global AI Developer Hackathon, theme **Build for Your World**, from the author's own experience of helping family through disability benefits, insurance claims and a lawyer.
+The app opens in Norwegian (where it is called *Saksmappen*) and also works in English; the choice is remembered, and `?lang=en` forces English. It was built for the Meta Global AI Developer Hackathon, theme **Build for Your World**, from the author's own experience of helping family through disability benefits, insurance claims and a lawyer.
 
 > Case Ally organizes and explains. It does not give legal advice. All sample documents are fictional.
 
@@ -34,7 +34,9 @@ Long cases with an agency, an insurer and a lawyer are hard in the same ways:
 An AI that just *says* things does not help someone who is afraid of being wrong. So every claim is shown as **Claim, then Quote, then Source document and page.**
 
 - The model must give a quote copied word for word from the document.
-- The server then checks that the quote is in the document text (case, quote marks and whitespace are ignored). The result is shown as **Checked against the document** or **Could not be checked. Check yourself.**
+- The server then checks that the quote is in the document text (case, quote marks and whitespace are ignored). The result is shown as **Quote found in the document** or **Quote not found. Check yourself.** We deliberately do not say "checked": a found quote means the words are there, not that they were read correctly or understood correctly.
+- **You confirm dates and amounts.** The Overview lists every date and amount with its quote and asks you to tick that you have checked it against the letter. The trust bar counts quotes found and numbers you have confirmed, separately.
+- **Ideas are not checked facts.** The quote that triggered an idea gets a dashed, neutral badge, not the green one, and the idea itself is labelled *Idea, not checked*.
 - **Dates are calculated by code, not by the model.** Early testing showed the model getting date arithmetic wrong (six weeks from October 16 came back as November 28; it is November 27). Now the model only reports the *duration* ("6 weeks", "60 days") and what it runs from (receipt or the letter's date). The code adds it to the date you enter. The deadline screen shows the sum: *You received the letter Oct 16 + 60 days = Dec 15*.
 - A date the model gives that appears **neither in the document nor was computed by code** is marked *The date is not in the document* in an amber box.
 - If a deadline depends on when you received the letter and you have not entered that, the app asks you instead of guessing.
@@ -71,6 +73,18 @@ The API key lists `muse-spark-1.1`, `1.2`, `1.3`, two `-contributor` variants, `
 - **`muse-image-1.0`, `muse-wonder-1.0`:** no fit for this product, or no documentation found. We did not force them in.
 
 ---
+
+## From case folder to consent-based verification layer (demo)
+
+The long-term idea is *verify once, apply everywhere*: the family builds a verified profile once and shares only the fields a program needs, with consent that expires and can be withdrawn. This repo contains a working demo of that layer. **Read the limits first:**
+
+> **Limits, on purpose and visible in the app:** the sources (tax register, payroll, population register) and the three programs are **simulated and fictional**. They return made-up values and no real agency, logo, person or system is contacted. There is **no sign-in yet**: a case link and a program link are bearer links. Nothing here is legal advice.
+
+- **Verified profile** (income, household, residence). Each field shows where it comes from and when: *from a source (SIMULATED)*, or *claimed* (a quote in a document, a voice note, or your own entry), which is never shown as verified. If both exist, both are shown.
+- **Share with a program.** Three fictional programs each need certain fields. You tick which fields to share (required ones are needed, optional ones are off by default), choose 7, 30 or 90 days, and get a link for the program. The program sees only those fields, as they were on the day you shared.
+- **Program view** (`#/v/<link>`). Shows each field as either *verified from source (SIMULATED)* or *claimed by the family, not verified at a source*, with the basis. No case name, no other documents.
+- **Withdraw and log.** Withdraw access at any time: the same link then shows nothing. Every grant, withdrawal and visit (including denied visits to withdrawn or expired links) is in the access log.
+- **Appeal deadline** has its own countdown at the top of the Overview. If the received date is missing the app asks *When did you receive the decision?* and calculates the date in code, with no model call.
 
 ## What you can do in the app
 
@@ -153,6 +167,10 @@ All routes are under `/api/cases`.
 - `POST …/translate` (the Simple view text into one of the supported languages)
 - `GET …/facts`, `PUT` and `DELETE …/facts/:id` (confirm, include, correct, delete)
 - `GET …/packet` (printable HTML) and `GET …/packet.json` (`?lang=`, `&quotes=1`, `&hide=0` to show ID numbers, `&dl=1` to download)
+- `POST …/recalc` (recalculate deadline dates in code after a received date is added; no model call)
+- `GET …/profile`, `POST …/profile/source` (fetch one field from a SIMULATED source), `DELETE …/profile/:field`
+- `POST …/consents`, `DELETE …/consents/:id` (grant per field with expiry, withdraw)
+- `GET /api/view/:link` (what a program sees; logged)
 - `POST …/ask`, `POST …/draft`
 - `PUT …/checks`
 - `GET …/files/:id`, `GET …/calendar.ics` (optional `?i=` for one deadline, `?lang=`)
@@ -239,6 +257,40 @@ Fonts come from Google Fonts and the PDF reader from cdnjs, so you need internet
 - The same decision in two documents can produce two deadlines that are not merged.
 - The app has no legal knowledge on purpose. It only uses what the documents say. A letter that states a deadline in a way our date code does not recognize will show *We need a date* or a model-computed date flagged as unchecked.
 
+## The 90-second demo
+
+1. **0:00** Open the app (Norwegian) and choose the fictional sample case. The Overview starts with the **appeal deadline** asking *Når mottok du vedtaket?*
+2. **0:10** Enter 16 Oct. The countdown appears at once (no model call): *received Oct 16 + 60 days = Dec 15*, with the highlighted quote and *Sitatet står i dokumentet*. Tick *I have checked this against the letter*.
+3. **0:30** **Documents**: evidence cards with claims found and deadlines per document.
+4. **0:40** **Profile**: fetch household, residence and income from the three SIMULATED sources. Income shows the source value next to what the family said in a voice note.
+5. **0:55** **Share with a program**: share with *Transport support* and *Free legal aid* (both fictional), 30 and 7 days.
+6. **1:05** *Open as the program*: the program sees only the consented fields, each marked *verified from source (SIMULATED)* or *claimed by the family*.
+7. **1:15** Withdraw one consent. Its link now shows nothing, and the access log has the grant, the visit and the withdrawal.
+8. **1:20** Home page: the **evaluation numbers** (see below).
+
+## Evaluation
+
+`node --no-warnings eval/run.mjs` runs the real analysis on 20 synthetic, fictional cases (`eval/cases.mjs`, 10 English and 10 Norwegian) and scores them against answers written first. `node --no-warnings eval/quotecheck.mjs` tests the quote checker on its own. Results are saved in `eval/results/` and the app reads `public/eval.json` (written by `eval/publish.mjs`).
+
+Latest run (`eval/results/latest.json`, model `muse-spark-1.3`, 20 cases, about 8 seconds per case):
+
+| What | Result |
+|---|---|
+| Deadline dates found, exactly right | **16 of 18** (89%) |
+| Dates shown that were wrong or invented | **0** (see the first run below) |
+| Asked for the received date instead of guessing | 1 of 1 |
+| Date invented where the text was unreadable | 0 of 1 |
+| Deadline invented in letters that have none | 0 of 2 |
+| Missing documents found | **10 of 10** |
+| Quotes not found word for word in the document | **0 of 94** |
+| Quote checker on its own: altered quotes rejected | 19 of 19 digit changes, 47 of 47 word changes, 38 of 38 reorderings, 53 of 53 wrong-document; harmless reformatting accepted 53 of 53 |
+
+**What the first run found.** The first run (`eval/results/2026-11-01-22-06-04.json`) scored 16 of 18 and also showed **2 wrong dates**: for "5 working days of receipt" the model reported "5 days" and the code calculated a calendar date (October 21 instead of October 23), and for "end of the month after the date of this letter" it reported "1 month" and the code gave October 14. Both looked like confident, calculated dates. The code now refuses to calculate working-day and end-of-month rules and tells the user to read the letter (`UNSUPPORTED_RULE` in `lib/ai.mjs`), so the same two cases now give no date instead of a wrong one. The two cases still count as missed in the 16 of 18, because the app does not support those rules.
+
+**What this does not show.** The cases are synthetic, short and written by us, with the right answers written by us. 0 failed quotes in 94 is a small sample and does not mean the model never paraphrases. The test says nothing about real letters, photographs, handwriting or languages other than English and Norwegian. The quote checker cannot tell whether a true quote supports the claim it is attached to. The numbers are on the home page of the app, with these limits.
+
 ## Not built yet
+
+Sign-in and real consent (today a link is the only protection), connections to real agencies or registers (every source here is simulated), a real evaluation on real letters and photos, and the items below.
 
 Real accounts and sharing roles, reminders by email or text, more languages (the prompts and texts are separated per language, so another one is a dictionary and a set of prompts, but it needs a native speaker to check), case templates reviewed by experts, and direct connections to agencies' systems.
