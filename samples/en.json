@@ -8,7 +8,7 @@
       "title": "Medical statement from family doctor",
       "type": "legeerklæring",
       "date": "2026-03-12",
-      "text": "MEDICAL STATEMENT\nPatient: Jordan Example, born 1991.\nPhysician: Dr. Sam Fictional, Example Family Clinic.\n\nThe patient was rear-ended in a car accident on February 3, 2026. Diagnosis: whiplash injury to the neck and lower back. The patient has pain when sitting longer than 30 minutes and when lifting.\nThe patient has been fully off work since February 3, 2026.\nThe patient has been referred to an orthopedic specialist. The estimated wait is about eight weeks.\nThe expected duration of inability to work is uncertain.\n\nSincerely,\nDr. Sam Fictional"
+      "text": "MEDICAL STATEMENT\nPatient: Jordan Example, born 1991.\nPhysician: Dr. Sam Fictional, Example Family Clinic.\n\nThe patient was rear-ended in a car accident on February 3, 2026. Diagnosis: whiplash injury to the neck and lower back. The patient has pain when sitting longer than 30 minutes and when lifting.\nThe patient has been fully off work since February 3, 2026.\nThe patient has been referred to an orthopedic specialist. The estimated wait is about eight weeks.\nThe expected duration of inability to work is uncertain.\nThis statement is valid for 6 months from the date above.\n\nSincerely,\nDr. Sam Fictional"
     },
     {
       "id": "d2",

@@ -336,7 +336,7 @@ footer a{color:#fff}
     <nav class="main" aria-label="Page sections">
       <a href="#problem">The problem</a><a href="#how">How it works</a><a href="#trust">Verification</a><a href="#meta">Meta models</a><a href="#privacy">Limits</a>
     </nav>
-    <a class="btn primary small" href="#demo"><span class="long">See a fictional sample case</span><span class="short">Sample case</span></a>
+    <a class="btn primary small" href="https://caseally-app.netlify.app/?sample" rel="noopener"><span class="long">Open the live app</span><span class="short">Live app</span></a>
   </div>
 </header>
 
@@ -356,9 +356,10 @@ footer a{color:#fff}
       <h1 id="h1">Every claim comes with <em>its quote.</em></h1>
       <p class="lead">A case folder for the family member who runs a long benefits or insurance case for someone else.</p>
       <div class="cta-row">
-        <a class="btn primary" href="#demo">See a fictional sample case <svg class="ic" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        <a class="btn" href="#how">How it works</a>
+        <a class="btn primary" href="https://caseally-app.netlify.app/?sample" rel="noopener">Open a sample case in the app <svg class="ic" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn" href="#demo">Try the check on this page</a>
       </div>
+      <p class="hero-note" style="margin-bottom:10px"><span>The sample case needs no sign-in. Features that call live AI, such as reading your own documents, ask for an access code from the hackathon submission.</span></p>
       <p class="hero-note"><svg class="ic" width="20" height="20" aria-hidden="true" style="margin-top:3px;color:var(--navy)"><use href="#i-shield"/></svg><span>Case Ally organizes and explains. It does not give legal advice. All sample documents are fictional.</span></p>
     </div>
     <figure class="video-frame" style="margin:0">
@@ -600,8 +601,8 @@ footer a{color:#fff}
   <div class="px" data-speed="-0.14" data-rot="-8" style="left:-70px;bottom:-60px;width:320px;opacity:.5" aria-hidden="true"><svg viewBox="0 0 64 64" width="320"><path d="M5 17a6 6 0 0 1 6-6h13.5a6 6 0 0 1 4.6 2.1L33 18h20a6 6 0 0 1 6 6v29a6 6 0 0 1-6 6H11a6 6 0 0 1-6-6z" fill="#fff" opacity=".08"/></svg></div>
   <div class="wrap">
     <h2 id="h-final">Try the check on a fictional case.</h2>
-    <p>The sample runs in this page, so there is nothing to install and no real documents are involved.</p>
-    <div class="cta-row"><a class="btn primary" href="#demo">See a fictional sample case</a><a class="btn light" href="#meta">See how it uses Meta models</a></div>
+    <p>The live app opens a fictional sample case with no sign-in, and the same check also runs on this page. Features that call live AI ask for an access code from the hackathon submission.</p>
+    <div class="cta-row"><a class="btn primary" href="https://caseally-app.netlify.app/?sample" rel="noopener">Open a sample case in the app</a><a class="btn light" href="#demo">Try the check on this page</a><a class="btn light" href="#meta">See how it uses Meta models</a></div>
   </div>
 </section>
 
@@ -714,11 +715,13 @@ var TOUR=[
  '<div class="mock"><div class="mini"><strong>File appeal of denial</strong><dl class="calc" style="margin-top:10px"><div><dt>You received the letter</dt><dd>Oct 16</dd></div><span class="op" aria-hidden="true">+</span><div><dt>The deadline in the letter</dt><dd>60 days</dd></div><span class="op" aria-hidden="true">=</span><div class="res"><dt>Deadline</dt><dd>Dec 15</dd></div></dl></div><p style="margin-top:12px"><span class="btn small" style="cursor:default"><svg class="ic" width="18" height="18" aria-hidden="true"><use href="#i-cal"/></svg>Download calendar file (.ics)</span></p></div>'],
 ['Missing','Missing','A checklist where each item says why it is needed and how to get it, with its source quote.',
  '<div class="mock"><div class="mini"><div class="cb"><i></i><div><strong>Specialist statement on permanent impairment</strong><p class="small muted">Why: the insurer denied lost income for now because it has no specialist statement.</p></div></div></div><div class="mini"><div class="cb"><i class="on"><svg class="ic" width="16" height="16" aria-hidden="true" style="color:#fff"><use href="#i-check"/></svg></i><div><strong>Written confirmation from the employer</strong><p class="small muted">Obtained</p></div></div></div></div>'],
+['Facts','Facts','Details that come up again in other applications, renewals and with professionals, each with a quote and a source. You can confirm, correct, exclude or delete a fact. A fact you correct is marked “Entered by you — not checked”, and a fact from a voice note says so. A validity is only arithmetic on a duration the document quotes.',
+ '<div class="mock"><div class="mini"><span class="badge ok">'+CHECK+'Checked against the document</span><p class="claim-t" style="font-weight:600;font-size:1.25rem;margin:8px 0">Valid for 6 months from the statement date</p><div class="q">This statement is valid for 6 months from the date above.</div><p class="small muted" style="margin-top:8px">From medical statement dated Mar 12 + 6 months = Sep 12. May be stale for a renewal after this date.</p></div><div class="mini" style="margin-top:12px"><span class="badge ok">'+CHECK+'Checked against your voice note</span><p style="font-weight:600;margin:8px 0">no income since May</p><p class="small muted">From your voice note, not an official document.</p></div></div>'],
 ['Ask & Write','Ask & Write','Ask a question about the case, or draft an appeal letter or a plain-text summary. Answers use only the documents in the case, and show where they come from.',
  '<div class="mock"><div class="fakeinp">What does the specialist need to write for the insurer to accept it?</div><div class="mini" style="margin-top:12px"><p>The documents do not say more than that a specialist statement is needed by November 30. Ask the insurer what it must contain.</p><div class="vclaim ok" style="margin-top:10px;border-left-color:var(--ok);padding:12px 14px"><span class="badge ok">'+CHECK+'Checked against the document</span><p class="q" style="margin-top:8px;font-size:1rem">“We need a statement from an orthopedic specialist by November 30, 2026.”</p></div></div><p class="small muted" style="margin-top:10px">Drafts are not checked quote by quote. Read and edit them before you use them.</p></div>'],
 ['Simple View','Simple View','A toggle in the header. One column, large text, three headings: what happened, what happens now, what you need to do.',
  '<div class="mock"><div class="simplev"><h4>What happened</h4><p>Your application was denied on October 14.</p><h4>What happens now</h4><p>You can appeal. The deadline is December 15.</p><h4>What you need to do</h4><ol><li>Tell us the day you received the letter.</li></ol></div></div>'],
-['Share / Handover','Share and handover','Copy the case link. Open a printable handover page for a lawyer, with a “Hide ID numbers” switch. Rename or delete the case.',
+['Share / Handover','Share and handover','Copy the case link. Open a printable handover page for a lawyer, with a “Hide ID numbers” switch. Choose which facts go into a proof packet, and open it as a printable page or download it as data (JSON). Rename or delete the case.',
  '<div class="mock"><div class="fakeinp" style="display:flex;gap:10px;align-items:center"><svg class="ic" width="20" height="20" aria-hidden="true"><use href="#i-link"/></svg>caseally.example/case-link-shown-here</div><div class="mini" style="margin-top:12px"><div class="cb"><i class="on"><svg class="ic" width="16" height="16" aria-hidden="true" style="color:#fff"><use href="#i-check"/></svg></i><div><strong>Hide ID numbers</strong><p class="small muted">Pattern matching, not a guarantee.</p></div></div></div></div>']
 ];
 var tabs=$('#tabs'), panel=$('#tpanel');

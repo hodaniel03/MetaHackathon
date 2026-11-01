@@ -82,9 +82,19 @@ The API key lists `muse-spark-1.1`, `1.2`, `1.3`, two `-contributor` variants, `
 | **Deadlines** | Sorted by urgency. Shows the calculation. Asks for the received date when a deadline needs it. Downloads a calendar file (`.ics`) with alerts 7 days and 1 day before. |
 | **Missing** | A checklist with 24 px checkboxes. Each item says why it is needed and how to get it, with its source quote. Ticks are saved. |
 | **Ask & write** | Ask a question about the case. Draft an appeal letter or a plain-text summary. |
+| **Facts** | Details that come up again in other applications, renewals and with professionals (income, address, household, work status, diagnosis, case numbers), each with a word-for-word quote and a source. **Confirm**, **Correct**, **Exclude from packet** or **Delete** each one. A corrected fact is marked *Entered by you — not checked* and keeps its original quote, marked as replaced. A fact from a voice note says *From your voice note, not an official document*. If the document quotes a duration ("valid for 6 months"), the app adds it to the document date (or the received date) and shows the whole sum. It never states any program's rules. |
 | **Things it may be worth asking about** | A card on the Overview with up to four general suggestions (for example free legal aid, or help with transport to appointments). Each is labelled **Idea, not checked** and shows the quote from your documents that triggered it. They come from general knowledge, are not rights, and carry no amounts or eligibility claims. |
 | **Simple view** | A toggle in the header. One column, large text, three headings. A language picker shows it in Norwegian, English, Arabic, Urdu, Polish, Somali, Ukrainian or Turkish (right-to-left for Arabic and Urdu). Dates keep their day, month and year and only get translated month names. The translation is by the model and is marked as machine translation. |
-| **Share** | Copy the case link. Open the printable **handover page** for a lawyer, with a **Hide ID numbers** switch. Rename or delete the case. |
+| **Share** | Copy the case link. Build a **proof packet** from the facts you choose, as a printable page or as JSON (see below). Open the printable **handover page** for a lawyer, with a **Hide ID numbers** switch. Rename or delete the case. |
+
+### Facts and the proof packet
+
+A fact is a claim with the same trust model: *fact → quote → source document, voice note or your own entry*. Analysis reads facts as a **fifth part**, alongside the four others. A failed facts call never blocks the rest, and the analysis then stays "not up to date" so you can update it. The ideas card is not a source of facts and nothing in the facts code reads it.
+
+- The status of a fact is computed on every read, by the one quote checker in `lib/ai.mjs`: *checked* (the quote is in the document text), *not checked* (it is not, for example after the document was edited), *source document deleted* (check yourself), *entered by you* (not checked). The model never decides it. `external` is reserved for a future agency or bank source and cannot occur yet.
+- The page number and the validity date are computed by code. The model only reports the duration text, and only if it appears in the quote.
+- Re-reading the documents keeps what you did (confirmed, included, corrected).
+- **Proof packet** (on the Share screen): tick which facts to include (checked facts are ticked by default, unchecked ones can be added and print with their warning), optionally with the quote, with **Hide ID numbers** on by default. *Open the printable packet* and *Download as data (JSON)* contain exactly the same facts. Anyone with the file or link can read it.
 
 ### Voice notes
 
@@ -141,6 +151,8 @@ All routes are under `/api/cases`.
 - `POST …/voice` (a WAV recording to text; the audio is not stored)
 - `POST …/analyze` (streams each of the four parts as it finishes)
 - `POST …/translate` (the Simple view text into one of the supported languages)
+- `GET …/facts`, `PUT` and `DELETE …/facts/:id` (confirm, include, correct, delete)
+- `GET …/packet` (printable HTML) and `GET …/packet.json` (`?lang=`, `&quotes=1`, `&hide=0` to show ID numbers, `&dl=1` to download)
 - `POST …/ask`, `POST …/draft`
 - `PUT …/checks`
 - `GET …/files/:id`, `GET …/calendar.ics` (optional `?i=` for one deadline, `?lang=`)
@@ -202,6 +214,8 @@ Because the demo is public and uses a real API key, live AI is protected:
 - **Cases are deleted after 14 days** by a scheduled function.
 - The key lives only in Netlify's environment variables (secret), never in the code or the browser.
 
+Run the tests with `node --test test/facts.test.mjs` (quote check, date arithmetic, voice and corrected facts, deleted documents, packet and JSON parity, ID hiding, an old database).
+
 Deploy with `netlify deploy --prod --no-build --dir public --functions netlify/functions`.
 
 Fonts come from Google Fonts and the PDF reader from cdnjs, so you need internet for those. Without it, photos and pasted text still work.
@@ -219,6 +233,7 @@ Fonts come from Google Fonts and the PDF reader from cdnjs, so you need internet
 - A scanned PDF with many pages (the model reads the whole file, we have only tried one page).
 - Screen readers, printing to PDF, real devices, several people editing at once, cases above the size limit.
 - **Translations and ideas.** The translations were checked by us only for structure and dates, not by native speakers (Arabic, Urdu and Somali especially). The ideas are general knowledge from the model and are never checked against your documents.
+- **Facts and the proof packet.** Tested with the sample cases, unit tests and one live analysis. Not tested: facts read from real photographs, the Norwegian wording of the new status lines by a native speaker, a screen reader, or the packet page with the same automated accessibility checks as the app screens. The model decides what a quoted validity applies to, so check it. Nothing is source-checked, because no outside source is connected.
 - The ID-number hiding is pattern-based (Norwegian national ID, US Social Security number, Norwegian bank account number). It misses other formats, names and addresses. It also runs on text the model writes (answers, drafts, translations), but it is not a guarantee.
 - Ticks are stored by the wording of the item, so a new analysis that words an item differently loses its tick.
 - The same decision in two documents can produce two deadlines that are not merged.
