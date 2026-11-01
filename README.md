@@ -181,13 +181,28 @@ Create a `.env` file in the project folder:
 META_API_KEY=your-key
 ```
 
-Optional variables: `META_BASE_URL` (default `https://api.meta.ai/v1`), `META_MODEL` (default `muse-spark-1.3`), `META_EFFORT` (default `low`), `PORT` (default `3000`), `DB_FILE`.
+`CASEALLY_API_KEY`, `CASEALLY_BASE_URL` and `CASEALLY_MODEL` do the same and win if both are set. The public deployment uses them, because Netlify can inject its own `META_*` variables. Optional variables: `META_BASE_URL` (default `https://api.meta.ai/v1`), `META_MODEL` (default `muse-spark-1.3`), `META_EFFORT` (default `low`), `PORT` (default `3000`), `DB_FILE`.
 
 ```
 node --no-warnings server.mjs
 ```
 
 Open `http://localhost:3000` and choose **See a fictional sample case**. Restart the server after changing server code. The page itself reloads normally.
+
+### Online demo (Netlify)
+
+The same API handler runs as a Netlify Function (`netlify/functions/api.mjs`) with the cases stored in Netlify Blobs (`lib/blobstore.mjs`). The local server (`server.mjs`) and the function both call `lib/app.mjs`, so there is one implementation.
+
+Because the demo is public and uses a real API key, live AI is protected:
+
+- **The sample cases are open.** They come with finished analyses and cost nothing to view.
+- **Anything that calls the model needs an access code**: reading your own documents, voice notes, translation, questions and drafts. The page asks for it and remembers it in the browser. Set it with the `ACCESS_CODE` variable.
+- **Caps**: `DAILY_CAP` model calls per day for the whole site (default 400), `HOURLY_PER_IP` per network per hour (default 60) and `CASES_PER_IP_DAY` new cases per network per day (default 40).
+- **Smaller uploads**: Netlify buffers a request at 6 MB, so photos and PDFs are limited to about 3.5 MB and voice notes to 80 seconds online. The local server keeps the larger limits.
+- **Cases are deleted after 14 days** by a scheduled function.
+- The key lives only in Netlify's environment variables (secret), never in the code or the browser.
+
+Deploy with `netlify deploy --prod --no-build --dir public --functions netlify/functions`.
 
 Fonts come from Google Fonts and the PDF reader from cdnjs, so you need internet for those. Without it, photos and pasted text still work.
 
