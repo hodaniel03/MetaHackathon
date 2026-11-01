@@ -4,22 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<title>Case Ally</title>
+<title>CaseAlly</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 44'%3E%3Cmask id='m'%3E%3Crect width='48' height='44' fill='%23fff'/%3E%3Cpath d='M9 11l5 5 11-10' stroke='%23000' stroke-width='3.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/mask%3E%3Cpath mask='url(%23m)' fill='%230E1F3D' d='M4 8a4 4 0 0 1 4-4h12a4 4 0 0 1 2.9 1.25l2.7 2.9a4 4 0 0 0 2.9 1.35H40a4 4 0 0 1 4 4V36a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4Z'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600&family=Source+Serif+4:ital,wght@1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Source+Serif+4:ital,wght@1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #FAF9F6; --surface: #FFFFFF; --line: #E5E1D8; --ink: #162232; --muted: #4A5668;
-  --primary: #1E3A5F; --ok: #14714A; --ok-bg: #E8F3EE;
+  --bg: #FAF7F1; --surface: #FFFFFF; --line: #E7E0D2; --ink: #0E1F3D; --muted: #4A5568;
+  --primary: #0E1F3D; --ok: #14632E; --ok-bg: #E4F1E8;
   --warn: #9A6B00; --warn-ink: #7A5500; --warn-bg: #FFF4D6;
-  --bad: #B42318; --bad-bg: #FCECEA; --mark: #FFF1A8; --quote-bg: #F3F2EE; --ctl: #6B7686; --neutral-bg: #EEECE6;
-  --r: 12px;
+  --bad: #B42318; --bad-bg: #FCECEA; --mark: #FFE873; --quote-bg: #F4EFE4; --ctl: #6B7280; --neutral-bg: #EFE9DC;
+  --r: 16px; --shadow: 0 2px 12px rgba(14, 31, 61, .06); --serif: "Fraunces", Georgia, serif;
 }
 * { box-sizing: border-box; }
 html { scroll-padding-top: 16px; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.6 "Public Sans", Inter, system-ui, -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
 h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; margin: 0; }
+h1, h2 { font-family: var(--serif); }
 h1 { font-size: 1.75rem; }
 h2 { font-size: 1.375rem; }
 h3 { font-size: 1.125rem; }
@@ -49,7 +51,8 @@ a { color: var(--primary); }
   .top-in { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; grid-template-areas: "brand lang share" "name name switch"; gap: 4px 12px; min-height: 0; padding-top: 8px; padding-bottom: 8px; }
   .top-actions { display: contents; }
   .brand { grid-area: brand; min-width: 0; }
-  .brand span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .brand span { display: none; }
+  .trustbar .tb-sep { display: none; }
   .casename { grid-area: name; border-left: 0; padding-left: 0; }
   .switch { grid-area: switch; }
   .langbtn { grid-area: lang; }
@@ -70,14 +73,14 @@ a { color: var(--primary); }
 .tabs a:focus-visible { outline-offset: -3px; }
 
 main { padding-top: 32px; padding-bottom: 48px; }
-main:focus { outline: none; }
+main:focus, h1[tabindex="-1"]:focus { outline: none; }
 footer.foot { padding-top: 0; padding-bottom: 48px; }
 
 /* Buttons and forms */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 20px; border-radius: 10px; border: 1.5px solid var(--primary); background: var(--surface); color: var(--primary); font-family: inherit; font-weight: 600; font-size: 1rem; line-height: 1.2; cursor: pointer; text-decoration: none; }
 .btn:hover { background: var(--quote-bg); }
 .btn.primary { background: var(--primary); color: #fff; }
-.btn.primary:hover { background: #17304F; }
+.btn.primary:hover { background: #1A3157; }
 .btn.danger { border-color: var(--bad); color: var(--bad); }
 .btn:disabled { opacity: .55; cursor: not-allowed; }
 .btn-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0; border: 0; background: none; font-family: inherit; font-weight: 600; font-size: 1rem; line-height: 1.3; color: var(--primary); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; text-align: left; }
@@ -88,7 +91,7 @@ textarea.big { min-height: 280px; }
 .copyrow { display: flex; gap: 12px; flex-wrap: wrap; }
 .copyrow input { flex: 1; min-width: 220px; min-height: 44px; }
 
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 24px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 24px; box-shadow: var(--shadow); }
 .notice { display: flex; gap: 12px; align-items: flex-start; padding: 16px; border-radius: 10px; background: var(--warn-bg); color: var(--warn-ink); border: 1px solid #E8D49A; }
 .notice.bad { background: var(--bad-bg); color: var(--bad); border-color: #E7B8B2; }
 .notice > div { color: var(--ink); }
@@ -106,7 +109,10 @@ textarea.big { min-height: 280px; }
 .claim.is-bad { border: 1.5px solid var(--bad); border-left-width: 4px; }
 .claim-text { font-size: 1.125rem; font-weight: 600; margin: 12px 0 4px; line-height: 1.35; }
 .claim-detail { color: var(--ink); margin-top: 4px; }
-.quote { margin: 12px 0 0; padding: 12px 16px; background: var(--quote-bg); border-radius: 8px; font: italic 400 1.0625rem/1.6 "Source Serif 4", Georgia, serif; }
+.quote { margin: 12px 0 0; padding: 4px 0; font: italic 400 1.0625rem/1.75 "Source Serif 4", Georgia, serif; }
+.quote .hl, .quote { background-image: linear-gradient(transparent 6%, var(--mark) 6%, var(--mark) 94%, transparent 94%); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+blockquote.quote { display: inline; padding: 2px 6px; }
+.quote-wrap { margin-top: 12px; }
 .src { display: flex; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; align-items: center; margin-top: 12px; font-size: .875rem; color: var(--muted); }
 .evidence { margin-top: 12px; padding-top: 16px; border-top: 1px solid var(--line); }
 .evidence h4 { margin-bottom: 8px; }
@@ -121,6 +127,58 @@ mark { background: var(--mark); color: var(--ink); padding: 1px 2px; border-radi
 .claim-toggle .chev { transition: transform .15s; flex: none; }
 .claim-toggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
 .claim-body { margin-top: 12px; }
+
+/* Trust bar */
+.trustbar { background: var(--surface); border-bottom: 1px solid var(--line); }
+.trustbar-in { display: flex; align-items: center; gap: 8px 16px; flex-wrap: wrap; min-height: 52px; padding-top: 8px; padding-bottom: 8px; font-weight: 600; }
+.trustbar .tb-ok { display: inline-flex; align-items: center; gap: 8px; color: var(--ok); }
+.trustbar .tb-need { display: inline-flex; align-items: center; gap: 8px; color: var(--warn-ink); background: var(--warn-bg); border-radius: 999px; padding: 4px 12px; }
+.trustbar .tb-sep { color: var(--ctl); }
+.trustbar .tb-hint { font-weight: 400; color: var(--muted); font-size: .875rem; flex-basis: 100%; margin-top: -4px; }
+.logo { display: inline-block; color: var(--primary); flex: none; }
+
+/* Overview: the hero deadline */
+.page-h1 { font-size: 1.5rem; }
+.hero-dl { background: var(--surface); border: 1px solid var(--line); border-top: 6px solid var(--primary); border-radius: var(--r); box-shadow: var(--shadow); padding: 28px; }
+.hero-dl.need { border-top-color: var(--warn); background: #FFFDF6; }
+.hero-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.hero-date { font-family: var(--serif); font-weight: 600; font-size: clamp(2.5rem, 8vw, 3.5rem); line-height: 1.05; letter-spacing: -0.02em; margin-top: 12px; color: var(--primary); }
+.hero-what { font-size: 1.25rem; font-weight: 600; margin-top: 8px; }
+.hero-dl .calc { background: var(--quote-bg); margin-top: 16px; }
+.hero-ev { margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--line); }
+.hero-ev .claim { border: 0; padding: 0; border-radius: 0; box-shadow: none; background: transparent; }
+.hero-actions { display: flex; gap: 12px 20px; flex-wrap: wrap; align-items: center; margin-top: 20px; }
+.hero-actions .btn.primary { min-height: 48px; padding: 10px 24px; }
+.att-grid.two { grid-template-columns: 1fr; }
+@media (min-width: 760px) { .att-grid.two { grid-template-columns: 1fr 1fr; } }
+.needs { background: var(--warn-bg); border: 1.5px solid #E2C772; border-radius: var(--r); padding: 24px; }
+.needs h2 { color: var(--warn-ink); display: flex; align-items: center; gap: 10px; }
+.needs .claim { margin-top: 12px; }
+.empty { text-align: center; padding: 32px 16px; }
+.empty .logo { color: var(--ctl); margin-bottom: 8px; }
+
+/* Documents as evidence */
+.ds-strip { display: flex; gap: 8px 20px; flex-wrap: wrap; align-items: center; font-weight: 600; }
+.ds-strip .need { color: var(--warn-ink); }
+.ds-search { position: relative; }
+.ds-search input { min-height: 52px; font-size: 1.0625rem; padding-left: 48px; border-radius: 14px; }
+.ds-search .ic { position: absolute; left: 16px; top: 15px; color: var(--muted); }
+.fchips { display: flex; gap: 8px; flex-wrap: wrap; }
+.fchips button { min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); font: 600 .9375rem Inter, sans-serif; color: var(--ink); cursor: pointer; }
+.fchips button[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: #fff; }
+.ev-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
+.ev-card.review { border: 2px solid #E2C772; background: #FFFDF6; }
+.ev-main { display: flex; gap: 16px; align-items: flex-start; padding: 16px; width: 100%; border: 0; background: none; font: inherit; color: var(--ink); text-align: left; cursor: pointer; min-height: 96px; }
+.ev-main:hover { background: var(--quote-bg); }
+.ev-main .thumb { width: 64px; height: 84px; }
+.ev-main .grow { flex: 1; min-width: 0; }
+.ev-title { display: block; font-family: var(--serif); font-weight: 600; font-size: 1.1875rem; line-height: 1.3; }
+.ev-meta { display: block; color: var(--muted); font-size: .875rem; margin-top: 2px; }
+.ev-facts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.ev-why { display: flex; gap: 8px; align-items: center; margin-top: 8px; color: var(--warn-ink); font-weight: 600; font-size: .9375rem; }
+.ev-actions { display: flex; gap: 12px; align-items: center; padding: 0 16px 16px 96px; }
+@media (max-width: 520px) { .ev-actions { padding-left: 16px; } }
+.dropbar { display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 12px 16px; border: 2px dashed var(--ctl); border-radius: var(--r); background: var(--surface); }
 
 /* Overview */
 .att-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
@@ -170,14 +228,33 @@ mark { background: var(--mark); color: var(--ink); padding: 1px 2px; border-radi
 .check.done .ck-title { text-decoration: line-through; text-decoration-thickness: 1px; color: var(--muted); }
 .check .grow { flex: 1; min-width: 0; }
 
-/* Simple view */
-body.simple main { font-size: 1.25rem; line-height: 1.75; color: #0B1620; }
-body.simple h1 { font-size: 2.25rem; }
-body.simple h2 { font-size: 1.625rem; margin: 48px 0 12px; }
-body.simple .simple-list { padding-left: 28px; }
-body.simple .simple-list li { margin: 16px 0; padding-left: 4px; }
-body.simple .btn { font-size: 1.125rem; min-height: 52px; }
-body.simple .meta { font-size: 1rem; }
+/* Simple view: a different product. White paper, large type, one column, one way out. */
+body.simple { background: #FFFFFF; }
+body.simple .wrap { max-width: 780px; }
+body.simple .top { border-bottom: 4px solid var(--primary); }
+body.simple .top-in { min-height: 92px; }
+body.simple .brand { font-size: 1.5rem; }
+body.simple main { font-size: 1.375rem; line-height: 1.8; color: #0B1620; padding-top: 40px; padding-bottom: 72px; }
+body.simple h1 { font-size: 2.75rem; line-height: 1.15; }
+body.simple h2 { font-size: 2rem; margin: 56px 0 16px; padding-top: 24px; border-top: 4px solid var(--primary); }
+body.simple p { max-width: 36em; }
+body.simple .simple-list { padding-left: 40px; }
+body.simple .simple-list li { margin: 20px 0; padding-left: 8px; }
+body.simple .simple-list li::marker { font-weight: 600; color: var(--primary); }
+body.simple .btn { font-size: 1.25rem; min-height: 60px; padding: 12px 28px; }
+body.simple .langbtn, body.simple .top .btn { min-height: 60px; }
+body.simple select { min-height: 60px; font-size: 1.25rem; }
+body.simple .langpick label { font-size: 1.25rem; }
+body.simple .meta, body.simple .notice { font-size: 1.125rem; }
+body.simple footer.foot { font-size: 1.125rem; }
+@media (max-width: 640px) {
+  body.simple .top-in { display: flex; flex-wrap: wrap; gap: 8px 12px; padding-top: 12px; }
+  body.simple .brand span { display: inline; }
+  body.simple .top-actions { display: flex; width: 100%; margin-left: 0; gap: 12px; }
+  body.simple .top-actions .btn.primary { flex: 1; }
+}
+.s-deadline { display: flex; flex-direction: column; gap: 4px; margin-top: 20px; padding: 24px; border: 3px solid var(--primary); border-radius: var(--r); background: #FFFFFF; }
+.s-deadline .d { font-family: var(--serif); font-weight: 600; font-size: 2.25rem; line-height: 1.15; color: var(--primary); }
 
 /* Dialogs */
 dialog { max-width: 960px; width: calc(100% - 24px); max-height: calc(100vh - 24px); overflow: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); color: var(--ink); padding: 24px; }
@@ -238,9 +315,11 @@ footer.foot p { margin: 0; }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-logo" viewBox="0 0 48 44"><mask id="logo-cut"><rect width="48" height="44" fill="#fff"/><path d="M9 11l5 5 11-10" stroke="#000" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></mask><path mask="url(#logo-cut)" fill="currentColor" d="M4 8a4 4 0 0 1 4-4h12a4 4 0 0 1 2.9 1.25l2.7 2.9a4 4 0 0 0 2.9 1.35H40a4 4 0 0 1 4 4V36a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4Z"/></symbol></svg>
 <a class="skip" id="skip" href="#app">Skip to content</a>
 <header class="top"><div class="wrap top-in" id="top"></div></header>
 <nav class="tabs" id="tabs" hidden></nav>
+<div class="trustbar" id="trustbar" hidden><div class="wrap trustbar-in" id="trustbar-in"></div></div>
 <main class="wrap" id="app" tabindex="-1"></main>
 <footer class="wrap foot meta" id="foot"></footer>
 <dialog id="viewer"></dialog>
@@ -251,6 +330,13 @@ footer.foot p { margin: 0; }
 /* ---------- Texts. Missing Norwegian keys fall back to English. ---------- */
 const T = {
   en: {
+    sFull: 'Back to the full view', sDeadlineLabel: 'The next deadline',
+    tbChecked: (ok, n) => `${ok} of ${n} claims checked against the documents`, tbNeed: (n) => `${n} ${n === 1 ? 'needs' : 'need'} your check`, tbAllGood: 'Nothing needs your check', tbReading: 'Reading your documents…', tbHint: 'Checked means the quote appears word for word in the document.', tbSee: 'See them',
+    needsTitle: 'Needs your check', needsLead: 'We could not find these quotes word for word in the documents. Open the document and read for yourself.',
+    heroWhy: 'Why this date', heroNoDeadlineTitle: 'No deadline found yet', heroNoDeadlineText: 'When a letter has a deadline, it shows up here with the calculation.',
+    dsSummary: (d, p, r) => `${d} ${d === 1 ? 'document' : 'documents'} · ${p} ${p === 1 ? 'page' : 'pages'} · ${r} ${r === 1 ? 'needs' : 'need'} review`, dsSearch: 'Search documents', dsSearchPh: 'Search by title or text', dsAll: 'All', dsReview: 'Needs review', dsDecisions: 'Decisions', dsMedical: 'Medical', dsFilterAria: 'Filter documents',
+    dsNone: 'No documents match. Clear the search or choose All.', dsClaims: (n) => `${n} ${n === 1 ? 'claim' : 'claims'} found`, dsClaimsBad: (n, m) => `${n} ${n === 1 ? 'claim' : 'claims'} found, ${m} ${m === 1 ? 'needs' : 'need'} your check`, dsDeadline: (x) => `Deadline: ${x}`, dsNotRead: 'Not read yet', dsReviewNow: 'Review now',
+    dsOpenLabel: (title, date, state) => `Open ${title}${date ? ` from ${date}` : ''}, ${state}`, dsReviewLabel: (title) => `Review ${title} now`, dsAddMore: 'Add another document', dsWhyIll: 'Part of the text could not be read', dsWhyDate: 'The date is missing', dsWhyBad: 'A claim could not be checked', dsPages: (n) => `${n} ${n === 1 ? 'page' : 'pages'}`,
     tab_fakta: 'Facts', factsTitle: 'Facts', factsLead: 'Details that come up again in other applications, renewals and with professionals. Each one comes with a quote and a source.',
     factsNote: 'A check means the quote is in the text we read. It does not mean the text was read correctly from a photo (that is what the review step is for), and it does not mean our interpretation is right.',
     factsEmpty: 'Facts appear here after the documents are read. You can reuse them in the proof packet when you share the case.', factsReading: 'Reading the facts…', factsFailed: 'The facts could not be read this time. Update the overview to try again.',
@@ -266,7 +352,7 @@ const T = {
     pkCount: (n, m) => `${n} of ${m} included`, pkQuotes: 'Include the source quote for each fact', pkShare: 'Anyone with this file or link can see what’s in it. Only share it with people helping with the case.',
     pkOpen: 'Open the printable packet', pkJson: 'Download as data (JSON)', pkHideNote: 'Hides personal ID numbers we recognize. It is pattern matching, not a guarantee: it misses other formats, names and addresses.', pkWarnUnchecked: 'Not checked. It prints with a warning.',
     codeTitle: 'Access code', codeBody: 'Reading your own documents, voice notes, translation and questions use live AI. They need the access code from the submission. The fictional sample cases work without one.', codeLabel: 'Access code', codeGo: 'Continue', codeCancel: 'Cancel', codeBad: 'That code is not right.', homeCode: 'Judges: the sample case works right away. Features that use live AI ask for the access code from the submission.', pdfTooBigN: (mb) => `That PDF is too large for the online version (limit ${mb} MB). Try a photo instead.`, recTooLongN: (s) => `The recording reached ${s} seconds and was stopped.`,
-    brand: 'Case Ally', skip: 'Skip to content', simpleView: 'Simple view', shareBtn: 'Share case', langBtn: 'Norsk', langAria: 'Bytt til norsk',
+    brand: 'CaseAlly', skip: 'Skip to content', simpleView: 'Simple view', shareBtn: 'Share case', langBtn: 'Norsk', langAria: 'Bytt til norsk',
     tabsAria: 'Parts of the case', tab_oversikt: 'Overview', tab_tidslinje: 'Timeline', tab_dokumenter: 'Documents', tab_frister: 'Deadlines', tab_mangler: 'Missing', tab_skriv: 'Ask & write',
     foot: 'Reads and checks your documents with Meta’s Muse Spark. Not legal advice.',
     type_vedtak: 'Decision', type_legeerklæring: 'Medical statement', type_forsikring: 'Insurance', type_advokat: 'Lawyer', type_innkalling: 'Appointment', type_notat: 'Own note', type_annet: 'Other',
@@ -312,7 +398,7 @@ const T = {
     copyLink: 'Copy the link', linkLabel: 'Link to the case', noLogin: 'We do not have sign-in yet. The link is the only thing that gives access.',
     hoTitle: 'Overview for a lawyer or support service', hoText: 'A tidy page that gathers the timeline, deadlines, documents and what is missing. Every claim has a quote and a source. You can print it or save it as PDF.', openOverview: 'Open the overview',
     settings: 'Settings', rename: 'Rename the case', deleteCase: 'Delete the case', deleteNote: 'When you delete, all documents and images are removed for good.',
-    hBack: 'Back', hTitle: (n) => `Case overview: ${n}`, hMade: (d) => `Made ${d} by Case Ally`, hPrint: 'Print or save as PDF',
+    hBack: 'Back', hTitle: (n) => `Case overview: ${n}`, hMade: (d) => `Made ${d} by CaseAlly`, hPrint: 'Print or save as PDF',
     hLegend: 'Every claim has a quote from the document. “Checked” means the quote appears word for word in the document. “Check yourself” means we did not find it. This is not legal advice.',
     hStands: 'How the case stands', hNow: 'Now:', hDeadlines: 'Deadlines', hNone: 'None found.', hDateMissing: 'Date missing', hTimeline: 'Timeline', hDocs: 'Documents in the case', hMissing: 'Documents that are missing', hObtained: '(obtained)',
     hNotRead: 'The case has not been read through yet. Go back and press “Read through the case”.', hNothing: 'Nothing found.', hReceived: (d) => `received ${d}`,
@@ -343,6 +429,13 @@ const T = {
     hideIds: 'Hide ID numbers', hideIdsHint: 'Hides personal ID numbers we recognize, such as Norwegian national ID numbers and US Social Security numbers. It can miss others, so check before you share.', idHidden: '[ID number hidden]', hLegendHidden: 'Personal ID numbers we recognize have been hidden.',
   },
   nb: {
+    sFull: 'Tilbake til full visning', sDeadlineLabel: 'Neste frist',
+    tbChecked: (ok, n) => `${ok} av ${n} påstander kontrollert mot dokumentene`, tbNeed: (n) => `${n} trenger at du sjekker`, tbAllGood: 'Ingenting trenger sjekk fra deg', tbReading: 'Leser dokumentene dine…', tbHint: 'Kontrollert betyr at sitatet står ordrett i dokumentet.', tbSee: 'Se dem',
+    needsTitle: 'Trenger din sjekk', needsLead: 'Vi fant ikke disse sitatene ordrett i dokumentene. Åpne dokumentet og les selv.',
+    heroWhy: 'Hvorfor denne datoen', heroNoDeadlineTitle: 'Ingen frist funnet ennå', heroNoDeadlineText: 'Når et brev har en frist, dukker den opp her med utregningen.',
+    dsSummary: (d, p, r) => `${d} ${d === 1 ? 'dokument' : 'dokumenter'} · ${p} ${p === 1 ? 'side' : 'sider'} · ${r} trenger gjennomgang`, dsSearch: 'Søk i dokumenter', dsSearchPh: 'Søk i tittel eller tekst', dsAll: 'Alle', dsReview: 'Trenger gjennomgang', dsDecisions: 'Vedtak', dsMedical: 'Medisinsk', dsFilterAria: 'Filtrer dokumenter',
+    dsNone: 'Ingen dokumenter passer. Fjern søket eller velg Alle.', dsClaims: (n) => `${n} ${n === 1 ? 'påstand' : 'påstander'} funnet`, dsClaimsBad: (n, m) => `${n} ${n === 1 ? 'påstand' : 'påstander'} funnet, ${m} trenger din sjekk`, dsDeadline: (x) => `Frist: ${x}`, dsNotRead: 'Ikke lest ennå', dsReviewNow: 'Gå gjennom nå',
+    dsOpenLabel: (title, date, state) => `Åpne ${title}${date ? ` fra ${date}` : ''}, ${state}`, dsReviewLabel: (title) => `Gå gjennom ${title} nå`, dsAddMore: 'Legg til et dokument til', dsWhyIll: 'Deler av teksten kunne ikke leses', dsWhyDate: 'Datoen mangler', dsWhyBad: 'En påstand kunne ikke kontrolleres', dsPages: (n) => `${n} ${n === 1 ? 'side' : 'sider'}`,
     tab_fakta: 'Fakta', factsTitle: 'Fakta', factsLead: 'Opplysninger som kommer igjen i andre søknader, fornyelser og hos fagpersoner. Hver av dem har et sitat og en kilde.',
     factsNote: 'Kontrollert betyr at sitatet står i teksten vi leste. Det betyr ikke at teksten ble lest riktig fra et bilde (det er det gjennomgangen er til for), og heller ikke at tolkningen vår er riktig.',
     factsEmpty: 'Fakta dukker opp her etter at dokumentene er lest. Du kan bruke dem på nytt i bevispakken når du deler saken.', factsReading: 'Leser faktaene…', factsFailed: 'Faktaene kunne ikke leses denne gangen. Oppdater oversikten for å prøve igjen.',
@@ -469,6 +562,7 @@ const ICONS = {
   pencil: '<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/>',
   shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
 };
+ICONS.search = '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>';
 ICONS.mic = '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/>';
 const icon = (n, size = 20) =>`<svg class="ic" viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ''}</svg>`;
 const badge = (kind, ic, text) => `<span class="badge ${kind}">${icon(ic, 16)}<span>${esc(text)}</span></span>`;
@@ -587,7 +681,7 @@ function claimCard({ id, claim = '', detail = '', quote = '', dok, verified, col
   const src = d ? `${esc(d.title)} · ${esc(fmtShort(d.date))}${pg ? ` · ${esc(t('pageN', pg))}` : ''}` : esc(t('unknownDoc'));
   const inner = `
     ${top}${detail ? `<p class="claim-detail">${esc(rd(detail))}</p>` : ''}
-    ${quote ? `<blockquote class="quote">«${esc(rd(quote))}»</blockquote>` : ''}
+    ${quote ? `<div class="quote-wrap"><blockquote class="quote">«${esc(rd(quote))}»</blockquote></div>` : ''}
     ${voice && quote ? `<p class="meta" style="margin-top:6px">${esc(t('voiceCaveat'))}</p>` : ''}
     ${d ? `<div class="src"><span>${src}</span>${plain ? '' : `<button class="btn-link" data-act="evidence" data-id="${esc(id)}" aria-expanded="${showEv}">${esc(showEv ? t('hide') : t('viewInDoc'))} ${icon(showEv ? 'x' : 'arrow', 16)}</button>`}</div>` : ''}
     ${showEv && d ? evidenceHtml(d, quote) : ''}${after}`;
@@ -668,6 +762,9 @@ addEventListener('hashchange', route);
 
 function focusMain() { window.scrollTo(0, 0); const h = $('#app h1'); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); } }
 
+// The mark: a folder with a check cut into the tab. Defined once in the page, used with <use>.
+const logo = (w = 36) => `<svg class="logo" width="${w}" height="${Math.round(w * 44 / 48)}" viewBox="0 0 48 44" aria-hidden="true" focusable="false"><use href="#i-logo"/></svg>`;
+
 function renderStatic() {
   document.documentElement.lang = lang;
   $('#skip').textContent = t('skip');
@@ -679,8 +776,9 @@ const langButton = () => `<button class="btn langbtn" data-act="toggle-lang" lan
 
 function renderChrome() {
   renderStatic();
-  const brand = `<a class="brand" href="#/">${icon('folder', 24)}<span>${esc(t('brand'))}</span></a>`;
-  if (!st) { $('#top').innerHTML = `${brand}<div class="top-actions">${langButton()}</div>`; $('#tabs').hidden = true; return; }
+  const brand = `<a class="brand" href="#/" aria-label="${esc(t('brand'))}">${logo(34)}<span>${esc(t('brand'))}</span></a>`;
+  if (!st) { $('#top').innerHTML = `${brand}<div class="top-actions">${langButton()}</div>`; $('#tabs').hidden = true; $('#trustbar').hidden = true; return; }
+  if (simple) { $('#top').innerHTML = `${brand}<div class="top-actions">${langButton()}<button class="btn primary" data-act="toggle-simple">${icon('arrow', 20).replace('<svg ', '<svg style="transform:scaleX(-1)" ')} ${esc(t('sFull'))}</button></div>`; $('#tabs').hidden = true; return; }
   $('#top').innerHTML = `${brand}<div class="casename" title="${esc(st.c?.name || '')}">${esc(st.c?.name || t('opening'))}</div>
     <div class="top-actions">
       ${langButton()}
@@ -711,7 +809,7 @@ function renderHome() {
 
 /* ---------- Open a case ---------- */
 async function openCase(token, page = 'oversikt') {
-  st = { token, page, hideIds: true, facts: [], fedit: null, pk: { quotes: false, hide: true }, failed: false, sLang: '', trans: {}, transBusy: false, c: null, docs: [], analysis: null, aState: 'none', checks: {}, pending: [], open: new Set(), ev: new Set(), answer: null, draft: null, busy: '', err: '' };
+  st = { token, page, hideIds: true, facts: [], fedit: null, dq: '', dfilter: 'all', pk: { quotes: false, hide: true }, failed: false, sLang: '', trans: {}, transBusy: false, c: null, docs: [], analysis: null, aState: 'none', checks: {}, pending: [], open: new Set(), ev: new Set(), answer: null, draft: null, busy: '', err: '' };
   renderCase();
   try {
     const v = await api('GET', `/api/cases/${token}`);
@@ -753,9 +851,52 @@ function renderPage() {
   else if (simple) html = pageEnkel();
   else html = { oversikt: pageOversikt, tidslinje: pageTidslinje, dokumenter: pageDokumenter, frister: pageFrister, mangler: pageMangler, fakta: pageFakta, skriv: pageSkriv }[st.page]();
   el.innerHTML = errHtml + (['del', 'overlevering'].includes(st.page) ? '' : banner()) + html;
+  renderTrustBar();
 }
 
 /* ---------- Screens ---------- */
+/* ---------- Trust bar: how much of what we say is checked, on the screens that lead with evidence ---------- */
+function renderTrustBar() {
+  const el = $('#trustbar'), inner = $('#trustbar-in');
+  const on = st && !simple && ['oversikt', 'dokumenter'].includes(st.page) && st.docs.length && (st.analysis || st.pending.length);
+  if (!on) { el.hidden = true; return; }
+  el.hidden = false;
+  if (wait('a') || wait('b') || wait('c')) { inner.innerHTML = `<span class="skeleton" role="status">${esc(t('tbReading'))}</span>`; return; }
+  const claims = flatClaims(), bad = claims.filter((c) => !c.verified).length, ok = claims.length - bad;
+  inner.innerHTML = `<span class="tb-ok">${icon(bad ? 'alert' : 'check', 22)}<span>${esc(t('tbChecked', ok, claims.length))}</span></span><span class="tb-sep" aria-hidden="true">•</span>
+    ${bad ? `<span class="tb-need">${icon('alert', 18)}<span>${esc(t('tbNeed', bad))}</span></span>` : `<span class="tb-ok">${esc(t('tbAllGood'))}</span>`}
+    <span class="tb-hint">${esc(t('tbHint'))}</span>`;
+}
+
+// Everything one document contributes: claims found, how many are unchecked, and its deadline if it has one.
+function docEvidence(d) {
+  const mine = flatClaims().filter((c) => c.dok === d.id), bad = mine.filter((c) => !c.verified).length;
+  const fr = (A().frister || []).find((f) => f.dok === d.id);
+  const dl = fr ? (fr.varighet ? `${fr.varighet.antall} ${fr.varighet.enhet}` : fr.dato ? fmtShort(fr.dato) : '') : '';
+  const why = ILLEGIBLE.test(d.text) ? 'dsWhyIll' : !d.date ? 'dsWhyDate' : bad ? 'dsWhyBad' : ''; ILLEGIBLE.lastIndex = 0;
+  return { n: mine.length, bad, dl, why, review: !!why };
+}
+
+function heroDeadline() {
+  if (wait('b')) return `<section class="hero-dl" aria-label="${esc(t('cardDeadline'))}"><p class="skeleton">${esc(t('findingDeadlines'))}</p></section>`;
+  const f = nextDeadline();
+  if (f) {
+    const d = docById(f.dok), voice = d?.source === 'tale';
+    return `<section class="hero-dl" aria-labelledby="h-hero"><div class="hero-top"><h2 id="h-hero" class="eyebrow">${esc(t('cardDeadline'))}</h2>${dueBadge(f.dato)}</div>
+      <p class="hero-date">${esc(fmtLong(f.dato))}</p>
+      <p class="hero-what">${capEsc(f.hva)}</p>
+      ${f.beregnet || f.usikker || voice ? calcHtml(f) : `<p class="meta" style="margin-top:8px">${esc(t('asInLetter'))}</p>`}
+      <div class="hero-ev">${claimCard({ id: 'hero', quote: f.sitat, dok: f.dok, verified: !!f.verifisert })}</div>
+      <div class="hero-actions noprint"><a class="btn primary" href="${icsUrl(icsIndex(f))}" download>${icon('calendar-plus', 20)} ${esc(t('addToCalendar'))}</a><a class="btn-link" href="#/s/${esc(st.token)}/frister">${esc(t('seeCalc'))}</a></div>
+      ${expiringLine()}</section>`;
+  }
+  const n = needInfo()[0];
+  if (n) return `<section class="hero-dl need" aria-labelledby="h-hero"><div class="hero-top"><h2 id="h-hero" class="eyebrow">${esc(t('cardDeadline'))}</h2>${badge('warn', 'alert', t('weNeedDate'))}</div>
+      <p class="hero-date" style="font-size:2rem">${esc(t('needDate'))}</p><p class="hero-what">${capEsc(n.hva)}</p><p style="margin-top:4px">${esc(n.regel || '')}</p>
+      <div class="hero-actions"><a class="btn primary" href="#/s/${esc(st.token)}/frister">${esc(t('enterDate'))}</a></div>${expiringLine()}</section>`;
+  return `<section class="hero-dl" aria-labelledby="h-hero"><h2 id="h-hero" class="eyebrow">${esc(t('cardDeadline'))}</h2><div class="empty">${logo(56)}<p style="font-weight:600;font-size:1.125rem">${esc(t('heroNoDeadlineTitle'))}</p><p class="meta">${esc(t('heroNoDeadlineText'))}</p><p style="margin-top:16px"><a class="btn" href="#/s/${esc(st.token)}/dokumenter">${esc(t('addLetter'))}</a></p></div>${expiringLine()}</section>`;
+}
+
 function pageOversikt() {
   const a = A();
   const recordBtn = `<button class="btn" data-act="record">${icon('mic', 18)} ${esc(t('recordBtn'))}</button>`;
@@ -763,16 +904,6 @@ function pageOversikt() {
   if (!st.analysis) return `<div class="stack"><div class="stack-s"><h1>${esc(t('readyTitle'))}</h1><p class="lead">${esc(t('readyLead', st.docs.length))}</p></div>
     <div class="row"><button class="btn primary" data-act="analyze">${esc(t('readBtn'))}</button>${recordBtn}</div></div>`;
 
-  const deadlineCard = () => {
-    if (wait('b')) return `<p class="skeleton">${esc(t('findingDeadlines'))}</p>`;
-    const f = nextDeadline();
-    if (f) return `<p class="bigdate">${esc(fmtShort(f.dato))}</p><p>${dueBadge(f.dato)}</p><p class="grow"><strong>${capEsc(f.hva)}</strong></p>
-      <a class="btn" href="${icsUrl(icsIndex(f))}" download>${icon('calendar-plus', 18)} ${esc(t('addToCalendar'))}</a>
-      <a class="btn-link" href="#/s/${esc(st.token)}/frister">${esc(t('seeCalc'))}</a>`;
-    const n = needInfo()[0];
-    if (n) return `<p class="bigdate" style="font-size:1.5rem">${esc(t('needDate'))}</p><p class="grow">${capEsc(n.hva)}. ${esc(n.regel || '')}</p><a class="btn primary" href="#/s/${esc(st.token)}/frister">${esc(t('enterDate'))}</a>`;
-    return `<p class="grow">${esc(t('noDeadlines'))}</p><a class="btn" href="#/s/${esc(st.token)}/dokumenter">${esc(t('addLetter'))}</a>`;
-  };
   const missingCard = () => {
     if (wait('c')) return `<p class="skeleton">${esc(t('findingMissing'))}</p>`;
     const m = a.mangler || [], done = m.filter((x) => st.checks[ck(x.hva)]).length, rest = m.filter((x) => !st.checks[ck(x.hva)]);
@@ -791,20 +922,15 @@ function pageOversikt() {
   };
   const card = (title, body) => `<section class="card att" aria-label="${esc(title)}"><h2 class="eyebrow">${esc(title)}</h2>${body}</section>`;
 
-  const claims = flatClaims(), bad = claims.filter((c) => !c.verified), ok = claims.length - bad.length;
-  const hero = wait('a') || wait('b') || wait('c') ? '' : `<section class="card hero" aria-labelledby="h-trust"><h2 id="h-trust" class="eyebrow">${esc(t('allChecked'))}</h2>
-      <div class="stats">
-        <div class="stat"><span class="numrow"><span class="num">${claims.length}</span></span><span class="lbl">${esc(t('heroClaims', claims.length))}</span></div>
-        <div class="stat okc"><span class="numrow">${icon('check', 28)}<span class="num">${ok}</span></span><span class="lbl">${esc(t('heroChecked'))}</span></div>
-        <div class="stat ${bad.length ? 'badc' : 'okc'}"><span class="numrow">${icon(bad.length ? 'alert' : 'check', 28)}<span class="num">${bad.length}</span></span><span class="lbl">${esc(t('heroUnchecked'))}</span></div>
-      </div>
-      <p class="meta" style="margin-top:12px">${esc(bad.length ? t('badHint') : t('okHint'))}</p></section>
-    ${bad.map((c) => claimCard(c)).join('<div style="height:16px"></div>')}`;
+  const bad = flatClaims().filter((c) => !c.verified);
+  const needs = wait('a') || wait('b') || wait('c') || !bad.length ? '' : `<section class="needs" aria-labelledby="h-need"><h2 id="h-need">${icon('alert', 26)} ${esc(t('needsTitle'))}</h2><p style="margin-top:4px">${esc(t('needsLead'))}</p>${bad.map((c) => claimCard(c)).join('')}</section>`;
 
   return `<div class="stack">
-    <div class="stack-s"><h1>${esc(t('attentionTitle'))}</h1>${wait('a') ? '' : `<p class="lead">${esc(a.status || '')}</p>`}</div>
-    ${hero}
-    <div class="att-grid">${card(t('cardDeadline'), deadlineCard() + expiringLine())}${card(t('cardMissing'), missingCard())}${card(t('cardLatest'), latestCard())}</div>
+    <h1 class="page-h1">${esc(t('attentionTitle'))}</h1>
+    ${heroDeadline()}
+    ${wait('a') || !a.status ? '' : `<p class="lead" style="font-size:1rem;color:var(--muted)">${esc(a.status)}</p>`}
+    <div class="att-grid two">${card(t('cardMissing'), missingCard())}${card(t('cardLatest'), latestCard())}</div>
+    ${needs}
     ${ideasHtml()}
     <p class="row">${recordBtn}</p></div>`;
 }
@@ -817,18 +943,44 @@ function pageTidslinje() {
   return `<div class="stack">${head}<ol class="timeline">${ev.map(({ x, i }) => `<li>${claimCard({ id: `t${i}`, claim: x.tittel, detail: x.beskrivelse, date: x.dato, quote: x.sitat, dok: x.dok, verified: !!x.verifisert, collapsed: true })}</li>`).join('')}</ol></div>`;
 }
 
+const pagesOf = (d) => Math.max(d.files?.length || 0, d.text.split('\f').length);
+const FILTERS = { all: () => true, review: (d) => docEvidence(d).review, decisions: (d) => d.type === 'vedtak', medical: (d) => d.type === 'legeerklæring' };
+
+// One document as evidence: what it is, what we found in it, and whether any of it needs a person to look.
 function docRow(d) {
-  const needs = ILLEGIBLE.test(d.text) || !d.date; ILLEGIBLE.lastIndex = 0;
+  const ev = st.analysis ? docEvidence(d) : { n: 0, bad: 0, dl: '', why: !d.date ? 'dsWhyDate' : ILLEGIBLE.test(d.text) ? 'dsWhyIll' : '', review: false };
+  ILLEGIBLE.lastIndex = 0;
+  if (!st.analysis) ev.review = !!ev.why;
   const thumb = d.files?.length ? `<img loading="lazy" alt="" src="/api/cases/${esc(st.token)}/files/${esc(d.files[0])}">` : icon(d.source === 'tale' ? 'mic' : 'file', 28);
   const when = d.received ? t('receivedOn', fmtShort(d.received)) : d.date ? t('datedOn', fmtShort(d.date)) : t('undated');
-  return `<button class="docrow" data-act="open-doc" data-id="${esc(d.id)}"><span class="thumb">${thumb}</span>
-    <span class="grow"><strong>${esc(d.title)}</strong><span class="meta">${esc(docKind(d))} · ${esc(when)}</span><span style="display:block;margin-top:6px">${needs ? badge('warn', 'alert', t('stReview')) : badge('ok', 'check', t('stRead'))}</span></span>${icon('arrow', 20)}</button>`;
+  const state = ev.review ? t('stReview') : st.analysis ? (ev.n ? t('dsClaims', ev.n) : t('stRead')) : t('dsNotRead');
+  const found = ev.review && !ev.n ? badge('warn', 'alert', t('stReview')) : !st.analysis ? badge('neutral', 'info', t('dsNotRead')) : ev.n ? (ev.bad ? badge('warn', 'alert', t('dsClaimsBad', ev.n, ev.bad)) : badge('ok', 'check', t('dsClaims', ev.n))) : badge('neutral', 'check', t('stRead'));
+  return `<article class="ev-card ${ev.review ? 'review' : ''}">
+    <button class="ev-main" data-act="open-doc" data-id="${esc(d.id)}" aria-label="${esc(t('dsOpenLabel', d.title, d.date ? fmtShort(d.date) : '', state))}">
+      <span class="thumb" aria-hidden="true">${thumb}</span>
+      <span class="grow"><span class="ev-title">${esc(d.title)}</span>
+        <span class="ev-meta">${esc(docKind(d))} · ${esc(when)} · ${esc(t('dsPages', pagesOf(d)))}</span>
+        <span class="ev-facts">${found}${ev.dl ? badge('neutral', 'clock', t('dsDeadline', ev.dl)) : ''}</span>
+        ${ev.review ? `<span class="ev-why">${icon('alert', 18)}${esc(t(ev.why))}</span>` : ''}</span>${icon('arrow', 20)}</button>
+    ${ev.review ? `<div class="ev-actions"><button class="btn" style="border-color:var(--warn-ink);color:var(--warn-ink)" data-act="edit-doc" data-id="${esc(d.id)}" aria-label="${esc(t('dsReviewLabel', d.title))}">${esc(t('dsReviewNow'))}</button></div>` : ''}</article>`;
 }
 
 function pageDokumenter() {
-  return `<div class="stack"><div class="stack-s"><h1>${esc(t('docsTitle'))}</h1><p class="lead">${esc(t('docsLead'))}</p></div>
-    ${dropzone()}<div class="row"><button class="btn" data-act="record">${icon('mic', 18)} ${esc(t('recordBtn'))}</button><button class="btn-link" data-act="paste-text">${esc(t('pasteInstead'))}</button></div>
-    ${st.docs.length ? `<ul style="list-style:none;margin:0;padding:0" class="stack-s">${st.docs.map((d) => `<li>${docRow(d)}</li>`).join('')}</ul>` : `<div class="card"><p>${esc(t('noDocs'))}</p></div>`}</div>`;
+  const q = (st.dq || '').trim().toLowerCase(), f = st.dfilter || 'all';
+  const all = st.docs, reviewN = all.filter((d) => FILTERS.review(d)).length, pages = all.reduce((n, d) => n + pagesOf(d), 0);
+  let list = all.filter((d) => FILTERS[f](d) && (!q || `${d.title} ${d.text}`.toLowerCase().includes(q)));
+  list = [...list.filter((d) => FILTERS.review(d)), ...list.filter((d) => !FILTERS.review(d))]; // needs review first
+  const chip = (k, label) => `<button type="button" data-act="ds-filter" data-id="${k}" aria-pressed="${f === k}">${f === k ? icon('check', 16) + ' ' : ''}${esc(label)}${k === 'review' && reviewN ? ` (${reviewN})` : ''}</button>`;
+  const tools = all.length ? `<div class="ds-strip" role="status"><span>${esc(t('dsSummary', all.length, pages, reviewN))}</span></div>
+    <div class="ds-search"><label for="ds-q" class="sr-only" style="position:absolute;left:-9999px">${esc(t('dsSearch'))}</label>${icon('search', 22)}<input id="ds-q" type="search" placeholder="${esc(t('dsSearchPh'))}" value="${esc(st.dq || '')}" autocomplete="off"></div>
+    <div class="fchips" role="group" aria-label="${esc(t('dsFilterAria'))}">${chip('all', t('dsAll'))}${chip('review', t('dsReview'))}${chip('decisions', t('dsDecisions'))}${chip('medical', t('dsMedical'))}</div>` : '';
+  const intakeBar = all.length >= 5
+    ? `<div class="dropbar noprint"><button class="btn primary" data-act="upload" id="dropzone" type="button">${icon('camera', 20)} ${esc(t('dsAddMore'))}</button><span class="row"><button class="btn" data-act="record">${icon('mic', 18)} ${esc(t('recordBtn'))}</button><button class="btn-link" data-act="paste-text">${esc(t('pasteInstead'))}</button></span></div><input id="f-upload" type="file" accept="image/*,application/pdf" multiple hidden>`
+    : `${dropzone()}<div class="row"><button class="btn" data-act="record">${icon('mic', 18)} ${esc(t('recordBtn'))}</button><button class="btn-link" data-act="paste-text">${esc(t('pasteInstead'))}</button></div>`;
+  return `<div class="stack"><div class="stack-s"><h1 class="page-h1">${esc(t('docsTitle'))}</h1><p class="lead" style="font-size:1rem;color:var(--muted)">${esc(t('docsLead'))}</p></div>
+    ${tools}
+    ${list.length ? `<ul style="list-style:none;margin:0;padding:0" class="stack-s" id="ds-list">${list.map((d) => `<li>${docRow(d)}</li>`).join('')}</ul>` : all.length ? `<div class="card empty"><p>${esc(t('dsNone'))}</p></div>` : `<div class="card empty">${logo(56)}<p>${esc(t('noDocs'))}</p></div>`}
+    ${intakeBar}</div>`;
 }
 
 function fristCard(f, i) {
@@ -905,7 +1057,7 @@ function factCard(f) {
   return `<article class="claim ${bad ? 'is-bad' : ''}" id="${esc(id)}">${factBadge(f)}
     <p class="factval">${esc(f.value)}</p>
     ${f.originalValue ? `<p class="meta">${esc(t('fxOrigValue', f.originalValue))}</p>` : ''}
-    ${f.quote ? `<div class="${f.superseded ? 'fx-orig' : ''}">${f.superseded ? `<p class="meta">${esc(t('fxOrigQuote'))}</p>` : ''}<blockquote class="quote">«${esc(f.quote)}»</blockquote></div>` : ''}
+    ${f.quote ? `<div class="${f.superseded ? 'fx-orig' : ''}">${f.superseded ? `<p class="meta">${esc(t('fxOrigQuote'))}</p>` : ''}<div class="quote-wrap"><blockquote class="quote">«${esc(f.quote)}»</blockquote></div></div>` : ''}
     ${voice ? `<p class="meta" style="margin-top:6px">${esc(f.kind === 'user' ? t('fxFromVoiceUser') : t('voiceCaveat'))}</p>` : ''}
     ${d ? `<div class="src"><span>${src}</span>${f.quote ? `<button class="btn-link" data-act="evidence" data-id="${esc(id)}" aria-expanded="${showEv}">${esc(showEv ? t('hide') : t('viewInDoc'))} ${icon(showEv ? 'x' : 'arrow', 16)}</button>` : ''}</div>` : ''}
     ${showEv ? evidenceHtml(d, f.quote) : ''}
@@ -988,7 +1140,7 @@ function pageEnkel() {
   return `<h1>${esc(t('sTitle'))}</h1>${picker}
     <h2>${esc(t('sHappened'))}</h2><p>${wait('a') ? esc(t('sReading')) : esc(a.sammendrag || '')}</p>
     <h2>${esc(t('sNow'))}</h2><p>${wait('a') ? '' : esc(a.status || '')}</p>
-    ${next ? `<p style="margin-top:16px"><strong>${esc(t('sNextDeadline', fmtLong(next.dato)))}</strong> ${esc(n === 0 ? t('sToday') : t('sInDays', n))}<br>${capEsc(next.hva)}</p>` : ''}
+    ${next ? `<p class="s-deadline"><span>${esc(t('sDeadlineLabel'))}</span><span class="d">${esc(fmtLong(next.dato))}</span><span><strong>${esc(n === 0 ? t('sToday') : t('sInDays', n))}</strong> · ${capEsc(next.hva)}</span></p>` : ''}
     <h2>${esc(t('sToDo'))}</h2>${wait('b') || wait('c') ? `<p>${esc(t('sFinding'))}</p>` : p.todo.length ? `<ol class="simple-list">${p.todo.map((s) => `<li>${esc(s)}</li>`).join('')}</ol>` : `<p>${esc(t('sNothing'))}</p>`}`;
 }
 
@@ -1419,6 +1571,7 @@ const acts = {
     $('#viewer').showModal(); $('#p-title').focus();
   },
   analyze: () => analyze(),
+  'ds-filter': (id) => { st.dfilter = id; renderPage(); document.querySelector(`[data-act="ds-filter"][data-id="${id}"]`)?.focus(); },
   'fx-confirm': (id) => fxPut(id, { confirmed: !factById(id).confirmed }),
   'fx-include': (id) => fxPut(id, { included: !factById(id).included }),
   'fx-correct': (id) => { st.fedit = id; renderPage(); $('#fx-val')?.focus(); },
@@ -1507,7 +1660,13 @@ document.addEventListener('change', async (e) => {
   else if (el.id === 'pk-quotes' || el.id === 'pk-hide') { st.pk[el.id === 'pk-quotes' ? 'quotes' : 'hide'] = el.checked; renderPage(); document.getElementById(el.id)?.focus(); }
   else if (el.id === 'hide-ids') { st.hideIds = el.checked; renderPage(); document.getElementById('hide-ids')?.focus(); }
 });
-document.addEventListener('input', (e) => { if (e.target.id === 'i-text') renderChips(); });
+document.addEventListener('input', (e) => {
+  if (e.target.id === 'i-text') renderChips();
+  else if (e.target.id === 'ds-q') { // filter as you type, keep the caret
+    st.dq = e.target.value; const pos = e.target.selectionStart; renderPage();
+    const i = document.getElementById('ds-q'); if (i) { i.focus(); i.setSelectionRange(pos, pos); }
+  }
+});
 
 document.addEventListener('dragover', (e) => { const z = e.target.closest('#dropzone'); if (z) { e.preventDefault(); z.classList.add('over'); } });
 document.addEventListener('dragleave', (e) => { e.target.closest?.('#dropzone')?.classList.remove('over'); });
@@ -1524,8 +1683,9 @@ $('#intake').addEventListener('cancel', (e) => { if (intake?.phase === 'ready' &
 if (/^\??sample/.test(location.search.slice(0, 7)) && !location.hash.startsWith('#/s/')) {
   const l = new URLSearchParams(location.search).get('lang');
   if (l === 'nb' || l === 'en') lang = l;
+  const pg = new URLSearchParams(location.search).get('page');
   history.replaceState(null, '', location.pathname);
-  api('POST', '/api/cases/sample', { lang }).then(({ token }) => { remember(token, t('sampleName')); location.hash = `#/s/${token}`; }).catch((e) => toast(e.message));
+  api('POST', '/api/cases/sample', { lang }).then(({ token }) => { remember(token, t('sampleName')); location.hash = `#/s/${token}${PAGES.includes(pg) ? '/' + pg : ''}`; }).catch((e) => toast(e.message));
 }
 fetch('/api/status').then((r) => r.json()).then((j) => { SRV = { ...SRV, ...j }; if (document.querySelector('[data-form="new-case"]')) renderHome(); }).catch(() => {});
 route();
