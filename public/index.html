@@ -146,6 +146,17 @@ mark { background: var(--mark); color: var(--ink); padding: 1px 2px; border-radi
 
 /* Overview: the hero deadline */
 .page-h1 { font-size: 1.5rem; }
+.badge.sim { background: var(--primary); color: #fff; }
+.badge.sim .tag { border: 1.5px solid #fff; border-radius: 4px; padding: 0 5px; font-size: .875rem; letter-spacing: .04em; }
+.pf-card { background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--primary); border-radius: var(--r); box-shadow: var(--shadow); padding: 20px 24px; }
+.pf-card.claimed { border-left-color: var(--warn); border-left-style: dashed; background: #FFFDF6; }
+.pf-card.empty { border-left-color: var(--line); }
+.pf-val { font-family: var(--serif); font-weight: 600; font-size: 1.5rem; line-height: 1.3; margin: 10px 0 4px; overflow-wrap: anywhere; }
+.pg-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); padding: 20px 24px; }
+.pg-card .tagrow { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.cw-banner { background: var(--primary); color: #fff; padding: 12px 16px; border-radius: var(--r); display: flex; gap: 12px; align-items: center; font-weight: 600; }
+.loglist { list-style: none; margin: 12px 0 0; padding: 0; }
+.loglist li { padding: 10px 0; border-top: 1px solid var(--line); display: flex; gap: 12px; flex-wrap: wrap; }
 .appeal { background: var(--surface); border: 2px solid var(--primary); border-radius: var(--r); box-shadow: var(--shadow); padding: 28px; }
 .appeal.soon { border-color: var(--warn); background: #FFFDF6; }
 .appeal.over { border-color: var(--bad); }
@@ -344,6 +355,15 @@ footer.foot p { margin: 0; }
 /* ---------- Texts. Missing Norwegian keys fall back to English. ---------- */
 const T = {
   en: {
+    tab_profil: 'Profile', pfTitle: 'Verified profile', pfLead: 'The facts programs ask for again and again, each with where it comes from. Share them once, with your consent, for as long as you choose.',
+    pfDemo: 'Demo limits: the sources (tax, payroll, population register) and the programs are simulated. They return made-up values and no real agency is contacted. There is no sign-in yet, so anyone with a link can see what that link shows. This is not legal advice.',
+    pfSource: 'From a source', pfSim: 'SIMULATED', pfFetched: (n, d) => `${n} · fetched ${d}`, pfClaimed: 'Claimed, not verified at a source', pfClaimedBy: 'The family says', pfEmpty: 'No value yet', pfNoteDoc: 'Quote found in a document', pfNoteVoice: 'From a voice note, not an official document', pfNoteUser: 'Entered by you', pfNoteOther: 'Not checked',
+    pfFetch: (n) => `Fetch from ${n}`, pfRemove: 'Remove the source value', pfFetchAria: (n, f) => `Fetch ${f} from ${n}`,
+    shTitle2: 'Share with a program', shLead2: 'Choose what each program may see. Only the fields you tick are shared, as they are today, until the date you choose. You can withdraw at any time.',
+    shRequired: 'Needed', shOptional: 'Optional', shNeedValues: 'Fill in the fields this program needs first.', shExpiry: 'Access lasts', shDays: (n) => `${n} days`, shGo: 'Share these fields', shFictional: 'Fictional program',
+    coTitle: 'Who can see what', coNone: 'You have not shared anything.', coActive: 'Active', coRevoked: 'Withdrawn', coExpired: 'Expired', coUntil: (d) => `until ${d}`, coRevoke: 'Withdraw access', coLink: 'Link for the program', coOpen: 'Open as the program', coCopy: 'Copy link', coCopied: 'Link copied',
+    lgTitle: 'Access log', lgNone: 'Nothing has happened yet.', lg_granted: 'You shared', lg_revoked: 'You withdrew access', lg_viewed: 'The program opened its link', 'lg_denied-revoked': 'The program tried to open a withdrawn link', 'lg_denied-expired': 'The program tried to open an expired link',
+    cwTitle: 'Program view', cwBanner: 'This is a simulated program view for the demo. The program and agency are fictional.', cwFrom: 'Verified from source', cwClaimed: 'Claimed by the family, not verified at a source', cwFamilySays: 'The family says', cwAccess: (a, b) => `Shared ${a}, until ${b}`, cwRevoked: 'The family has withdrawn access. No data is shown.', cwExpired: 'The consent has expired. No data is shown.', cwNone: 'This link does not exist.', cwBasis: 'Based on',
     apTitle: 'Appeal deadline', apWhen: 'When did you receive the decision?', apWhenHelp: (n, u) => `The appeal deadline is ${n} ${u} from the day you received it. Enter the day and we calculate the date.`, apDaysLeft: (n) => (n === 1 ? '1 day left' : `${n} days left`), apToday: 'Last day is today', apExpired: (n) => `Expired ${n} ${n === 1 ? 'day' : 'days'} ago`, apNeedDate: 'We need a date before we can count down', apSave: 'Calculate the deadline',
     tbQuotes: (ok, n) => `${ok} of ${n} quotes found in the documents`, tbConfirm: (c, n) => `${c} of ${n} dates and amounts confirmed by you`, tbConfirmAll: 'You confirmed all dates and amounts',
     tbHint2: 'A found quote means those words are in the document. It does not mean the text was read correctly, or that we understood it right. Confirm dates and amounts yourself.',
@@ -448,6 +468,15 @@ const T = {
     hideIds: 'Hide ID numbers', hideIdsHint: 'Hides personal ID numbers we recognize, such as Norwegian national ID numbers and US Social Security numbers. It can miss others, so check before you share.', idHidden: '[ID number hidden]', hLegendHidden: 'Personal ID numbers we recognize have been hidden.',
   },
   nb: {
+    tab_profil: 'Profil', pfTitle: 'Verifisert profil', pfLead: 'Opplysningene programmer ber om igjen og igjen, hver med hvor den kommer fra. Del dem én gang, med ditt samtykke, så lenge du velger.',
+    pfDemo: 'Begrensninger i demoen: kildene (skatt, lønn, folkeregister) og programmene er simulert. De gir oppdiktede verdier, og ingen ekte etat kontaktes. Det finnes ingen innlogging ennå, så alle med en lenke kan se det lenken viser. Dette er ikke juridisk rådgivning.',
+    pfSource: 'Fra en kilde', pfSim: 'SIMULERT', pfFetched: (n, d) => `${n} · hentet ${d}`, pfClaimed: 'Påstått, ikke verifisert hos en kilde', pfClaimedBy: 'Familien sier', pfEmpty: 'Ingen verdi ennå', pfNoteDoc: 'Sitatet står i et dokument', pfNoteVoice: 'Fra et talenotat, ikke et offisielt dokument', pfNoteUser: 'Skrevet inn av deg', pfNoteOther: 'Ikke sjekket',
+    pfFetch: (n) => `Hent fra ${n}`, pfRemove: 'Fjern kildeverdien', pfFetchAria: (n, f) => `Hent ${f} fra ${n}`,
+    shTitle2: 'Del med et program', shLead2: 'Velg hva hvert program får se. Bare feltene du krysser av for deles, slik de er i dag, fram til datoen du velger. Du kan trekke tilbake når som helst.',
+    shRequired: 'Påkrevd', shOptional: 'Valgfritt', shNeedValues: 'Fyll først ut feltene dette programmet trenger.', shExpiry: 'Tilgangen varer', shDays: (n) => `${n} dager`, shGo: 'Del disse feltene', shFictional: 'Fiktivt program',
+    coTitle: 'Hvem som kan se hva', coNone: 'Du har ikke delt noe.', coActive: 'Aktiv', coRevoked: 'Trukket tilbake', coExpired: 'Utløpt', coUntil: (d) => `til ${d}`, coRevoke: 'Trekk tilbake tilgangen', coLink: 'Lenke til programmet', coOpen: 'Åpne som programmet', coCopy: 'Kopier lenken', coCopied: 'Lenken er kopiert',
+    lgTitle: 'Tilgangslogg', lgNone: 'Ingenting har skjedd ennå.', lg_granted: 'Du delte', lg_revoked: 'Du trakk tilbake tilgangen', lg_viewed: 'Programmet åpnet lenken sin', 'lg_denied-revoked': 'Programmet prøvde å åpne en tilbaketrukket lenke', 'lg_denied-expired': 'Programmet prøvde å åpne en utløpt lenke',
+    cwTitle: 'Programvisning', cwBanner: 'Dette er en simulert programvisning for demoen. Programmet og etaten er fiktive.', cwFrom: 'Verifisert fra kilde', cwClaimed: 'Påstått av familien, ikke verifisert hos en kilde', cwFamilySays: 'Familien sier', cwAccess: (a, b) => `Delt ${a}, til ${b}`, cwRevoked: 'Familien har trukket tilbake tilgangen. Ingen data vises.', cwExpired: 'Samtykket er utløpt. Ingen data vises.', cwNone: 'Denne lenken finnes ikke.', cwBasis: 'Basert på',
     apTitle: 'Ankefrist', apWhen: 'Når mottok du vedtaket?', apWhenHelp: (n, u) => `Ankefristen er ${n} ${u} fra dagen du mottok det. Legg inn dagen, så regner vi ut datoen.`, apDaysLeft: (n) => (n === 1 ? '1 dag igjen' : `${n} dager igjen`), apToday: 'Siste dag er i dag', apExpired: (n) => `Gikk ut for ${n} ${n === 1 ? 'dag' : 'dager'} siden`, apNeedDate: 'Vi trenger en dato før vi kan telle ned', apSave: 'Regn ut fristen',
     tbQuotes: (ok, n) => `${ok} av ${n} sitater funnet i dokumentene`, tbConfirm: (c, n) => `${c} av ${n} datoer og beløp bekreftet av deg`, tbConfirmAll: 'Du har bekreftet alle datoer og beløp',
     tbHint2: 'Et funnet sitat betyr at ordene står i dokumentet. Det betyr ikke at teksten er lest riktig, eller at vi har forstått den riktig. Bekreft datoer og beløp selv.',
@@ -556,8 +585,8 @@ const T = {
 /* ---------- Base ---------- */
 const LS_KEY = 'saksmappen_saker_v2', SIMPLE_KEY = 'saksmappen_enkel', LANG_KEY = 'casefolder_lang';
 const TYPES = ['vedtak', 'legeerklæring', 'forsikring', 'advokat', 'innkalling', 'notat', 'annet'];
-const PAGES = ['oversikt', 'tidslinje', 'dokumenter', 'frister', 'mangler', 'fakta', 'skriv', 'del', 'overlevering'];
-const TAB_KEYS = ['oversikt', 'tidslinje', 'dokumenter', 'frister', 'mangler', 'fakta', 'skriv'];
+const PAGES = ['oversikt', 'tidslinje', 'dokumenter', 'frister', 'mangler', 'fakta', 'profil', 'skriv', 'del', 'overlevering'];
+const TAB_KEYS = ['oversikt', 'tidslinje', 'dokumenter', 'frister', 'mangler', 'fakta', 'profil', 'skriv'];
 const MAX_PAGES = 6;
 
 let lang = 'en';
@@ -780,6 +809,8 @@ function dropzone() {
 
 /* ---------- Routing and chrome ---------- */
 function route() {
+  const vm = location.hash.match(/^#\/v\/([A-Za-z0-9_-]+)$/);
+  if (vm) return renderProgramView(vm[1]);
   const m = location.hash.match(/^#\/s\/([A-Za-z0-9_-]+)(?:\/([a-z-]+))?$/);
   if (!m) return renderHome();
   const page = PAGES.includes(m[2]) ? m[2] : 'oversikt';
@@ -836,7 +867,7 @@ function renderHome() {
 
 /* ---------- Open a case ---------- */
 async function openCase(token, page = 'oversikt') {
-  st = { token, page, hideIds: true, facts: [], fedit: null, dq: '', dfilter: 'all', pk: { quotes: false, hide: true }, failed: false, sLang: '', trans: {}, transBusy: false, c: null, docs: [], analysis: null, aState: 'none', checks: {}, pending: [], open: new Set(), ev: new Set(), answer: null, draft: null, busy: '', err: '' };
+  st = { token, page, hideIds: true, facts: [], fedit: null, profile: null, profBusy: false, dq: '', dfilter: 'all', pk: { quotes: false, hide: true }, failed: false, sLang: '', trans: {}, transBusy: false, c: null, docs: [], analysis: null, aState: 'none', checks: {}, pending: [], open: new Set(), ev: new Set(), answer: null, draft: null, busy: '', err: '' };
   renderCase();
   try {
     const v = await api('GET', `/api/cases/${token}`);
@@ -876,9 +907,10 @@ function renderPage() {
   if (st.page === 'del') html = pageDel();
   else if (st.page === 'overlevering') html = pageOverlevering();
   else if (simple) html = pageEnkel();
-  else html = { oversikt: pageOversikt, tidslinje: pageTidslinje, dokumenter: pageDokumenter, frister: pageFrister, mangler: pageMangler, fakta: pageFakta, skriv: pageSkriv }[st.page]();
+  else html = { oversikt: pageOversikt, tidslinje: pageTidslinje, dokumenter: pageDokumenter, frister: pageFrister, mangler: pageMangler, fakta: pageFakta, profil: pageProfil, skriv: pageSkriv }[st.page]();
   el.innerHTML = errHtml + (['del', 'overlevering'].includes(st.page) ? '' : banner()) + html;
   renderTrustBar();
+  if (st.page === 'profil' && !st.profile && !st.profBusy) loadProfile();
 }
 
 /* ---------- Screens ---------- */
@@ -1174,6 +1206,70 @@ function expiringLine() {
   const v = f.validity, d = docById(f.docId), unit = t('u_' + v.unit, v.n);
   const sum = v.baseKind === 'received' ? t('fxSumRecv', fmtShort(v.base), v.n, unit, fmtShort(v.until)) : t('fxSum', (d ? docKind(d) : t('unknownDoc')).toLowerCase(), fmtShort(v.base), v.n, unit, fmtShort(v.until));
   return `<div class="meta" style="margin-top:12px;color:var(--warn-ink)"><strong>${esc(t('ovExpiring'))}: ${esc(factLabel(f))}.</strong> ${esc(sum)}.</div><p style="margin-top:4px"><a class="btn-link" href="#/s/${esc(st.token)}/fakta">${esc(t('ovSeeFacts'))}</a></p>`;
+}
+
+/* ---------- Verified profile, sharing with programs, and the program's own view ---------- */
+const profApi = (method, sub, body) => caseApi(method, `${sub}${sub.includes('?') ? '&' : '?'}lang=${lang}`, body);
+async function loadProfile() {
+  st.profBusy = true;
+  try { st.profile = await profApi('GET', '/profile'); } catch (e) { st.err = e.message; }
+  st.profBusy = false; renderPage();
+}
+const simBadge = (text) => `<span class="badge sim">${icon('shield', 16)}<span class="tag">${esc(t('pfSim'))}</span><span>${esc(text)}</span></span>`;
+const claimNote = (c) => !c ? '' : c.kind === 'voice' || c.origin === 'voice' ? t('pfNoteVoice') : c.kind === 'user' ? t('pfNoteUser') : c.status === 'checked' ? t('pfNoteDoc') : t('pfNoteOther');
+const fmtDay = (iso) => (iso ? fmtShort(iso) : '');
+
+function pageProfil() {
+  const head = `<div class="stack-s"><h1 class="page-h1">${esc(t('pfTitle'))}</h1><p class="lead" style="font-size:1rem;color:var(--muted)">${esc(t('pfLead'))}</p></div><div class="notice" style="background:var(--neutral-bg);color:var(--ink);border-color:var(--line)">${icon('info')}<div>${esc(t('pfDemo'))}</div></div>`;
+  const P = st.profile;
+  if (!P) return `<div class="stack">${head}<p class="skeleton" role="status">${esc(t('opening'))}</p></div>`;
+  const fieldCard = (f) => {
+    const cls = f.state === 'source' ? '' : f.state === 'claimed' ? 'claimed' : 'empty';
+    const srcBtns = P.sources.filter((x) => x.fields.includes(f.key)).map((x) => `<button class="btn" data-act="pf-source" data-id="${esc(x.id + ':' + f.key)}" aria-label="${esc(t('pfFetchAria', x.name, f.label))}">${esc(t('pfFetch', x.name))}</button>`).join('');
+    let body;
+    if (f.state === 'source') body = `${simBadge(t('pfFetched', f.source.name, fmtDay(f.source.fetched)))}<p class="pf-val">${esc(f.source.value)}</p>${f.claimed ? `<p class="meta">${esc(t('pfClaimedBy'))}: ${esc(f.claimed.value)} (${esc(claimNote(f.claimed))})</p>` : ''}`;
+    else if (f.state === 'claimed') body = `${badge('warn', 'alert', t('pfClaimed'))}<p class="pf-val">${esc(f.claimed.value)}</p><p class="meta">${esc(claimNote(f.claimed))}${f.claimed.doc ? ` · ${esc(f.claimed.doc)}` : ''}</p>`;
+    else body = `<p class="pf-val" style="color:var(--muted)">${esc(t('pfEmpty'))}</p>`;
+    return `<article class="pf-card ${cls}"><h3>${esc(f.label)}</h3>${body}<div class="row" style="margin-top:12px">${srcBtns}${f.state === 'source' ? `<button class="btn-link" data-act="pf-clear" data-id="${esc(f.key)}">${esc(t('pfRemove'))}</button>` : ''}</div></article>`;
+  };
+  const byKey = Object.fromEntries(P.fields.map((f) => [f.key, f]));
+  const programCard = (p) => {
+    const all = [...p.required.map((k) => [k, true]), ...p.optional.map((k) => [k, false])];
+    const ready = p.required.every((k) => byKey[k].state !== 'empty');
+    return `<article class="pg-card" data-prog="${esc(p.id)}"><div class="tagrow"><h3>${esc(p.name)}</h3></div><p class="meta">${esc(p.agency)}. ${esc(p.purpose)}</p>
+      <fieldset style="border:0;padding:0;margin:12px 0 0"><legend class="meta" style="padding:0">${esc(t('shTitle2'))}</legend>
+      ${all.map(([k, req]) => { const f = byKey[k], has = f.state !== 'empty'; return `<label class="check-row" for="pg-${esc(p.id)}-${k}"><input type="checkbox" id="pg-${esc(p.id)}-${k}" data-pgf="${esc(p.id)}:${k}" ${req && has ? 'checked disabled' : has ? '' : 'disabled'}><span><strong>${esc(f.label)}</strong> <span class="meta">(${esc(t(req ? 'shRequired' : 'shOptional'))})</span><br><span class="meta">${has ? esc(f.state === 'source' ? f.source.value : f.claimed.value) : esc(t('pfEmpty'))} ${f.state === 'source' ? '· ' + esc(t('pfSim')) : f.state === 'claimed' ? '· ' + esc(t('pfClaimed')) : ''}</span></span></label>`; }).join('')}</fieldset>
+      ${ready ? `<label for="pg-exp-${esc(p.id)}" style="margin-top:12px">${esc(t('shExpiry'))}</label><select id="pg-exp-${esc(p.id)}" style="max-width:240px">${P.expiryDays.map((d) => `<option value="${d}" ${d === 30 ? 'selected' : ''}>${esc(t('shDays', d))}</option>`).join('')}</select>
+      <p style="margin-top:12px"><button class="btn primary" data-act="pf-share" data-id="${esc(p.id)}">${esc(t('shGo'))}</button></p>` : `<p class="meta" style="margin-top:12px">${esc(t('shNeedValues'))}</p>`}</article>`;
+  };
+  const stBadge = (c) => c.state === 'active' ? badge('ok', 'check', t('coActive')) : badge(c.state === 'revoked' ? 'bad' : 'warn', 'alert', t(c.state === 'revoked' ? 'coRevoked' : 'coExpired'));
+  const consent = (c) => { const url = `${location.origin}/#/v/${c.viewToken}`; return `<article class="pg-card"><div class="row between"><h3>${esc(c.programName)}</h3>${stBadge(c)}</div>
+      <p class="meta">${esc(c.fields.map((k) => byKey[k].label).join(', '))} · ${esc(t('cwAccess', fmtDay(c.granted), fmtDay(c.expires)))}${c.revoked ? ` · ${esc(t('coRevoked'))} ${esc(fmtDay(c.revoked))}` : ''}</p>
+      ${c.state === 'active' ? `<div class="copyrow" style="margin-top:12px"><input readonly value="${esc(url)}" aria-label="${esc(t('coLink'))}"><button class="btn" data-act="pf-copy" data-id="${esc(c.viewToken)}">${icon('link', 18)} ${esc(t('coCopy'))}</button><a class="btn" href="#/v/${esc(c.viewToken)}" target="_blank" rel="noopener">${esc(t('coOpen'))}</a></div>
+      <p style="margin-top:12px"><button class="btn danger" data-act="pf-revoke" data-id="${esc(c.id)}">${esc(t('coRevoke'))}</button></p>` : ''}</article>`; };
+  const logText = (l) => `${t('lg_' + l.event) || l.event}: ${(P.programs.find((p) => p.id === l.program) || {}).name || l.program}${l.event === 'granted' ? ` (${l.fields.map((k) => byKey[k].label).join(', ')})` : ''}`;
+  return `<div class="stack">${head}
+    <section aria-labelledby="h-pf"><h2 id="h-pf" class="sr-only" style="position:absolute;left:-9999px">${esc(t('pfTitle'))}</h2><div class="stack-s">${P.fields.map(fieldCard).join('')}</div></section>
+    <section aria-labelledby="h-share"><h2 id="h-share">${esc(t('shTitle2'))}</h2><p style="margin-top:4px">${esc(t('shLead2'))}</p><div class="stack-s" style="margin-top:12px">${P.programs.map(programCard).join('')}</div></section>
+    <section aria-labelledby="h-co"><h2 id="h-co">${esc(t('coTitle'))}</h2>${P.consents.length ? `<div class="stack-s" style="margin-top:12px">${P.consents.map(consent).join('')}</div>` : `<p style="margin-top:8px">${esc(t('coNone'))}</p>`}</section>
+    <section aria-labelledby="h-lg"><h2 id="h-lg">${esc(t('lgTitle'))}</h2>${P.log.length ? `<ul class="loglist">${P.log.map((l) => `<li><span class="meta">${esc(new Date(l.at).toLocaleString(loc(), { dateStyle: 'medium', timeStyle: 'short' }))}</span><span>${esc(logText(l))}</span></li>`).join('')}</ul>` : `<p style="margin-top:8px">${esc(t('lgNone'))}</p>`}</section></div>`;
+}
+
+// The program's page: no case chrome, no way to the family's case. Only what was consented to, with provenance.
+async function renderProgramView(vt) {
+  st = null; document.body.classList.remove('simple'); document.title = `${t('cwTitle')} · ${t('brand')}`;
+  renderChrome(); $('#trustbar').hidden = true;
+  const el = $('#app'); el.innerHTML = `<p class="skeleton">${esc(t('opening'))}</p>`;
+  let r, v;
+  try { r = await fetch(`/api/view/${vt}?lang=${lang}`); v = await r.json(); } catch { v = { error: t('cwNone') }; }
+  if (v.error) { el.innerHTML = `<div class="stack"><h1>${esc(t('cwTitle'))}</h1><div class="notice bad" role="alert">${icon('alert')}<div>${esc(v.error)}</div></div></div>`; return; }
+  const fieldHtml = (f) => `<article class="pf-card ${f.state === 'source' ? '' : 'claimed'}"><h3>${esc(f.label)}</h3>${f.state === 'source'
+    ? `${simBadge(`${t('cwFrom')}: ${f.source.name} · ${fmtDay(f.source.fetched)}`)}<p class="pf-val">${esc(f.value)}</p>${f.claimed ? `<p class="meta">${esc(t('cwFamilySays'))}: ${esc(f.claimed.value)} (${esc(claimNote(f.claimed))})</p>` : ''}`
+    : `${badge('warn', 'alert', t('cwClaimed'))}<p class="pf-val">${esc(f.value)}</p><p class="meta">${esc(t('cwBasis'))}: ${esc(claimNote(f.claimed))}</p>`}</article>`;
+  const msg = v.state === 'revoked' ? t('cwRevoked') : v.state === 'expired' ? t('cwExpired') : '';
+  el.innerHTML = `<div class="stack"><p class="cw-banner">${icon('shield', 22)}<span>${esc(t('cwBanner'))}</span></p>
+    <div class="stack-s"><h1 class="page-h1">${esc(v.program.name)}</h1><p class="meta">${esc(v.program.agency)} · ${esc(t('cwAccess', fmtDay(v.granted), fmtDay(v.expires)))}</p></div>
+    ${msg ? `<div class="notice bad" role="alert">${icon('alert')}<div>${esc(msg)}</div></div>` : `<div class="stack-s">${v.fields.map(fieldHtml).join('')}</div>`}</div>`;
 }
 
 function pageSkriv() {
@@ -1628,7 +1724,8 @@ async function saveIntake() {
 /* ---------- Events ---------- */
 function setLang(l) {
   lang = l; try { localStorage.setItem(LANG_KEY, l); } catch {}
-  if (st) { if (st.c) document.title = `${st.c.name} · ${t('brand')}`; renderCase(); } else renderHome();
+  if (location.hash.startsWith('#/v/')) return route();
+  if (st) { st.profile = null; if (st.c) document.title = `${st.c.name} · ${t('brand')}`; renderCase(); } else renderHome();
 }
 
 const acts = {
@@ -1658,6 +1755,14 @@ const acts = {
     $('#viewer').showModal(); $('#p-title').focus();
   },
   analyze: () => analyze(),
+  'pf-source': async (id) => { const [source, field] = id.split(':'); st.profile = await profApi('POST', '/profile/source', { source, field }); renderPage(); },
+  'pf-clear': async (id) => { st.profile = await profApi('DELETE', `/profile/${id}`); renderPage(); },
+  'pf-share': async (id) => {
+    const fields = [...document.querySelectorAll(`[data-pgf^="${id}:"]`)].filter((i) => i.checked).map((i) => i.dataset.pgf.split(':')[1]);
+    st.profile = await profApi('POST', '/consents', { program: id, fields, days: Number($(`#pg-exp-${id}`).value) }); renderPage(); toast(t('shGo'));
+  },
+  'pf-revoke': async (id) => { st.profile = await profApi('DELETE', `/consents/${id}`); renderPage(); },
+  'pf-copy': async (id) => { try { await navigator.clipboard.writeText(`${location.origin}/#/v/${id}`); toast(t('coCopied')); } catch { toast(t('selectLink')); } },
   'ds-filter': (id) => { st.dfilter = id; renderPage(); document.querySelector(`[data-act="ds-filter"][data-id="${id}"]`)?.focus(); },
   'fx-confirm': (id) => fxPut(id, { confirmed: !factById(id).confirmed }),
   'fx-include': (id) => fxPut(id, { included: !factById(id).included }),
