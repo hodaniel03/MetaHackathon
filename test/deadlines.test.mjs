@@ -28,3 +28,14 @@ test('API: recalc fills the appeal date without a model call and keeps the analy
   assert.equal(after.analysisState, 'fresh');
   assert.equal(after.analysis.frister.find((f) => /appeal/i.test(f.hva)).dato, '2026-12-15');
 });
+
+test('a deadline in working days or end of month is not calculated, instead of being calculated wrongly', () => {
+  const docs = [{ id: 'd1', date: '2026-10-14', received: '2026-10-16', text: '' }];
+  const mk = (sitat, v) => [{ dato: null, varighet: v, fra: 'mottak', dok: 'd1', sitat }];
+  const a = mk('You must respond within 5 working days of receipt of this letter.', { antall: 5, enhet: 'days' }); computeDeadlines(a, docs);
+  assert.equal(a[0].dato, null); assert.equal(a[0].ikkeStottet, true);
+  const b = mk('Fristen er utgangen av måneden etter datoen på dette brevet.', { antall: 1, enhet: 'months' }); computeDeadlines(b, docs);
+  assert.equal(b[0].dato, null); assert.equal(b[0].ikkeStottet, true);
+  const c = mk('You have 60 days from the date you receive this notice.', { antall: 60, enhet: 'days' }); computeDeadlines(c, docs);
+  assert.equal(c[0].dato, '2026-12-15');
+});
