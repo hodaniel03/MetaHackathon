@@ -1,0 +1,267 @@
+{
+  "version": 1,
+  "historyId": "9f0f51af-f88b-4429-b973-cb86b456abe9",
+  "currentRevision": "23a07239-db9d-4876-af3c-c7e888f11848",
+  "pendingChanges": false,
+  "files": {
+    "AGENTS.md": {
+      "hash": "1b36171117cb7c18f4100a0db6a3782ff2e096115995733200445cc2e80a4060",
+      "content": "/Users/hodanielkhuu/.cache/hyperframes/history/9f0f51af-f88b-4429-b973-cb86b456abe9/blobs/1b/1b36171117cb7c18f4100a0db6a3782ff2e096115995733200445cc2e80a4060"
+    },
+    "CLAUDE.md": {
+      "hash": "1b36171117cb7c18f4100a0db6a3782ff2e096115995733200445cc2e80a4060",
+      "content": "/Users/hodanielkhuu/.cache/hyperframes/history/9f0f51af-f88b-4429-b973-cb86b456abe9/blobs/1b/1b36171117cb7c18f4100a0db6a3782ff2e096115995733200445cc2e80a4060"
+    },
+    "hyperframes.json": {
+      "hash": "53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50",
+      "content": "/Users/hodanielkhuu/.cache/hyperframes/history/9f0f51af-f88b-4429-b973-cb86b456abe9/blobs/53/53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50"
+    },
+    "index.html": {
+      "hash": "20a7f0a77b038a4a2e55301c733ca8dabdd20f649d1634096d455068abe37e85",
+      "content": "/Users/hodanielkhuu/.cache/hyperframes/history/9f0f51af-f88b-4429-b973-cb86b456abe9/blobs/20/20a7f0a77b038a4a2e55301c733ca8dabdd20f649d1634096d455068abe37e85"
+    },
+    "meta.json": {
+      "hash": "426b2640cd1e90346e87e9ee09922093ff729459f4132270fbfdcb3df1ffbf01",
+      "content": "/Users/hodanielkhuu/.cache/hyperframes/history/9f0f51af-f88b-4429-b973-cb86b456abe9/blobs/42/426b2640cd1e90346e87e9ee09922093ff729459f4132270fbfdcb3df1ffbf01"
+    },
+    "package.json": {
+      "hash": "262f485bf0ba1c397365e4dded3265a1c8547e5b8b6a3365696e5db94b7608c3",
+      "content": "/Users/hodanielkhuu/.cache/hyperframes/history/9f0f51af-f88b-4429-b973-cb86b456abe9/blobs/26/262f485bf0ba1c397365e4dded3265a1c8547e5b8b6a3365696e5db94b7608c3"
+    }
+  },
+  "revisions": {
+    "23a07239-db9d-4876-af3c-c7e888f11848": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1793493376516,
+      "endedAt": 1793493376516,
+      "files": {
+        "index.html": {
+          "before": "/Users/hodanielkhuu/.cache/hyperframes/history/9f0f51af-f88b-4429-b973-cb86b456abe9/blobs/5e/5e38d7f56c5baa432b770c7d0acb70532c8c19208b638623de53e32fc37446ca",
+          "after": "/Users/hodanielkhuu/.cache/hyperframes/history/9f0f51af-f88b-4429-b973-cb86b456abe9/blobs/20/20a7f0a77b038a4a2e55301c733ca8dabdd20f649d1634096d455068abe37e85"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": {
+      "revision": null,
+      "id": "982ca8b2-bd4e-423a-83b7-bef660bc37ff"
+    },
+    "revisions": {},
+    "unversioned": [
+      {
+        "id": "982ca8b2-bd4e-423a-83b7-bef660bc37ff",
+        "scope": "project",
+        "report": "/Users/hodanielkhuu/vscode/MetaHackathon/landing/video/.hyperframes/artifacts/checks/982ca8b2-bd4e-423a-83b7-bef660bc37ff.json",
+        "metadata": {
+          "ok": true,
+          "browserSkipped": false,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 2,
+            "timeout": 10000,
+            "contrast": true,
+            "strict": false,
+            "snapshots": false,
+            "browserGpuMode": "auto"
+          }
+        },
+        "createdAt": 1793493329918,
+        "contentHash": "70d787841cab72e54cccd83ee0f6c86d0e9e438539757ed4a43d1d3f0d7e5b4b",
+        "revision": null,
+        "inputFingerprint": "ef452d1dc88057440d201953075a59b1379f2c153f91603cf62cf7524b1c85a3",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "snapshots": {
+    "latest": {
+      "revision": null,
+      "id": "1231c92d-aad2-43f4-9eea-6efd9b4f92c0-7"
+    },
+    "revisions": {},
+    "unversioned": [
+      {
+        "scope": "full",
+        "id": "1231c92d-aad2-43f4-9eea-6efd9b4f92c0-0",
+        "image": "/Users/hodanielkhuu/vscode/MetaHackathon/landing/video/.hyperframes/artifacts/snapshots/6738425f-1fd3-46fb-8716-de9ec48bb793/frame-00-at-0s.png",
+        "time": 0,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793493342960,
+        "contentHash": "9cec394417b21b596351be1d27de90910f3a74794211feabd4f3d9064a7372fa",
+        "revision": null,
+        "inputFingerprint": "ef452d1dc88057440d201953075a59b1379f2c153f91603cf62cf7524b1c85a3",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "1231c92d-aad2-43f4-9eea-6efd9b4f92c0-1",
+        "image": "/Users/hodanielkhuu/vscode/MetaHackathon/landing/video/.hyperframes/artifacts/snapshots/6738425f-1fd3-46fb-8716-de9ec48bb793/frame-01-at-2s.png",
+        "time": 2,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793493342960,
+        "contentHash": "c43932cc68c97d3a87c98531e713771666eded3e7e2832c722016b43ab7a8349",
+        "revision": null,
+        "inputFingerprint": "ef452d1dc88057440d201953075a59b1379f2c153f91603cf62cf7524b1c85a3",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "1231c92d-aad2-43f4-9eea-6efd9b4f92c0-2",
+        "image": "/Users/hodanielkhuu/vscode/MetaHackathon/landing/video/.hyperframes/artifacts/snapshots/6738425f-1fd3-46fb-8716-de9ec48bb793/frame-02-at-3s.png",
+        "time": 3,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793493342960,
+        "contentHash": "40d33eb91549e38aa0ce52004587ac17105f3c06f0320fa662698be7db8c8921",
+        "revision": null,
+        "inputFingerprint": "ef452d1dc88057440d201953075a59b1379f2c153f91603cf62cf7524b1c85a3",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "1231c92d-aad2-43f4-9eea-6efd9b4f92c0-3",
+        "image": "/Users/hodanielkhuu/vscode/MetaHackathon/landing/video/.hyperframes/artifacts/snapshots/6738425f-1fd3-46fb-8716-de9ec48bb793/frame-03-at-5s.png",
+        "time": 5,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793493342960,
+        "contentHash": "7142bc7cbc6b217f770e630226b1681755a8c50c91d2af5b8a34dca8b01b7856",
+        "revision": null,
+        "inputFingerprint": "ef452d1dc88057440d201953075a59b1379f2c153f91603cf62cf7524b1c85a3",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "1231c92d-aad2-43f4-9eea-6efd9b4f92c0-4",
+        "image": "/Users/hodanielkhuu/vscode/MetaHackathon/landing/video/.hyperframes/artifacts/snapshots/6738425f-1fd3-46fb-8716-de9ec48bb793/frame-04-at-7s.png",
+        "time": 7,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793493342960,
+        "contentHash": "3088abffbc32c11ec13fd3a2a63302645982025d3b1d1a659e2a35d202767276",
+        "revision": null,
+        "inputFingerprint": "ef452d1dc88057440d201953075a59b1379f2c153f91603cf62cf7524b1c85a3",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "1231c92d-aad2-43f4-9eea-6efd9b4f92c0-5",
+        "image": "/Users/hodanielkhuu/vscode/MetaHackathon/landing/video/.hyperframes/artifacts/snapshots/6738425f-1fd3-46fb-8716-de9ec48bb793/frame-05-at-10s.png",
+        "time": 10,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793493342960,
+        "contentHash": "1a671843547b9cda829a66f0a1a8dd24ab456fc177f0970049c5493dbd90fcc8",
+        "revision": null,
+        "inputFingerprint": "ef452d1dc88057440d201953075a59b1379f2c153f91603cf62cf7524b1c85a3",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "1231c92d-aad2-43f4-9eea-6efd9b4f92c0-6",
+        "image": "/Users/hodanielkhuu/vscode/MetaHackathon/landing/video/.hyperframes/artifacts/snapshots/6738425f-1fd3-46fb-8716-de9ec48bb793/frame-06-at-11.9s.png",
+        "time": 11.9,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793493342960,
+        "contentHash": "5218215b4c56a4bc0fdc991252783281b12ea0d020606cd8890e91e02064a4b0",
+        "revision": null,
+        "inputFingerprint": "ef452d1dc88057440d201953075a59b1379f2c153f91603cf62cf7524b1c85a3",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "scope": "full",
+        "id": "1231c92d-aad2-43f4-9eea-6efd9b4f92c0-7",
+        "image": "/Users/hodanielkhuu/vscode/MetaHackathon/landing/video/.hyperframes/artifacts/snapshots/6738425f-1fd3-46fb-8716-de9ec48bb793/frame-07-at-11.75s.png",
+        "time": 11.75,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1793493342960,
+        "contentHash": "01dfc6ee7b7848e7adcbc13ca07c5bc7683ad6a78240a358b060699ecf3e5fe6",
+        "revision": null,
+        "inputFingerprint": "ef452d1dc88057440d201953075a59b1379f2c153f91603cf62cf7524b1c85a3",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "renders": {
+    "latest": {
+      "id": "b9e8516e-b55c-4691-a534-df9588ee61b3",
+      "completedAt": 1793493397415,
+      "output": "/Users/hodanielkhuu/vscode/MetaHackathon/landing/site/assets/hero-src.mp4",
+      "status": "completed",
+      "revision": "23a07239-db9d-4876-af3c-c7e888f11848"
+    },
+    "retainedRevisions": [
+      "23a07239-db9d-4876-af3c-c7e888f11848"
+    ]
+  },
+  "pendingArtifactCleanup": []
+}

@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Ally: a case folder for the family member who runs a long benefits or insurance case</title>
+<meta name="description" content="Case Ally turns letters and calls into a timeline, deadlines and a list of what is missing. Every claim has a word-for-word quote that the server checks.">
+<meta name="theme-color" content="#FAF9F6">
+<link rel="canonical" href="https://caseally.netlify.app/">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Case Ally">
+<meta property="og:title" content="Case Ally: every claim comes with its quote">
+<meta property="og:description" content="A case folder for the family member who runs a long benefits or insurance case for someone else.">
+<meta property="og:url" content="https://caseally.netlify.app/">
+<meta property="og:image" content="https://caseally.netlify.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Case Ally logo, the headline 'Every claim comes with its quote', and a claim card that says 'Checked against the document'.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Case Ally: every claim comes with its quote">
+<meta name="twitter:description" content="A case folder for the family member who runs a long benefits or insurance case for someone else.">
+<meta name="twitter:image" content="https://caseally.netlify.app/assets/og.png">
+<link rel="preload" href="assets/fonts/fraunces-normal-400-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Fraunces;src:url(assets/fonts/fraunces-normal-400-700.woff2) format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:Fraunces;src:url(assets/fonts/fraunces-italic-400-600.woff2) format("woff2");font-weight:400 600;font-style:italic;font-display:swap}
+@font-face{font-family:"Public Sans";src:url(assets/fonts/public-sans-var.woff2) format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
+:root{
+  --bg:#FAF9F6; --surface:#FFFFFF; --line:#E5E1D8; --ink:#162232; --muted:#4A5668; --navy:#1E3A5F; --navy-dark:#17304F;
+  --ok:#14714A; --ok-bg:#E8F3EE; --amber:#9A6B00; --amber-ink:#7A5500; --amber-bg:#FFF4D6; --amber-line:#E8D49A;
+  --bad:#B42318; --bad-bg:#FCECEA; --mark:#FFF1A8; --quote-bg:#F3F2EE; --ctl:#6B7686; --r:16px;
+  --serif:Fraunces,Georgia,"Times New Roman",serif; --sans:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:84px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg,video{display:block;max-width:100%}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;letter-spacing:-.015em;line-height:1.12;margin:0}
+h1{font-size:clamp(2.5rem,5.4vw,4.4rem)}
+h2{font-size:clamp(1.9rem,3.6vw,2.9rem)}
+h3{font-size:1.35rem;line-height:1.25}
+h4{font-size:1.0625rem;font-family:var(--sans);font-weight:600;letter-spacing:0}
+p{margin:0}
+a{color:var(--navy)}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px;position:relative}
+.eyebrow{font-size:.875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:clamp(1.15rem,1.9vw,1.4rem);line-height:1.5;color:var(--ink);max-width:36em}
+.muted{color:var(--muted)}
+.small{font-size:.9375rem}
+:focus-visible{outline:3px solid var(--navy);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--navy);color:#fff;padding:12px 18px;border-radius:10px;z-index:100}
+.skip:focus{left:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 26px;border-radius:12px;border:2px solid var(--navy);background:var(--surface);color:var(--navy);font:600 1.0625rem/1.2 var(--sans);text-decoration:none;cursor:pointer;transition:background .15s,transform .15s,box-shadow .15s}
+.btn:hover{background:#F3F2EE}
+.btn.primary{background:var(--navy);color:#fff;box-shadow:0 10px 24px rgba(30,58,95,.28)}
+.btn.primary:hover{background:var(--navy-dark);transform:translateY(-1px)}
+.btn.light{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
+.btn.light:hover{background:rgba(255,255,255,.1)}
+.btn.small{min-height:44px;padding:8px 18px;font-size:1rem}
+.ic{flex:none}
+section{position:relative}
+.hero,.sec,.final{overflow-x:clip}
+.sec{padding:clamp(72px,10vw,128px) 0}
+.sec-head{max-width:46rem;margin-bottom:clamp(36px,5vw,64px)}
+.sec-head .eyebrow{margin-bottom:14px;display:block}
+.sec-head h2+p{margin-top:18px}
+
+/* Parallax layers */
+.px{position:absolute;pointer-events:none;will-change:transform;z-index:0}
+@media (prefers-reduced-motion:reduce){.px{transform:none!important}}
+
+/* Header */
+.top{position:sticky;top:0;z-index:50;background:rgba(250,249,246,.88);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
+.top.scrolled{border-bottom-color:var(--line)}
+.top-in{display:flex;align-items:center;gap:20px;min-height:72px}
+.brand{display:inline-flex;align-items:center;gap:12px;white-space:nowrap;color:var(--navy);text-decoration:none;font-family:var(--serif);font-weight:600;font-size:1.55rem;letter-spacing:-.01em;min-height:44px}
+.brand img{width:40px;height:40px}
+nav.main{margin-left:auto;display:flex;gap:4px}
+nav.main a{white-space:nowrap;display:inline-flex;align-items:center;min-height:44px;padding:0 12px;color:var(--ink);text-decoration:none;font-weight:600;font-size:.9375rem;border-radius:10px}
+nav.main a:hover{background:rgba(30,58,95,.08)}
+.top .btn{margin-left:8px}
+@media (max-width:1120px){nav.main{display:none}.top .btn{margin-left:auto}}
+.top .btn{white-space:nowrap}
+.top .btn .short{display:none}
+@media (max-width:560px){.top .btn .long{display:none}.top .btn .short{display:inline}}
+@media (max-width:420px){.top .btn{padding:8px 14px;font-size:.9375rem}.brand{font-size:1.35rem}}
+
+/* Hero */
+.hero{padding:clamp(40px,6vw,88px) 0 clamp(56px,8vw,112px);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 78% 30%,#F1E6D2 0%,rgba(250,249,246,0) 70%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,4vw,64px);align-items:center;z-index:1}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{margin:18px 0 22px}
+.hero h1 em{font-style:italic;font-weight:500;color:var(--navy)}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.hero-note{margin-top:22px;font-size:.9375rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start}
+.video-frame{margin:0;position:relative;border-radius:22px;overflow:hidden;background:#D9C19C;box-shadow:0 2px 3px rgba(60,40,20,.2),0 30px 70px rgba(60,40,20,.28);aspect-ratio:16/9}
+.video-frame video{width:100%;height:100%;object-fit:cover}
+.vctl{position:absolute;right:14px;bottom:14px;width:48px;height:48px;border-radius:50%;border:0;background:rgba(22,34,50,.78);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.vctl:hover{background:rgba(22,34,50,.95)}
+.vcap{margin-top:14px;font-size:.875rem;color:var(--muted)}
+
+/* Problem */
+.problem{background:linear-gradient(180deg,var(--bg),#F4F0E7)}
+.pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;z-index:1}
+@media (max-width:900px){.pain-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.pain-grid{grid-template-columns:1fr}}
+.pain{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:26px 26px 24px;box-shadow:0 14px 30px rgba(60,40,20,.06)}
+.pain .ic{color:var(--navy);margin-bottom:16px}
+.pain h3{margin-bottom:8px}
+.reassure{margin-top:44px;font-family:var(--serif);font-style:italic;font-size:clamp(1.3rem,2.4vw,1.8rem);line-height:1.35;color:var(--navy);max-width:34em;z-index:1;position:relative}
+
+/* Who */
+.who-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:20px}
+@media (max-width:900px){.who-grid{grid-template-columns:1fr}}
+.who{border-radius:var(--r);padding:30px;border:1px solid var(--line);background:var(--surface)}
+.who.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.who.primary .tag{background:rgba(255,255,255,.14);color:#fff}
+.who .tag{display:inline-block;font-size:.875rem;font-weight:600;background:var(--quote-bg);color:var(--muted);padding:4px 12px;border-radius:99px;margin-bottom:18px}
+.who h3{margin-bottom:12px}
+.who p+p{margin-top:12px}
+
+/* How */
+.how{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;counter-reset:s;position:relative;z-index:1}
+@media (max-width:900px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding-top:8px}
+.step .n{width:52px;height:52px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font:600 1.4rem var(--serif);margin-bottom:20px;box-shadow:0 0 0 8px var(--bg)}
+.steps::before{content:"";position:absolute;left:52px;right:52px;top:34px;height:2px;background:repeating-linear-gradient(90deg,var(--ctl) 0 8px,transparent 8px 16px);opacity:.5}
+@media (max-width:900px){.steps::before{display:none}}
+.step h3{margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--quote-bg);border-radius:99px;padding:6px 14px;font-size:.9375rem;font-weight:600}
+
+/* Trust */
+.trust{background:linear-gradient(180deg,#F4F0E7,var(--bg))}
+.trio{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:stretch;margin:6px 0 56px;z-index:1;position:relative}
+@media (max-width:900px){.trio{grid-template-columns:1fr}.trio .arrow{transform:rotate(90deg);justify-self:center}}
+.trio .arrow{display:flex;align-items:center;color:var(--navy)}
+.tcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:26px;box-shadow:0 18px 40px rgba(60,40,20,.08)}
+.tcard .k{font-size:.875rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.tcard .claim-t{font-weight:600;font-size:1.2rem;line-height:1.35}
+.q{background:var(--quote-bg);border-radius:10px;padding:14px 16px;font-family:var(--serif);font-style:italic;font-size:1.125rem;line-height:1.55}
+.srcline{font-size:.9375rem;color:var(--muted)}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:20px 36px;z-index:1;position:relative}
+@media (max-width:800px){.rules{grid-template-columns:1fr}}
+.rule{display:flex;gap:16px}
+.rule .ic{color:var(--ok);margin-top:3px}
+.rule h4{margin-bottom:4px}
+.honest{margin-top:44px;border:1.5px solid var(--amber-line);background:var(--amber-bg);border-radius:var(--r);padding:28px 30px;display:flex;gap:18px;color:var(--amber-ink);z-index:1;position:relative}
+.honest .ic{color:var(--amber-ink);margin-top:3px}
+.honest h3{font-family:var(--sans);font-size:1.125rem;margin-bottom:8px;color:var(--ink)}
+.honest p{color:var(--ink)}
+.honest p+p{margin-top:8px}
+
+/* Demo */
+.demo{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.window{border:1px solid var(--line);border-radius:20px;background:var(--bg);box-shadow:0 2px 3px rgba(60,40,20,.08),0 40px 80px rgba(60,40,20,.16);overflow:hidden}
+.wbar{display:flex;align-items:center;gap:14px;background:var(--surface);border-bottom:1px solid var(--line);padding:12px 18px;flex-wrap:wrap}
+.wbar .dots{display:flex;gap:7px}.wbar .dots i{width:11px;height:11px;border-radius:50%;background:#E5E1D8;display:block}
+.wbar .title{font-weight:600;font-size:.9375rem;margin-right:auto}
+.sw{display:inline-flex;align-items:center;gap:12px;min-height:44px;border:0;background:none;font:inherit;font-size:.9375rem;font-weight:600;color:var(--ink);cursor:pointer;padding:0}
+.sw .track{width:46px;height:28px;border-radius:99px;background:var(--ctl);position:relative;transition:background .15s}
+.sw .thumb{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .15s}
+.sw[aria-checked="true"] .track{background:var(--navy)}.sw[aria-checked="true"] .thumb{transform:translateX(18px)}
+.wbody{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:0}
+@media (max-width:900px){.wbody{grid-template-columns:1fr}}
+.docpane{padding:24px;border-right:1px solid var(--line);background:#F1EEE6}
+@media (max-width:900px){.docpane{border-right:0;border-bottom:1px solid var(--line)}}
+.pgtabs{display:flex;gap:8px;margin-bottom:14px;align-items:center}
+.pgtabs button{min-height:44px;padding:0 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--surface);font:600 .9375rem var(--sans);cursor:pointer;color:var(--ink)}
+.pgtabs button[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.sheet{background:#FFFDF8;border-radius:8px;padding:30px 30px 34px;box-shadow:0 2px 2px rgba(70,48,24,.14),0 18px 34px rgba(70,48,24,.14);font-size:1rem;line-height:1.65;min-height:360px}
+.sheet h4{font-family:var(--serif);font-size:1.0625rem;margin-bottom:14px;letter-spacing:.02em}
+.sheet p+p{margin-top:12px}
+mark{background:var(--mark);color:var(--ink);padding:1px 3px;border-radius:3px;box-shadow:0 0 0 0 rgba(255,241,168,0)}
+mark.pulse{animation:pulse 1.2s ease-out 1}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(224,165,38,.7)}100%{box-shadow:0 0 0 14px rgba(224,165,38,0)}}
+.fict{font-size:.875rem;color:var(--muted);margin-top:14px}
+.apppane{padding:24px;display:flex;flex-direction:column;gap:18px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.stat .num{font:600 2rem/1 var(--serif);display:flex;align-items:center;gap:6px}
+.stat .lbl{font-size:.875rem;color:var(--muted);margin-top:4px;line-height:1.3}
+.stat.ok .num{color:var(--ok)}.stat.bad .num{color:var(--bad)}
+.vclaim{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--ctl);border-radius:14px;padding:20px 22px;transition:border-color .2s}
+.vclaim.ok{border-left-color:var(--ok)}
+.vclaim.bad{border:1.5px solid var(--bad);border-left-width:5px}
+.badge{display:inline-flex;align-items:center;gap:7px;font-size:.875rem;font-weight:600;padding:4px 12px;border-radius:99px;line-height:1.4}
+.badge.ok{color:var(--ok);background:var(--ok-bg)}.badge.bad{color:var(--bad);background:var(--bad-bg)}.badge.neutral{color:var(--ink);background:#EEECE6}
+.vclaim .ct{font-weight:600;font-size:1.1875rem;margin:12px 0 4px;line-height:1.3}
+.vclaim .q{margin-top:12px}
+.vclaim .src{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between;align-items:center;margin-top:12px;font-size:.9375rem;color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.chipbtn{min-height:44px;padding:0 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--surface);font:600 .9375rem var(--sans);cursor:pointer;color:var(--ink)}
+.chipbtn:hover{border-color:var(--navy)}
+.chipbtn[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+textarea,input[type=date]{width:100%;min-height:48px;border:1.5px solid var(--ctl);border-radius:10px;padding:10px 14px;font:inherit;color:var(--ink);background:#fff}
+textarea{min-height:92px;resize:vertical;font-family:var(--serif);font-style:italic;font-size:1.0625rem}
+label.l{display:block;font-weight:600;font-size:.9375rem;margin:0 0 6px}
+.deadline{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+.deadline h4{margin-bottom:12px}
+.calc{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 16px;background:var(--quote-bg);border-radius:12px;padding:16px;margin-top:14px}
+.calc div{display:flex;flex-direction:column}.calc dt{font-size:.875rem;color:var(--muted)}.calc dd{margin:0;font-weight:600;font-size:1.1875rem}
+.calc .op{font:600 1.5rem var(--serif);color:var(--muted);padding-bottom:2px}.calc .res dd{font-size:1.7rem;font-family:var(--serif)}
+.notice{display:flex;gap:12px;margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--amber-bg);border:1px solid var(--amber-line);color:var(--ink)}
+.notice .ic{color:var(--amber-ink);margin-top:3px}
+.simplev{font-size:1.3rem;line-height:1.7;color:#0B1620;padding:6px 4px}
+.simplev h4{font:600 1.7rem/1.2 var(--serif);margin:26px 0 8px}.simplev h4:first-child{margin-top:0}
+.simplev ol{padding-left:26px;margin:6px 0 0}.simplev li{margin:10px 0}
+.srlive{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.ctrlbox{background:var(--surface);border:1px dashed var(--ctl);border-radius:14px;padding:16px 18px}
+.ctrlbox .k{font-size:.875rem;font-weight:600;color:var(--muted);margin-bottom:10px;display:block}
+
+/* App tour */
+.tour{display:grid;grid-template-columns:260px minmax(0,1fr);gap:28px}
+@media (max-width:900px){.tour{grid-template-columns:1fr}}
+.tabs{display:flex;flex-direction:column;gap:6px}
+@media (max-width:900px){.tabs{flex-direction:row;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}}
+.tabs [role=tab]{min-height:48px;padding:0 16px;border-radius:12px;border:1.5px solid transparent;background:none;font:600 1rem var(--sans);text-align:left;color:var(--ink);cursor:pointer;white-space:nowrap}
+.tabs [role=tab]:hover{background:rgba(30,58,95,.07)}
+.tabs [role=tab][aria-selected="true"]{background:var(--navy);color:#fff}
+.tpanel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px;min-height:420px;box-shadow:0 20px 50px rgba(60,40,20,.08)}
+.tpanel h3{margin-bottom:8px}.tpanel .desc{max-width:40em;margin-bottom:22px}
+.mock{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:18px}
+.mini{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.mini+.mini{margin-top:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:640px){.grid3{grid-template-columns:1fr}}
+.bignum{font:600 1.9rem/1.1 var(--serif)}
+.prog{height:10px;border-radius:99px;background:#EEECE6;overflow:hidden;margin:8px 0}.prog i{display:block;height:100%;background:var(--navy);border-radius:99px}
+.cb{display:flex;gap:12px;align-items:flex-start;padding:8px 0}
+.cb i{flex:none;width:24px;height:24px;border-radius:6px;border:2px solid var(--ctl);background:#fff;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.cb i.on{background:var(--navy);border-color:var(--navy)}
+.tl{list-style:none;margin:0;padding:0 0 0 22px;border-left:2px solid var(--line)}
+.tl li{position:relative;padding:0 0 10px}.tl li::before{content:"";position:absolute;left:-30px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--navy);border:3px solid var(--bg)}
+.tl .mini{display:flex;gap:12px;align-items:center}.tl .d{font-size:.875rem;color:var(--muted);min-width:54px}
+.drop{border:2px dashed var(--ctl);border-radius:14px;padding:22px;text-align:center;background:var(--surface)}
+.fakeinp{border:1.5px solid var(--ctl);border-radius:10px;padding:12px 14px;background:#fff;color:var(--muted)}
+
+/* Intake */
+.intake{background:linear-gradient(180deg,var(--bg),#F4F0E7)}
+.inputs{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media (max-width:980px){.inputs{grid-template-columns:1fr 1fr}}@media (max-width:560px){.inputs{grid-template-columns:1fr}}
+.inp{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.inp .ic{color:var(--navy);margin-bottom:14px}.inp h3{font-size:1.2rem;margin-bottom:6px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:44px}
+@media (max-width:900px){.two{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:30px}
+.panel h3{margin-bottom:12px}.panel ul{margin:12px 0 0;padding-left:20px}.panel li{margin:8px 0}
+.vnote{margin-top:16px}
+
+/* Meta */
+.meta-sec{background:var(--ink);color:#F6F3EC}
+.meta-sec .eyebrow{color:#B9C3D1}.meta-sec .lead,.meta-sec p{color:#E6E9EE}.meta-sec a{color:#fff}
+.mtable{width:100%;border-collapse:collapse;margin-top:8px;z-index:1;position:relative}
+.mtable th,.mtable td{text-align:left;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.16);vertical-align:top}
+.mtable th{font-size:.875rem;letter-spacing:.06em;text-transform:uppercase;color:#B9C3D1;font-weight:600}
+.mtable td:first-child{font-weight:600;width:26%}
+.mtable code{font:600 .9375rem ui-monospace,Menlo,monospace;background:rgba(255,255,255,.1);padding:2px 8px;border-radius:6px;white-space:nowrap}
+@media (max-width:760px){.mtable thead{display:none}.mtable tr{display:block;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.16)}.mtable td{display:block;border:0;padding:4px 0;width:auto!important}}
+.mcards{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px;z-index:1;position:relative}
+@media (max-width:900px){.mcards{grid-template-columns:1fr}}
+.mcard{border:1px solid rgba(255,255,255,.2);border-radius:var(--r);padding:28px;background:rgba(255,255,255,.04)}
+.mcard h3{margin-bottom:10px;color:#fff}.mcard p+p{margin-top:10px}
+.tested{display:inline-flex;align-items:center;gap:8px;font-size:.875rem;font-weight:600;background:rgba(255,255,255,.12);padding:4px 12px;border-radius:99px;margin-bottom:14px}
+.arch{margin-top:34px;border-top:1px solid rgba(255,255,255,.16);padding-top:24px;display:flex;flex-wrap:wrap;gap:10px 14px;z-index:1;position:relative}
+.arch span{background:rgba(255,255,255,.1);padding:6px 14px;border-radius:99px;font-size:.9375rem;font-weight:600}
+
+/* Real people */
+.people{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media (max-width:900px){.people{grid-template-columns:1fr}}
+.checks{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:12px}
+.checks li{display:flex;gap:12px}.checks .ic{color:var(--ok);margin-top:3px}
+.langbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:28px}
+.seg{display:inline-flex;border:2px solid var(--navy);border-radius:12px;overflow:hidden;margin:12px 0 18px}
+.seg button{min-height:44px;padding:0 20px;border:0;background:var(--surface);font:600 1rem var(--sans);cursor:pointer;color:var(--navy)}
+.seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.langrow{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.langrow:first-of-type{border-top:0}
+
+/* Privacy */
+.priv{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.privgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:900px){.privgrid{grid-template-columns:1fr}}
+.privgrid .panel li{margin:10px 0}
+
+/* Hackathon + final */
+.hack{text-align:center}
+.hack .sec-head{margin-left:auto;margin-right:auto}
+.pill{display:inline-flex;align-items:center;gap:10px;background:var(--quote-bg);border-radius:99px;padding:8px 18px;font-weight:600;margin-bottom:22px}
+.final{background:var(--navy);color:#fff;text-align:center;overflow:hidden}
+.final h2{color:#fff;max-width:18em;margin:0 auto 18px}.final p{color:#DCE3EC;max-width:34em;margin:0 auto}
+.final .cta-row{justify-content:center}.final .btn.primary{background:#fff;color:var(--navy)}.final .btn.primary:hover{background:#F3F2EE}
+footer{background:var(--ink);color:#C9D1DC;padding:48px 0 56px}
+footer .brand{color:#fff}.footgrid{display:flex;flex-wrap:wrap;gap:28px 48px;justify-content:space-between;align-items:flex-start}
+footer p{max-width:36em;margin-top:14px;font-size:.9375rem}
+footer .disc{border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:16px 18px;max-width:30em;color:#fff;font-size:.9375rem}
+footer a{color:#fff}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<noscript><style>.vclaim .badge.neutral{display:none}.js-only{display:none!important}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></g></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></g></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></g></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></g></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></g></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></g></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></g></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></g></symbol>
+    <symbol id="i-repeat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></g></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></g></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></g></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><g fill="currentColor"><rect x="6" y="4" width="4.5" height="16" rx="1.2"/><rect x="13.5" y="4" width="4.5" height="16" rx="1.2"/></g></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></g></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/></g></symbol>
+  </defs>
+</svg>
+
+<header class="top" id="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#main" aria-label="Case Ally, home"><img src="assets/mark.svg" alt="" width="40" height="40"><span>Case Ally</span></a>
+    <nav class="main" aria-label="Page sections">
+      <a href="#problem">The problem</a><a href="#how">How it works</a><a href="#trust">Verification</a><a href="#meta">Meta models</a><a href="#privacy">Limits</a>
+    </nav>
+    <a class="btn primary small" href="#demo"><span class="long">See a fictional sample case</span><span class="short">Sample case</span></a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero" aria-labelledby="h1">
+  <div class="px" data-speed="0.10" data-rot="-7" style="left:-230px;top:420px;width:430px;opacity:.55" aria-hidden="true">
+    <svg viewBox="0 0 440 300" width="430"><rect x="4" y="4" width="432" height="292" rx="14" fill="#fff" stroke="#E5E1D8" stroke-width="2" opacity=".75"/><g fill="#162232" opacity=".1"><rect x="40" y="48" width="190" height="16" rx="8"/><rect x="40" y="96" width="340" height="11" rx="5"/><rect x="40" y="124" width="310" height="11" rx="5"/><rect x="40" y="152" width="330" height="11" rx="5"/><rect x="40" y="180" width="230" height="11" rx="5"/></g></svg>
+  </div>
+  <div class="px" data-speed="0.26" data-rot="9" style="right:-110px;bottom:10px;width:300px" aria-hidden="true">
+    <svg viewBox="0 0 64 64" width="300"><path d="M5 17a6 6 0 0 1 6-6h13.5a6 6 0 0 1 4.6 2.1L33 18h20a6 6 0 0 1 6 6v29a6 6 0 0 1-6 6H11a6 6 0 0 1-6-6z" fill="#1E3A5F" opacity=".06"/></svg>
+  </div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Case Ally</span>
+      <h1 id="h1">Every claim comes with <em>its quote.</em></h1>
+      <p class="lead">A case folder for the family member who runs a long benefits or insurance case for someone else.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#demo">See a fictional sample case <svg class="ic" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn" href="#how">How it works</a>
+      </div>
+      <p class="hero-note"><svg class="ic" width="20" height="20" aria-hidden="true" style="margin-top:3px;color:var(--navy)"><use href="#i-shield"/></svg><span>Case Ally organizes and explains. It does not give legal advice. All sample documents are fictional.</span></p>
+    </div>
+    <figure class="video-frame" style="margin:0">
+      <video id="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/poster.jpg" aria-label="Illustrated scene, no sound: papers on a kitchen table are photographed with a phone and line up as a timeline with checks, and one amber warning.">
+      </video>
+      <script>(function(){var v=document.getElementById('hero-video'),c=navigator.connection||{},small=innerWidth<=800||c.saveData||/2g|3g/.test(c.effectiveType||'')||(c.downlink&&c.downlink<2.5);if(c.saveData)v.preload='none';v.src='assets/'+(small?'hero-720':'hero-1080')+'.mp4'})();</script>
+      <button class="vctl js-only" id="vctl" type="button" aria-pressed="false" aria-label="Pause the background scene"><svg class="ic" width="22" height="22" aria-hidden="true"><use id="vicon" href="#i-pause"/></svg></button>
+    </figure>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="sec problem" id="problem" aria-labelledby="h-problem">
+  <div class="px" data-speed="-0.12" data-rot="5" style="right:4%;top:30px;width:320px" aria-hidden="true"><svg viewBox="0 0 440 300" width="320"><rect x="4" y="4" width="432" height="292" rx="14" fill="#fff" stroke="#E5E1D8" stroke-width="2" opacity=".7"/><g fill="#162232" opacity=".09"><rect x="40" y="48" width="170" height="16" rx="8"/><rect x="40" y="96" width="340" height="11" rx="5"/><rect x="40" y="124" width="300" height="11" rx="5"/></g></svg></div>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">The human problem</span><h2 id="h-problem">Long cases are hard in the same six ways.</h2><p class="lead muted">You are probably tired, you probably have no legal background, and you are doing this alongside the rest of your life.</p></div>
+    <div class="pain-grid">
+      <article class="pain"><svg class="ic" width="32" height="32" aria-hidden="true"><use href="#i-inbox"/></svg><h3>Scattered documents</h3><p>Letters are spread across inboxes and paper.</p></article>
+      <article class="pain"><svg class="ic" width="32" height="32" aria-hidden="true"><use href="#i-help"/></svg><h3>No shared memory</h3><p>Nobody remembers what happened when, and why.</p></article>
+      <article class="pain"><svg class="ic" width="32" height="32" aria-hidden="true"><use href="#i-clock"/></svg><h3>Deadlines that start on receipt</h3><p>Many deadlines run from the day you received a letter, and are easy to lose track of.</p></article>
+      <article class="pain"><svg class="ic" width="32" height="32" aria-hidden="true"><use href="#i-file"/></svg><h3>A denial you cannot act on</h3><p>It says something is missing, but not in a form you can act on.</p></article>
+      <article class="pain"><svg class="ic" width="32" height="32" aria-hidden="true"><use href="#i-repeat"/></svg><h3>The same story, again</h3><p>You tell it again and again, and pay a lawyer to read the file first.</p></article>
+      <article class="pain"><svg class="ic" width="32" height="32" aria-hidden="true"><use href="#i-user"/></svg><h3>Doing it for someone else</h3><p>It adds the fear of making a mistake.</p></article>
+    </div>
+    <p class="reassure">If this sounds familiar, you are not doing it wrong. It is genuinely hard.</p>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="sec" id="who" aria-labelledby="h-who">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Who it helps</span><h2 id="h-who">Built for the person holding the paperwork.</h2></div>
+    <div class="who-grid">
+      <article class="who primary"><span class="tag">Primary</span><h3>The Helper</h3><p>An adult, often a son, daughter, sibling or partner, running the case for a relative.</p><p>No legal background. Tired. Afraid to miss something. Case Ally is made for them first.</p></article>
+      <article class="who"><span class="tag">Secondary</span><h3>The person the case is about</h3><p>Gets a <strong>Simple View</strong> with large text and no jargon, under three headings only:</p><p><strong>What happened.<br>What happens now.<br>What you need to do.</strong></p></article>
+      <article class="who"><span class="tag">Tertiary</span><h3>A lawyer or support service</h3><p>Gets a <strong>printable handover page</strong>, so they can see the case without reading every letter first.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="sec how" id="how" aria-labelledby="h-how">
+  <div class="px" data-speed="0.14" data-rot="-4" style="right:3%;bottom:-60px;width:240px" aria-hidden="true"><svg viewBox="0 0 64 64" width="240"><path d="M5 17a6 6 0 0 1 6-6h13.5a6 6 0 0 1 4.6 2.1L33 18h20a6 6 0 0 1 6 6v29a6 6 0 0 1-6 6H11a6 6 0 0 1-6-6z" fill="#1E3A5F" opacity=".07"/></svg></div>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">How it works</span><h2 id="h-how">Add what arrives. Get a case you can read.</h2></div>
+    <div class="steps">
+      <article class="step"><div class="n" aria-hidden="true">1</div><h3>Add documents</h3><p>Letters, decisions and medical statements, as they arrive.</p>
+        <div class="chips"><span class="chip"><svg class="ic" width="18" height="18" aria-hidden="true"><use href="#i-camera"/></svg>Photo</span><span class="chip"><svg class="ic" width="18" height="18" aria-hidden="true"><use href="#i-file"/></svg>PDF</span><span class="chip"><svg class="ic" width="18" height="18" aria-hidden="true"><use href="#i-text"/></svg>Pasted text</span><span class="chip"><svg class="ic" width="18" height="18" aria-hidden="true"><use href="#i-mic"/></svg>Voice note</span></div></article>
+      <article class="step"><div class="n" aria-hidden="true">2</div><h3>Case Ally reads them</h3><p>You see the image next to the text it read, and check dates, amounts and case numbers before anything is saved. That review step cannot be skipped.</p></article>
+      <article class="step"><div class="n" aria-hidden="true">3</div><h3>You get the case</h3><p>A timeline, the deadlines, a list of what is still missing, and drafts, including an appeal. Every item points back to the document it came from.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="sec trust" id="trust" aria-labelledby="h-trust">
+  <div class="px" data-speed="0.12" data-rot="6" style="right:-40px;top:80px;width:360px" aria-hidden="true"><svg viewBox="0 0 440 300" width="360"><rect x="4" y="4" width="432" height="292" rx="14" fill="#fff" stroke="#E5E1D8" stroke-width="2" opacity=".65"/><g fill="#162232" opacity=".08"><rect x="40" y="60" width="300" height="11" rx="5"/><rect x="40" y="88" width="260" height="11" rx="5"/></g></svg></div>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">The one principle</span><h2 id="h-trust">Verifiable trust.</h2><p class="lead">An AI that just says things does not help someone who is afraid of being wrong. So every claim is shown the same way.</p></div>
+    <div class="trio" role="group" aria-label="Claim, then quote, then source">
+      <article class="tcard"><div class="k">1 · Claim</div><p class="claim-t">The appeal must be filed within 60 days of receiving the notice.</p></article>
+      <div class="arrow" aria-hidden="true"><svg class="ic" width="34" height="34"><use href="#i-arrow"/></svg></div>
+      <article class="tcard"><div class="k">2 · Quote</div><p class="q">“You have 60 days from the date you receive this notice to file an appeal.”</p></article>
+      <div class="arrow" aria-hidden="true"><svg class="ic" width="34" height="34"><use href="#i-arrow"/></svg></div>
+      <article class="tcard"><div class="k">3 · Source</div><p class="claim-t" style="font-size:1.1rem">Decision from the State Disability Agency</p><p class="srcline">Oct 14 · Page 2</p><p style="margin-top:14px"><span class="badge ok"><svg class="ic" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Checked against the document</span></p></article>
+    </div>
+    <div class="rules">
+      <div class="rule"><svg class="ic" width="26" height="26" aria-hidden="true"><use href="#i-check"/></svg><div><h4>The model must quote the document, word for word.</h4><p class="muted">No paraphrase counts as evidence.</p></div></div>
+      <div class="rule"><svg class="ic" width="26" height="26" aria-hidden="true"><use href="#i-check"/></svg><div><h4>Then the server checks the quote.</h4><p class="muted">It looks for it in the document text. Case, quote marks and whitespace are ignored. The result is either <strong>“Checked against the document”</strong> or <strong>“Could not be checked. Check yourself.”</strong></p></div></div>
+      <div class="rule"><svg class="ic" width="26" height="26" aria-hidden="true"><use href="#i-check"/></svg><div><h4>Dates are calculated by code, not by the model.</h4><p class="muted">The model only reports the duration (“6 weeks”, “60 days”) and what it runs from: receipt, or the letter's date. The code adds it to the date you enter.</p></div></div>
+      <div class="rule"><svg class="ic" width="26" height="26" aria-hidden="true"><use href="#i-check"/></svg><div><h4>When a date is not in the document, it says so.</h4><p class="muted">A date the model gives that appears neither in the document nor was computed by code is marked “The date is not in the document”, in an amber box.</p></div></div>
+      <div class="rule"><svg class="ic" width="26" height="26" aria-hidden="true"><use href="#i-check"/></svg><div><h4>It asks instead of guessing.</h4><p class="muted">If a deadline depends on when you received the letter and you have not entered that, the app asks you.</p></div></div>
+    </div>
+    <div class="honest" role="note"><svg class="ic" width="28" height="28" aria-hidden="true"><use href="#i-alert"/></svg><div><h3>What the check proves, and what it does not</h3><p>It confirms the quote is in the text that was read.</p><p>It does <strong>not</strong> confirm the text was read correctly from a photo. That is what the review step is for. It does <strong>not</strong> confirm the model's interpretation of the quote is right. And drafts are not verified quote by quote.</p></div></div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="sec demo" id="demo" aria-labelledby="h-demo">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Interactive · fictional sample case</span><h2 id="h-demo">Try the check yourself.</h2><p class="lead muted">This sample runs entirely in your browser. Check the quote, change it, and see what happens to the deadline.</p></div>
+    <div class="window" id="win">
+      <div class="wbar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="title">Sample case: Jordan (fictional) · Deadlines</span>
+        <button class="sw js-only" id="simple-sw" role="switch" aria-checked="false" type="button"><span class="track"><span class="thumb"></span></span>Simple View</button></div>
+      <div class="wbody">
+        <div class="docpane">
+          <div class="pgtabs" role="tablist" aria-label="Pages of the letter">
+            <button role="tab" id="pt1" aria-selected="false" aria-controls="sheet" type="button">Page 1</button>
+            <button role="tab" id="pt2" aria-selected="true" aria-controls="sheet" type="button">Page 2</button>
+          </div>
+          <div class="sheet" id="sheet" role="tabpanel" tabindex="0" aria-label="Fictional decision letter"></div>
+          <p class="fict">Fictional document. The highlight appears in the text that was read from the letter.</p>
+        </div>
+        <div class="apppane" id="apppane">
+          <div id="full">
+            <div class="stats" aria-label="Is everything checked?">
+              <div class="stat"><div class="num" id="n-total">6</div><div class="lbl">claims</div></div>
+              <div class="stat ok"><div class="num"><svg class="ic" width="24" height="24" aria-hidden="true"><use href="#i-check"/></svg><span id="n-ok">5</span></div><div class="lbl">checked against the document</div></div>
+              <div class="stat" id="stat-bad"><div class="num"><svg class="ic" width="24" height="24" aria-hidden="true" id="bad-ic"><use href="#i-check"/></svg><span id="n-bad">0</span></div><div class="lbl">could not be checked</div></div>
+            </div>
+            <article class="vclaim" id="vclaim" aria-labelledby="vc-title" style="margin-top:18px">
+              <span class="badge neutral" id="vbadge"><svg class="ic" width="16" height="16" aria-hidden="true"><use href="#i-help"/></svg><span>Not checked yet</span></span>
+              <h3 class="ct" id="vc-title" style="font-family:var(--sans);font-size:1.1875rem">Appeal deadline is 60 days from receipt</h3>
+              <blockquote class="q" id="vquote" style="margin:12px 0 0">“You have 60 days from the date you receive this notice to file an appeal.”</blockquote>
+              <div class="src"><span>Decision from the State Disability Agency · Oct 14 · Page 2</span><button class="btn small js-only" id="view-doc" type="button">View in the document <svg class="ic" width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+            </article>
+            <div class="ctrlbox js-only" style="margin-top:18px">
+              <span class="k">Step 1 · Run the server's check</span>
+              <div class="row"><button class="btn primary small" id="run" type="button">Check this quote against the document</button>
+                <button class="chipbtn" id="alt" type="button" aria-pressed="false">Change “60” to “90”</button>
+                <button class="chipbtn" id="edit" type="button" aria-pressed="false">Edit the quote myself</button></div>
+              <div id="editbox" hidden style="margin-top:12px"><label class="l" for="qedit">The model's quote</label><textarea id="qedit" spellcheck="false"></textarea><p class="small muted" style="margin-top:6px">Try any wording. The check ignores case, quote marks and extra spaces, and nothing else.</p></div>
+            </div>
+            <div class="deadline" style="margin-top:18px">
+              <h4>Deadline</h4>
+              <label class="l" for="recv">When did you receive the letter?</label>
+              <input type="date" id="recv" value="2026-10-16">
+              <div id="calcout" aria-live="polite"></div>
+              <div class="ctrlbox js-only" style="margin-top:16px"><span class="k">Step 2 · What if…</span>
+                <div class="row" role="group" aria-label="Deadline scenarios">
+                  <button class="chipbtn" data-mode="code" aria-pressed="true" type="button">Code calculates it</button>
+                  <button class="chipbtn" data-mode="model" aria-pressed="false" type="button">The model gives a date that is not in the letter</button>
+                  <button class="chipbtn" data-mode="missing" aria-pressed="false" type="button">I have not entered a date</button></div></div>
+            </div>
+          </div>
+          <div id="simple" class="simplev" hidden></div>
+        </div>
+      </div>
+    </div>
+    <div class="srlive" id="live" role="status" aria-live="polite"></div>
+    <p class="small muted" style="margin-top:20px;max-width:46em">Every document, name and date in this sample is fictional. The check you just ran uses the same rules as the app: look for the quote in the document text, ignoring case, quote marks and whitespace.</p>
+  </div>
+</section>
+
+<!-- WHAT YOU CAN DO -->
+<section class="sec" id="app" aria-labelledby="h-app">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">What you can do in the app</span><h2 id="h-app">Eight screens. One job each.</h2><p class="lead muted">Everything below is a fictional sample.</p></div>
+    <div class="tour">
+      <div class="tabs" role="tablist" aria-label="App screens" aria-orientation="vertical" id="tabs"></div>
+      <div class="tpanel" id="tpanel" role="tabpanel" tabindex="0"></div>
+    </div>
+  </div>
+</section>
+
+<!-- INTAKE -->
+<section class="sec intake" id="intake" aria-labelledby="h-intake">
+  <div class="px" data-speed="-0.1" data-rot="-6" style="left:-60px;top:120px;width:300px" aria-hidden="true"><svg viewBox="0 0 440 300" width="300"><rect x="4" y="4" width="432" height="292" rx="14" fill="#fff" stroke="#E5E1D8" stroke-width="2" opacity=".7"/><g fill="#162232" opacity=".09"><rect x="40" y="52" width="180" height="16" rx="8"/><rect x="40" y="100" width="330" height="11" rx="5"/></g></svg></div>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Voice notes and document intake</span><h2 id="h-intake">Add it the way it arrives.</h2><p class="lead muted">Most of what happens in a long case happens on the phone. So you can speak it, not only scan it.</p></div>
+    <div class="inputs">
+      <article class="inp"><svg class="ic" width="34" height="34" aria-hidden="true"><use href="#i-camera"/></svg><h3>Photo</h3><p>Shown side by side with the text that was read.</p></article>
+      <article class="inp"><svg class="ic" width="34" height="34" aria-hidden="true"><use href="#i-file"/></svg><h3>PDF</h3><p>Uses its text layer when it has one. A scan is read whole by the model.</p></article>
+      <article class="inp"><svg class="ic" width="34" height="34" aria-hidden="true"><use href="#i-text"/></svg><h3>Pasted text</h3><p>For emails and anything already digital.</p></article>
+      <article class="inp"><svg class="ic" width="34" height="34" aria-hidden="true"><use href="#i-mic"/></svg><h3>Voice note</h3><p>Record what was said. Check the text before it is saved.</p></article>
+    </div>
+    <div class="two">
+      <div class="panel"><h3>Reading a letter</h3><p>Photos are reviewed next to the extracted text. Dates, amounts and case numbers are flagged, because a wrong date gives a wrong deadline.</p><ul><li>You can read, edit or delete the extracted text.</li><li>Each document shows a status: <strong>Read</strong> or <strong>Needs review</strong>.</li><li>PDFs use their text layer when available, or are read whole by the model for scans.</li></ul></div>
+      <div class="panel"><h3>Voice notes, labeled honestly</h3><p>Muse Voice Transcribe turns the recording into text. You check and correct it before saving. <strong>The audio is not stored</strong>, only the text you save.</p>
+        <div class="vclaim ok vnote" style="border-left-color:var(--ok)"><span class="badge ok"><svg class="ic" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Checked against your voice note</span><p class="q" style="margin-top:12px">“They said the statement must arrive by December 5.”</p><p class="small muted" style="margin-top:8px">From your voice note, not an official document.</p></div>
+        <p class="small muted" style="margin-top:14px">The analysis is told to treat a voice note as your account, never as an official decision, and to say that a deadline from a call should be confirmed in writing.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- META -->
+<section class="sec meta-sec" id="meta" aria-labelledby="h-meta">
+  <div class="px" data-speed="0.12" data-rot="8" style="right:-80px;top:40px;width:340px;opacity:.5" aria-hidden="true"><svg viewBox="0 0 64 64" width="340"><path d="M5 17a6 6 0 0 1 6-6h13.5a6 6 0 0 1 4.6 2.1L33 18h20a6 6 0 0 1 6 6v29a6 6 0 0 1-6 6H11a6 6 0 0 1-6-6z" fill="#fff" opacity=".05"/></svg></div>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Built with Meta models</span><h2 id="h-meta">Two Meta models, each doing one clear job.</h2><p class="lead">Muse Spark 1.3 reads, understands and writes. Muse Voice Transcribe 1.0 turns speech into text.</p></div>
+    <table class="mtable">
+      <thead><tr><th scope="col">Task</th><th scope="col">Model and how</th></tr></thead>
+      <tbody>
+        <tr><td>Read a photographed letter</td><td><code>Muse Spark 1.3</code> vision. Transcribe word for word, and write <code>[illegible]</code> instead of guessing.</td></tr>
+        <tr><td>Read a scanned PDF</td><td><code>Muse Spark 1.3</code>, with the whole PDF as a file part.</td></tr>
+        <tr><td>Suggest title, type and date</td><td><code>Muse Spark 1.3</code>, returning JSON.</td></tr>
+        <tr><td>Analyze the case</td><td><code>Muse Spark 1.3</code>, three parallel calls: (a) summary, status and timeline; (b) deadlines and next steps; (c) what is missing and a glossary. Each returns JSON with quotes.</td></tr>
+        <tr><td>Answer a question</td><td><code>Muse Spark 1.3</code>: an answer plus sources, each checked like any other claim.</td></tr>
+        <tr><td>Draft an appeal or handover summary</td><td><code>Muse Spark 1.3</code>, plain text.</td></tr>
+        <tr><td>Turn a voice note into text</td><td><code>Muse Voice Transcribe 1.0</code> through its file API.</td></tr>
+      </tbody>
+    </table>
+    <div class="mcards">
+      <article class="mcard"><span class="tested"><svg class="ic" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Tested, not shipped</span><h3>SAM 3.1</h3><p>We tested it properly. It found the sheet of paper in a photo exactly, but cropping to it did not improve reading accuracy.</p><p>A segmenter finds objects, not the content of text, so it cannot safely power redaction. We did not use it, and our ID-number hiding says what it can miss.</p></article>
+      <article class="mcard"><span class="tested"><svg class="ic" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Tested, not shipped</span><h3>Quote locations on the photo</h3><p>We asked Muse Spark for the location of a quote on the image. Its bounding boxes were on the wrong line.</p><p>So quote highlights appear in the extracted text, not drawn on the photo. Saying no to a feature we could not verify is part of the product's point.</p></article>
+    </div>
+    <div class="arch" aria-label="How it is built"><span>One HTML file, vanilla JavaScript</span><span>Node server, built-in modules only</span><span>SQLite storage</span><span>Analysis in about 14–18 seconds, streaming in parts</span></div>
+  </div>
+</section>
+
+<!-- DESIGNED FOR REAL PEOPLE -->
+<section class="sec" id="people" aria-labelledby="h-people">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Designed for real people</span><h2 id="h-people">Calm, readable, and hard to misread.</h2></div>
+    <div class="people">
+      <div class="panel"><h3>Accessible by default</h3>
+        <ul class="checks">
+          <li><svg class="ic" width="22" height="22" aria-hidden="true"><use href="#i-check"/></svg><span>Status is never shown by color alone. It is always an icon plus text.</span></li>
+          <li><svg class="ic" width="22" height="22" aria-hidden="true"><use href="#i-check"/></svg><span>No text under 14 px and 44 px touch targets.</span></li>
+          <li><svg class="ic" width="22" height="22" aria-hidden="true"><use href="#i-check"/></svg><span>Visible focus rings and one clear next action per screen.</span></li>
+          <li><svg class="ic" width="22" height="22" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Simple View</strong> for the person the case is about: one column, large text, three headings.</span></li>
+        </ul></div>
+      <div class="langbox"><h3 style="margin-bottom:6px">English and Norwegian</h3><p class="muted">The app is in English by default and also works in Norwegian, where it is called <strong>Saksmappen</strong>. The texts and the model's instructions exist in both languages.</p>
+        <div class="seg" role="group" aria-label="Language of the examples"><button type="button" aria-pressed="true" data-l="en">English</button><button type="button" aria-pressed="false" data-l="nb">Norsk</button></div>
+        <div id="langrows" aria-live="polite"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="sec priv" id="privacy" aria-labelledby="h-priv">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Privacy and limitations</span><h2 id="h-priv">Honest about what it cannot promise yet.</h2><p class="lead muted">That honesty is part of the product, not a footnote.</p></div>
+    <div class="privgrid">
+      <div class="panel"><h3>What happens to your data</h3><ul>
+        <li>Text and images are stored on the server and sent to Meta's models when read, analyzed or asked about. Use fictional or anonymized documents until you are sure you want to share real ones.</li>
+        <li>The API key stays on the server and is never sent to the browser.</li>
+        <li>Voice recordings are not stored, only the text you save.</li>
+        <li>Deleting a case removes all its documents, images, ticks and analysis.</li></ul></div>
+      <div class="panel"><h3>What it cannot promise yet</h3><ul>
+        <li><strong>No legal advice.</strong> Case Ally organizes and explains.</li>
+        <li><strong>No sign-in yet.</strong> Anyone with the case link can see and change the case, and the interface says so. Real accounts are the first thing a real product would need.</li>
+        <li><strong>ID-number hiding is pattern matching, not a guarantee.</strong> The handover page has a “Hide ID numbers” switch, and says so on the page.</li>
+        <li>Meta's data terms for API input and EEA storage requirements have not been reviewed. Do not use real sensitive data until that is done.</li>
+        <li>All sample documents are fictional.</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- HACKATHON -->
+<section class="sec hack" id="hackathon" aria-labelledby="h-hack">
+  <div class="wrap">
+    <div class="sec-head"><span class="pill"><svg class="ic" width="20" height="20" aria-hidden="true"><use href="#i-shield"/></svg>Meta Global AI Developer Hackathon</span><h2 id="h-hack">Built for “Build for Your World”.</h2><p class="lead muted">Case Ally was built for the Meta Global AI Developer Hackathon, under the theme “Build for Your World”, from the author's own experience of helping family through disability benefits, insurance claims, and working with a lawyer.</p></div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="sec final" id="try" aria-labelledby="h-final">
+  <div class="px" data-speed="-0.14" data-rot="-8" style="left:-70px;bottom:-60px;width:320px;opacity:.5" aria-hidden="true"><svg viewBox="0 0 64 64" width="320"><path d="M5 17a6 6 0 0 1 6-6h13.5a6 6 0 0 1 4.6 2.1L33 18h20a6 6 0 0 1 6 6v29a6 6 0 0 1-6 6H11a6 6 0 0 1-6-6z" fill="#fff" opacity=".08"/></svg></div>
+  <div class="wrap">
+    <h2 id="h-final">Try the check on a fictional case.</h2>
+    <p>The sample runs in this page, so there is nothing to install and no real documents are involved.</p>
+    <div class="cta-row"><a class="btn primary" href="#demo">See a fictional sample case</a><a class="btn light" href="#meta">See how it uses Meta models</a></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap footgrid">
+    <div><a class="brand" href="#main"><img src="assets/mark.svg" alt="" width="40" height="40"><span>Case Ally</span></a><p>Called <strong>Saksmappen</strong> in Norwegian. Built for the Meta Global AI Developer Hackathon, theme “Build for Your World”.</p></div>
+    <p class="disc"><strong>Not legal advice.</strong> Case Ally organizes and explains. It does not give legal advice. All sample documents are fictional.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var reduce=matchMedia('(prefers-reduced-motion: reduce)');
+
+/* Header shadow */
+var top=$('#top'); addEventListener('scroll',function(){top.classList.toggle('scrolled',scrollY>8)},{passive:true});
+
+/* Hero video: autoplay when allowed, pause control, pause when off screen */
+var v=$('#hero-video'), vb=$('#vctl'), vi=$('#vicon'), userPaused=false;
+function setIcon(p){vi.setAttribute('href',p?'#i-play':'#i-pause');vb.setAttribute('aria-pressed',String(p));vb.setAttribute('aria-label',p?'Play the background scene':'Pause the background scene')}
+function saveData(){return navigator.connection&&navigator.connection.saveData}
+if(reduce.matches||saveData()){v.removeAttribute('autoplay');v.pause();v.setAttribute('poster','assets/poster-story.jpg');userPaused=true;setIcon(true)}
+vb.addEventListener('click',function(){if(v.paused){userPaused=false;var p=v.play();if(p&&p.catch)p.catch(function(){});setIcon(false)}else{userPaused=true;v.pause();setIcon(true)}});
+if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(userPaused)return;if(e.isIntersecting){var p=v.play();if(p&&p.catch)p.catch(function(){})}else v.pause()})},{threshold:.1}).observe(v)}
+
+/* Parallax: transforms only, 2 to 3 depths, softer on small screens, off for reduced motion */
+var layers=$$('.px');
+function parallax(){ if(reduce.matches)return; var vh=innerHeight, k=innerWidth<700?.5:1;
+  layers.forEach(function(el){var r=el.parentElement.getBoundingClientRect(); if(r.bottom<-300||r.top>vh+300)return;
+    var c=r.top+r.height/2-vh/2, y=-c*parseFloat(el.dataset.speed)*k; el.style.transform='translate3d(0,'+y.toFixed(1)+'px,0) rotate('+(el.dataset.rot||0)+'deg)'})}
+var tick=false; function req(){if(!tick){tick=true;requestAnimationFrame(function(){tick=false;parallax()})}}
+addEventListener('scroll',req,{passive:true}); addEventListener('resize',req); parallax();
+reduce.addEventListener&&reduce.addEventListener('change',function(){layers.forEach(function(l){l.style.transform=''});parallax()});
+
+/* ---------- Verification demo ---------- */
+var PAGES=[
+ ['<h4>STATE DISABILITY AGENCY<br>NOTICE OF DECISION</h4>','<p>Date: October 14, 2026</p>','<p>We have denied your application for disability benefits.</p>','<p>Reason: We find that it has not been documented that your ability to work is reduced by at least half because of illness or injury. The medical statement dated March 12, 2026 describes a diagnosis, but not which work tasks you are unable to perform.</p>'],
+ ['<p>You have the right to appeal. You have 60 days from the date you receive this notice to file an appeal.</p>','<p>You may ask for a copy of the documents in your case.</p>','<p>Sincerely,<br>State Disability Agency</p>']
+];
+var PLAIN=PAGES.map(function(p){return p.map(function(h){return h.replace(/<br>/g,' ').replace(/<[^>]+>/g,'')})});
+var EXACT='You have 60 days from the date you receive this notice to file an appeal.';
+var st={quote:EXACT,checked:null,page:2,mode:'code',alt:false,edit:false,simple:false};
+function norm(s){return String(s||'').toLowerCase().replace(/[‘’“”"'«»]/g,'').replace(/\s+/g,' ').trim()}
+function find(q){ // same idea as the app: whitespace-flexible, case-insensitive
+  var toks=q.trim().split(/\s+/).filter(Boolean); if(norm(q).length<4)return null;
+  var re;try{re=new RegExp(toks.map(function(t){return t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}).join('\\s+'),'i')}catch(e){return null}
+  for(var i=0;i<PLAIN.length;i++){var m=re.exec(PLAIN[i].join('\n'));if(m)return {page:i+1,i:m.index,len:m[0].length}} return null}
+function verified(q){var all=norm(PLAIN.map(function(p){return p.join(' ')}).join(' '));var n=norm(q);return n.length>3&&all.indexOf(n)>-1}
+function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function renderSheet(){
+  var html=PAGES[st.page-1].join(''), hit=(st.checked===true||st.show)?find(st.quote):null;
+  if(hit&&hit.page===st.page){ // highlight inside the plain paragraph that contains it
+    var paras=PAGES[st.page-1].map(function(h){return h}); var plain=PLAIN[st.page-1], off=0, out=[];
+    paras.forEach(function(h,idx){var p=plain[idx], start=off, end=off+p.length+1; off=end;
+      if(hit.i>=start&&hit.i<end){var a=hit.i-start,b=Math.min(p.length,a+hit.len);
+        var inner=h.replace(/^<(\w+)>([\s\S]*)<\/\1>$/,function(_,tag,body){var plainBody=body.replace(/<br>/g,' ');var pre=esc(plainBody.slice(0,a)),mk=esc(plainBody.slice(a,b)),post=esc(plainBody.slice(b));return '<'+tag+'>'+pre+'<mark class="pulse">'+mk+'</mark>'+post+'</'+tag+'>'});out.push(inner)}else out.push(h)});
+    html=out.join('')}
+  $('#sheet').innerHTML=html;
+  $$('#pt1,#pt2').forEach(function(b,i){b.setAttribute('aria-selected',String(st.page===i+1))});
+}
+function setBadge(state){
+  var c=$('#vclaim'),b=$('#vbadge'); c.classList.remove('ok','bad'); b.className='badge '+state;
+  var map={neutral:['i-help','Not checked yet'],ok:['i-check','Checked against the document'],bad:['i-alert','Could not be checked. Check yourself']}[state];
+  b.innerHTML='<svg class="ic" width="16" height="16" aria-hidden="true"><use href="#'+map[0]+'"/></svg><span>'+map[1]+'</span>'; if(state!=='neutral')c.classList.add(state)}
+function counts(){var okn=5+(st.checked===true?1:0), bad=st.checked===false?1:0;
+  $('#n-ok').textContent=okn;$('#n-bad').textContent=bad;$('#stat-bad').className='stat'+(bad?' bad':' ok');
+  $('#bad-ic').innerHTML='<use href="#'+(bad?'i-alert':'i-check')+'"/>'}
+function say(t){$('#live').textContent=t}
+function run(){var ok=verified(st.quote); st.checked=ok;
+  if(ok){var h=find(st.quote);if(h)st.page=h.page} setBadge(ok?'ok':'bad'); renderSheet(); counts(); renderCalc();
+  say(ok?'Checked against the document. The quote was found on page '+st.page+'.':'Could not be checked. The quote is not in the document.')}
+function reset(){st.checked=null;setBadge('neutral');counts();renderSheet();say('')}
+function setQuote(q){st.quote=q;$('#vquote').textContent='“'+q+'”';reset()}
+function fmt(d){return d.toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'})}
+function parse(v){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v);return m?new Date(Date.UTC(+m[1],+m[2]-1,+m[3])):null}
+function renderCalc(){
+  var r=parse($('#recv').value), box=$('#calcout'), out='', due=r&&new Date(r.getTime()+60*864e5);
+  if(st.mode==='missing'||!r){out='<div class="notice"><svg class="ic" width="22" height="22" aria-hidden="true"><use href="#i-alert"/></svg><div><strong>We need one date from you.</strong> The deadline runs from when you received the letter. We ask instead of guessing.</div></div>'}
+  else if(st.mode==='model'){out='<div class="notice"><svg class="ic" width="22" height="22" aria-hidden="true"><use href="#i-alert"/></svg><div><strong>The date is not in the document.</strong> '+fmt(due)+' was calculated by AI and has not been checked. Check the letter yourself.</div></div>'}
+  else{out='<dl class="calc" aria-label="How the deadline was calculated"><div><dt>You received the letter</dt><dd>'+fmt(r)+'</dd></div><span class="op" aria-hidden="true">+</span><div><dt>The deadline in the letter</dt><dd>60 days</dd></div><span class="op" aria-hidden="true">=</span><div class="res"><dt>Deadline</dt><dd>'+fmt(due)+'</dd></div></dl><p class="small muted" style="margin-top:10px">Calculated by an ordinary calculator, not by AI. Check whether the letter states a date of its own.</p>'}
+  box.innerHTML=out; renderSimple(r,due)}
+function renderSimple(r,due){
+  var when=(r&&st.mode!=='missing')?'The appeal deadline is <strong>'+due.toLocaleDateString('en-US',{month:'long',day:'numeric',timeZone:'UTC'})+'</strong>, if you received the letter on '+r.toLocaleDateString('en-US',{month:'long',day:'numeric',timeZone:'UTC'})+'.':'We need to know the day you received the letter before we can give you the deadline.';
+  $('#simple').innerHTML='<h4>What happened</h4><p>Your application for disability benefits was denied on October 14. The agency says it was not documented that your ability to work is reduced by at least half.</p><h4>What happens now</h4><p>You can appeal. '+when+'</p><h4>What you need to do</h4><ol><li>Tell us the day you received the letter.</li><li>Get a medical statement that says which work tasks you cannot do.</li><li>Send the appeal before the deadline.</li></ol>'}
+$('#run').addEventListener('click',run);
+$('#view-doc').addEventListener('click',function(){var h=find(st.quote);st.show=true;if(h){st.page=h.page}else{st.page=2}renderSheet();$('#sheet').scrollIntoView({block:'nearest',behavior:reduce.matches?'auto':'smooth'})});
+$$('#pt1,#pt2').forEach(function(b,i){b.addEventListener('click',function(){st.page=i+1;renderSheet()})});
+$('#alt').addEventListener('click',function(){st.alt=!st.alt;this.setAttribute('aria-pressed',String(st.alt));st.show=false;setQuote(st.alt?EXACT.replace('60','90'):EXACT);$('#qedit').value=st.quote;this.textContent=st.alt?'Put the exact quote back':'Change “60” to “90”'});
+$('#edit').addEventListener('click',function(){st.edit=!st.edit;this.setAttribute('aria-pressed',String(st.edit));$('#editbox').hidden=!st.edit;if(st.edit){$('#qedit').value=st.quote;$('#qedit').focus()}});
+$('#qedit').addEventListener('input',function(){st.alt=false;var a=$('#alt');a.setAttribute('aria-pressed','false');a.textContent='Change “60” to “90”';st.show=false;setQuote(this.value||' ')});
+$('#recv').addEventListener('input',renderCalc);
+$$('[data-mode]').forEach(function(b){b.addEventListener('click',function(){st.mode=b.dataset.mode;$$('[data-mode]').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});renderCalc()})});
+$('#simple-sw').addEventListener('click',function(){st.simple=!st.simple;this.setAttribute('aria-checked',String(st.simple));$('#full').hidden=st.simple;$('#simple').hidden=!st.simple;$('#win').querySelector('.title').textContent=st.simple?'Sample case: Jordan (fictional) · Simple View':'Sample case: Jordan (fictional) · Deadlines';say(st.simple?'Simple View on':'Simple View off')});
+renderSheet();renderCalc();counts();
+
+/* ---------- App tour (tabs) ---------- */
+var CHECK='<svg class="ic" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>';
+var TOUR=[
+['Overview','Overview','“Is everything checked?” as three big numbers: claims, checked against the document, could not be checked. Unchecked claims are shown in full right below. At most three cards: next deadline, what is missing, latest event.',
+ '<div class="mock"><div class="mini"><div class="grid3"><div><div class="bignum">6</div><span class="small muted">claims</span></div><div><div class="bignum" style="color:var(--ok)">5</div><span class="small muted">checked against the document</span></div><div><div class="bignum" style="color:var(--bad)">1</div><span class="small muted">could not be checked</span></div></div></div><div class="grid3" style="margin-top:10px"><div class="mini"><span class="small muted">Next deadline</span><div class="bignum">Nov 18</div><span class="badge neutral" style="margin-top:6px"><svg class="ic" width="16" height="16" aria-hidden="true"><use href="#i-clock"/></svg>In 18 days</span></div><div class="mini"><span class="small muted">What is missing</span><div class="bignum">0 of 4</div><div class="prog"><i style="width:4%"></i></div></div><div class="mini"><span class="small muted">Latest event</span><div class="bignum">Oct 25</div><span class="small">Talk with employer</span></div></div></div>'],
+['Timeline','Timeline','Events in order, each as a verified-claim card. Tap an event to see the quote from the letter.',
+ '<div class="mock"><ul class="tl"><li><div class="mini"><span class="d">Mar 12</span><strong>Family doctor statement</strong></div></li><li><div class="mini"><span class="d">Sep 30</span><strong>Insurance decision</strong></div></li><li><div class="mini"><span class="d">Oct 14</span><strong>Disability benefits denied</strong></div></li></ul></div>'],
+['Documents','Documents','A drop zone for a photo or PDF, a button to record a voice note, or paste text. Each document has a thumbnail and a status, Read or Needs review. You can read, edit or delete the extracted text.',
+ '<div class="mock"><div class="drop"><svg class="ic" width="30" height="30" aria-hidden="true" style="margin:0 auto 6px;color:var(--navy)"><use href="#i-camera"/></svg><strong>Take a photo or upload a PDF of the letter</strong></div><div class="mini" style="margin-top:12px;display:flex;justify-content:space-between;gap:10px;align-items:center"><span><strong>Letter from Example Insurance Co.</strong><br><span class="small muted">Insurance · Sep 30</span></span><span class="badge ok">'+CHECK+'Read</span></div><div class="mini" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span><strong>Voice note</strong><br><span class="small muted">Oct 31</span></span><span class="badge" style="background:var(--amber-bg);color:var(--amber-ink)"><svg class="ic" width="16" height="16" aria-hidden="true"><use href="#i-alert"/></svg>Needs review</span></div></div>'],
+['Deadlines','Deadlines','Sorted by urgency, with the calculation shown. It asks for the received date when needed, and downloads a calendar file (.ics) with alerts 7 days and 1 day before.',
+ '<div class="mock"><div class="mini"><strong>File appeal of denial</strong><dl class="calc" style="margin-top:10px"><div><dt>You received the letter</dt><dd>Oct 16</dd></div><span class="op" aria-hidden="true">+</span><div><dt>The deadline in the letter</dt><dd>60 days</dd></div><span class="op" aria-hidden="true">=</span><div class="res"><dt>Deadline</dt><dd>Dec 15</dd></div></dl></div><p style="margin-top:12px"><span class="btn small" style="cursor:default"><svg class="ic" width="18" height="18" aria-hidden="true"><use href="#i-cal"/></svg>Download calendar file (.ics)</span></p></div>'],
+['Missing','Missing','A checklist where each item says why it is needed and how to get it, with its source quote.',
+ '<div class="mock"><div class="mini"><div class="cb"><i></i><div><strong>Specialist statement on permanent impairment</strong><p class="small muted">Why: the insurer denied lost income for now because it has no specialist statement.</p></div></div></div><div class="mini"><div class="cb"><i class="on"><svg class="ic" width="16" height="16" aria-hidden="true" style="color:#fff"><use href="#i-check"/></svg></i><div><strong>Written confirmation from the employer</strong><p class="small muted">Obtained</p></div></div></div></div>'],
+['Ask & Write','Ask & Write','Ask a question about the case, or draft an appeal letter or a plain-text summary. Answers use only the documents in the case, and show where they come from.',
+ '<div class="mock"><div class="fakeinp">What does the specialist need to write for the insurer to accept it?</div><div class="mini" style="margin-top:12px"><p>The documents do not say more than that a specialist statement is needed by November 30. Ask the insurer what it must contain.</p><div class="vclaim ok" style="margin-top:10px;border-left-color:var(--ok);padding:12px 14px"><span class="badge ok">'+CHECK+'Checked against the document</span><p class="q" style="margin-top:8px;font-size:1rem">“We need a statement from an orthopedic specialist by November 30, 2026.”</p></div></div><p class="small muted" style="margin-top:10px">Drafts are not checked quote by quote. Read and edit them before you use them.</p></div>'],
+['Simple View','Simple View','A toggle in the header. One column, large text, three headings: what happened, what happens now, what you need to do.',
+ '<div class="mock"><div class="simplev"><h4>What happened</h4><p>Your application was denied on October 14.</p><h4>What happens now</h4><p>You can appeal. The deadline is December 15.</p><h4>What you need to do</h4><ol><li>Tell us the day you received the letter.</li></ol></div></div>'],
+['Share / Handover','Share and handover','Copy the case link. Open a printable handover page for a lawyer, with a “Hide ID numbers” switch. Rename or delete the case.',
+ '<div class="mock"><div class="fakeinp" style="display:flex;gap:10px;align-items:center"><svg class="ic" width="20" height="20" aria-hidden="true"><use href="#i-link"/></svg>caseally.example/case-link-shown-here</div><div class="mini" style="margin-top:12px"><div class="cb"><i class="on"><svg class="ic" width="16" height="16" aria-hidden="true" style="color:#fff"><use href="#i-check"/></svg></i><div><strong>Hide ID numbers</strong><p class="small muted">Pattern matching, not a guarantee.</p></div></div></div></div>']
+];
+var tabs=$('#tabs'), panel=$('#tpanel');
+TOUR.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.id='tab'+i;b.setAttribute('aria-selected',i===0);b.setAttribute('aria-controls','tpanel');b.tabIndex=i===0?0:-1;b.textContent=t[0];tabs.appendChild(b);b.addEventListener('click',function(){sel(i)});});
+function sel(i,focus){$$('[role=tab]',tabs).forEach(function(b,j){b.setAttribute('aria-selected',j===i);b.tabIndex=j===i?0:-1});var t=TOUR[i];panel.setAttribute('aria-labelledby','tab'+i);panel.innerHTML='<h3>'+t[1]+'</h3><p class="desc muted">'+t[2]+'</p>'+t[3];if(focus)$('#tab'+i).focus()}
+tabs.addEventListener('keydown',function(e){var cur=$$('[role=tab]',tabs).findIndex(function(b){return b.getAttribute('aria-selected')==='true'});var n=TOUR.length,k=e.key,to=null;
+  if(k==='ArrowDown'||k==='ArrowRight')to=(cur+1)%n;else if(k==='ArrowUp'||k==='ArrowLeft')to=(cur-1+n)%n;else if(k==='Home')to=0;else if(k==='End')to=n-1;if(to!==null){e.preventDefault();sel(to,true)}});
+sel(0);
+
+/* ---------- Language examples (real strings from the app) ---------- */
+var L={en:[['Checked against the document','check'],['Could not be checked. Check yourself','alert'],['What happened · What happens now · What you need to do','file'],['Add to calendar','cal']],nb:[['Kontrollert mot dokumentet','check'],['Kunne ikke kontrolleres. Sjekk selv','alert'],['Hva har skjedd · Hva skjer nå · Dette må du gjøre','file'],['Legg i kalender','cal']]};
+function lang(l){$$('.seg button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.l===l))});
+  $('#langrows').innerHTML=L[l].map(function(r){return '<div class="langrow"><svg class="ic" width="22" height="22" aria-hidden="true" style="color:'+(r[1]==='alert'?'var(--amber-ink)':'var(--ok)')+'"><use href="#i-'+r[1]+'"/></svg><span lang="'+l+'"><strong>'+r[0]+'</strong></span></div>'}).join('')}
+$$('.seg button').forEach(function(b){b.addEventListener('click',function(){lang(b.dataset.l)})});lang('en');
+})();
+</script>
+</body>
+</html>
