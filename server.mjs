@@ -32,6 +32,9 @@ http
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
         return res.end(fs.readFileSync(path.join(root, 'public/index.html')));
       }
+      if (req.method === 'GET' && pathname === '/eval.json') {
+        try { const b = fs.readFileSync(path.join(root, 'public/eval.json')); res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); return res.end(b); } catch { res.writeHead(404); return res.end(); }
+      }
       const hasBody = req.method !== 'GET' && req.method !== 'HEAD';
       const r = await handle(new Request(`http://${req.headers.host || 'localhost'}${req.url}`, {
         method: req.method,

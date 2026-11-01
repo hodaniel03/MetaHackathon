@@ -1,0 +1,1264 @@
+{
+  "summary": {
+    "model": "muse-spark-1.3",
+    "ran": "2026-11-01T22:06:04.719Z",
+    "cases": 20,
+    "casesWithError": 0,
+    "deadlines": {
+      "expected": 18,
+      "caught": 16,
+      "caughtButFlagged": 0,
+      "recall": 0.889,
+      "falseDated": 2,
+      "casesWithFalseDated": 2
+    },
+    "needsReceived": {
+      "cases": 1,
+      "askedForReceivedDate": 1
+    },
+    "illegibleDate": {
+      "cases": 1,
+      "invented": 0
+    },
+    "noDeadlineCases": {
+      "cases": 2,
+      "withInvented": 0
+    },
+    "missing": {
+      "expected": 10,
+      "caught": 10,
+      "recall": 1
+    },
+    "quoteCheck": {
+      "quotes": 100,
+      "notFoundWordForWord": 0,
+      "failRate": 0,
+      "byPart": {
+        "timeline": {
+          "total": 23,
+          "failed": 0
+        },
+        "deadlines": {
+          "total": 20,
+          "failed": 0
+        },
+        "missing": {
+          "total": 36,
+          "failed": 0
+        },
+        "ideas": {
+          "total": 15,
+          "failed": 0
+        },
+        "facts": {
+          "total": 6,
+          "failed": 0
+        }
+      }
+    },
+    "seconds": {
+      "mean": 7,
+      "max": 9
+    }
+  },
+  "results": [
+    {
+      "id": "en-01-appeal-60d-received",
+      "lang": "en",
+      "tags": [
+        "duration",
+        "receipt"
+      ],
+      "seconds": 9,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-12-15"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-12-15",
+          "what": "File an appeal",
+          "calculated": true,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 1,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 1,
+      "missingExpected": 1,
+      "missingListed": [
+        "Statement from medical specialist"
+      ],
+      "quotes": {
+        "total": 8,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 1,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 4,
+            "failed": 0
+          },
+          "facts": {
+            "total": 1,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "en-02-appeal-30d-docdate",
+      "lang": "en",
+      "tags": [
+        "duration",
+        "document-date"
+      ],
+      "seconds": 6,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-10-10"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-10-10",
+          "what": "Appeal the housing support denial",
+          "calculated": true,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 1,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 0,
+      "missingExpected": 0,
+      "missingListed": [
+        "Proof of income",
+        "Copy of appeal letter",
+        "Housing support income rules"
+      ],
+      "quotes": {
+        "total": 5,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 3,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 0,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "en-03-explicit-date",
+      "lang": "en",
+      "tags": [
+        "explicit"
+      ],
+      "seconds": 7,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-11-30"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-11-30",
+          "what": "submit copies of all receipts for treatment costs",
+          "calculated": false,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 1,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 1,
+      "missingExpected": 1,
+      "missingListed": [
+        "Copies of receipts for treatment costs"
+      ],
+      "quotes": {
+        "total": 4,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 2,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 1,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 0,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "en-04-two-deadlines",
+      "lang": "en",
+      "tags": [
+        "duration",
+        "receipt",
+        "multiple"
+      ],
+      "seconds": 8,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-09-17",
+        "2026-08-17"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-08-17",
+          "what": "Return the enclosed form if you accept the decision",
+          "calculated": true,
+          "unverifiedDate": false
+        },
+        {
+          "date": "2026-09-17",
+          "what": "Appeal the decision",
+          "calculated": true,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 2,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 2,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 0,
+      "missingExpected": 0,
+      "missingListed": [
+        "Full decision with reasons",
+        "Enclosed acceptance form",
+        "Proof of appeal submission"
+      ],
+      "quotes": {
+        "total": 8,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 2,
+            "failed": 0
+          },
+          "missing": {
+            "total": 3,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 2,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "en-05-no-deadline",
+      "lang": "en",
+      "tags": [
+        "no-deadline"
+      ],
+      "seconds": 7,
+      "error": null,
+      "expectedDeadlines": [],
+      "returnedDeadlines": [],
+      "deadlinesCaught": 0,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 0,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 0,
+      "missingExpected": 0,
+      "missingListed": [
+        "Copy of submitted claim documents",
+        "Claim details and supporting proof"
+      ],
+      "quotes": {
+        "total": 3,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 0,
+            "failed": 0
+          },
+          "missing": {
+            "total": 2,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 0,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "en-06-appointment-distractor",
+      "lang": "en",
+      "tags": [
+        "distractor"
+      ],
+      "seconds": 6,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-12-02"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-12-02",
+          "what": "Attend appointment",
+          "calculated": false,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 1,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 0,
+      "missingExpected": 0,
+      "missingListed": [
+        "MRI images"
+      ],
+      "quotes": {
+        "total": 3,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 1,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 0,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "en-07-weeks-no-received",
+      "lang": "en",
+      "tags": [
+        "duration",
+        "needs-received"
+      ],
+      "seconds": 8,
+      "error": null,
+      "expectedDeadlines": [],
+      "returnedDeadlines": [
+        {
+          "date": null,
+          "what": "Appeal the decision",
+          "calculated": false,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 0,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 0,
+      "falseDatedDeadlines": [],
+      "needsReceived": {
+        "expected": true,
+        "asked": true,
+        "noDatedGuess": true
+      },
+      "forbidDated": null,
+      "missingCaught": 0,
+      "missingExpected": 0,
+      "missingListed": [
+        "Copy of denied application",
+        "Full written reasons for denial",
+        "Appeal letter within deadline"
+      ],
+      "quotes": {
+        "total": 6,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 3,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 1,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "en-08-voice-note",
+      "lang": "en",
+      "tags": [
+        "voice",
+        "explicit"
+      ],
+      "seconds": 7,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-11-20"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-11-20",
+          "what": "send the medical report to the court",
+          "calculated": false,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 1,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 1,
+      "missingExpected": 1,
+      "missingListed": [
+        "Medical report for court",
+        "Employer statement about work tasks"
+      ],
+      "quotes": {
+        "total": 4,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 2,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 0,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "en-09-multi-docs",
+      "lang": "en",
+      "tags": [
+        "duration",
+        "receipt",
+        "multi-doc"
+      ],
+      "seconds": 5,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-10-29"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-10-29",
+          "what": "file a complaint about the denied lost income claim",
+          "calculated": true,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 1,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 2,
+      "missingExpected": 2,
+      "missingListed": [
+        "MRI report",
+        "Specialist statement"
+      ],
+      "quotes": {
+        "total": 14,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 3,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 2,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 3,
+            "failed": 0
+          },
+          "facts": {
+            "total": 5,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "en-10-illegible-date",
+      "lang": "en",
+      "tags": [
+        "illegible"
+      ],
+      "seconds": 5,
+      "error": null,
+      "expectedDeadlines": [],
+      "returnedDeadlines": [
+        {
+          "date": null,
+          "what": "File appeal",
+          "calculated": false,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 0,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 0,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": {
+        "invented": false
+      },
+      "missingCaught": 0,
+      "missingExpected": 0,
+      "missingListed": [
+        "Readable copy of appeal deadline"
+      ],
+      "quotes": {
+        "total": 3,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 1,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 0,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "en-19-working-days",
+      "lang": "en",
+      "tags": [
+        "duration",
+        "receipt",
+        "hard",
+        "working-days"
+      ],
+      "seconds": 7,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-10-23"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-10-21",
+          "what": "Respond with information about your income",
+          "calculated": true,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 0,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [
+        "2026-10-21"
+      ],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 0,
+      "missingExpected": 0,
+      "missingListed": [
+        "Proof of income"
+      ],
+      "quotes": {
+        "total": 3,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 1,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 0,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "nb-11-klage-6uker-mottatt",
+      "lang": "nb",
+      "tags": [
+        "duration",
+        "receipt"
+      ],
+      "seconds": 8,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-11-06"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-11-06",
+          "what": "Klage på avslag på søknad om stønad",
+          "calculated": true,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 1,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 0,
+      "missingExpected": 0,
+      "missingListed": [
+        "Begrunnelse for avslaget",
+        "Kopi av søknaden",
+        "Skriftlig klage med kvittering"
+      ],
+      "quotes": {
+        "total": 5,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 3,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 0,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "nb-12-klage-3uker-dokdato",
+      "lang": "nb",
+      "tags": [
+        "duration",
+        "document-date"
+      ],
+      "seconds": 8,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-10-26"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-10-26",
+          "what": "Sende klage på avslag om boligstøtte",
+          "calculated": true,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 1,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 0,
+      "missingExpected": 0,
+      "missingListed": [
+        "Begrunnelse for avslag på boligstøtte",
+        "Adresse og krav for klage"
+      ],
+      "quotes": {
+        "total": 5,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 2,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 1,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "nb-13-eksplisitt-dato",
+      "lang": "nb",
+      "tags": [
+        "explicit"
+      ],
+      "seconds": 6,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-12-15"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-12-15",
+          "what": "sende legeerklæring som beskriver funksjonsnedsettelsen",
+          "calculated": false,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 1,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 1,
+      "missingExpected": 1,
+      "missingListed": [
+        "Legeerklæring om funksjonsnedsettelse"
+      ],
+      "quotes": {
+        "total": 6,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 1,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 3,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "nb-14-to-frister",
+      "lang": "nb",
+      "tags": [
+        "duration",
+        "receipt",
+        "multiple"
+      ],
+      "seconds": 9,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-11-09",
+        "2026-10-22"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-10-22",
+          "what": "Svare på innkallingen til samtale",
+          "calculated": true,
+          "unverifiedDate": false
+        },
+        {
+          "date": "2026-11-09",
+          "what": "Klage på vedtaket",
+          "calculated": true,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 2,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 2,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 0,
+      "missingExpected": 0,
+      "missingListed": [
+        "Full begrunnelse for delvis vedtak",
+        "Skriftlig svar på innkalling"
+      ],
+      "quotes": {
+        "total": 6,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 2,
+            "failed": 0
+          },
+          "missing": {
+            "total": 2,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 1,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "nb-15-ingen-frist",
+      "lang": "nb",
+      "tags": [
+        "no-deadline"
+      ],
+      "seconds": 9,
+      "error": null,
+      "expectedDeadlines": [],
+      "returnedDeadlines": [],
+      "deadlinesCaught": 0,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 0,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 0,
+      "missingExpected": 0,
+      "missingListed": [
+        "Oversikt over innsendte dokumenter",
+        "Beskrivelse av kravet i saken"
+      ],
+      "quotes": {
+        "total": 3,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 0,
+            "failed": 0
+          },
+          "missing": {
+            "total": 2,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 0,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "nb-16-maaneder-slutt",
+      "lang": "nb",
+      "tags": [
+        "duration",
+        "document-date",
+        "month-end"
+      ],
+      "seconds": 6,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-11-30"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-11-30",
+          "what": "Levere ny søknad",
+          "calculated": true,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 1,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 0,
+      "missingExpected": 0,
+      "missingListed": [
+        "Ny søknad om stønad"
+      ],
+      "quotes": {
+        "total": 3,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 1,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 0,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "nb-17-talenotat",
+      "lang": "nb",
+      "tags": [
+        "voice",
+        "explicit"
+      ],
+      "seconds": 7,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-12-01"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-12-01",
+          "what": "sende inn skjemaet",
+          "calculated": false,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 1,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 1,
+      "missingExpected": 1,
+      "missingListed": [
+        "Skjema til saksbehandler",
+        "Uttalelse fra fastlege"
+      ],
+      "quotes": {
+        "total": 4,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 2,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 0,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "nb-18-mangler-liste",
+      "lang": "nb",
+      "tags": [
+        "explicit",
+        "missing"
+      ],
+      "seconds": 6,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-11-03"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-11-03",
+          "what": "Sende arbeidsgiverattest og kopi av leiekontrakt",
+          "calculated": false,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 1,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 2,
+      "missingExpected": 2,
+      "missingListed": [
+        "arbeidsgiverattest",
+        "kopi av leiekontrakt"
+      ],
+      "quotes": {
+        "total": 4,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 2,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 0,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    },
+    {
+      "id": "nb-20-slutten-av-maaneden",
+      "lang": "nb",
+      "tags": [
+        "hard",
+        "end-of-month"
+      ],
+      "seconds": 5,
+      "error": null,
+      "expectedDeadlines": [
+        "2026-10-31"
+      ],
+      "returnedDeadlines": [
+        {
+          "date": "2026-10-14",
+          "what": "Sende lønnsslipper",
+          "calculated": true,
+          "unverifiedDate": false
+        }
+      ],
+      "deadlinesCaught": 0,
+      "caughtButFlagged": 0,
+      "deadlinesExpected": 1,
+      "falseDatedDeadlines": [
+        "2026-10-14"
+      ],
+      "needsReceived": null,
+      "forbidDated": null,
+      "missingCaught": 1,
+      "missingExpected": 1,
+      "missingListed": [
+        "Lønnsslipper"
+      ],
+      "quotes": {
+        "total": 3,
+        "failed": 0,
+        "byPart": {
+          "timeline": {
+            "total": 1,
+            "failed": 0
+          },
+          "deadlines": {
+            "total": 1,
+            "failed": 0
+          },
+          "missing": {
+            "total": 1,
+            "failed": 0
+          },
+          "ideas": {
+            "total": 0,
+            "failed": 0
+          },
+          "facts": {
+            "total": 0,
+            "failed": 0
+          }
+        },
+        "failedExamples": []
+      }
+    }
+  ]
+}
