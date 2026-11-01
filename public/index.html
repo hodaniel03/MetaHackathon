@@ -146,6 +146,13 @@ mark { background: var(--mark); color: var(--ink); padding: 1px 2px; border-radi
 
 /* Overview: the hero deadline */
 .page-h1 { font-size: 1.5rem; }
+.appeal { background: var(--surface); border: 2px solid var(--primary); border-radius: var(--r); box-shadow: var(--shadow); padding: 28px; }
+.appeal.soon { border-color: var(--warn); background: #FFFDF6; }
+.appeal.over { border-color: var(--bad); }
+.ap-count { font-family: var(--serif); font-weight: 600; font-size: clamp(2.5rem, 8vw, 3.5rem); line-height: 1.05; letter-spacing: -0.02em; margin-top: 12px; }
+.appeal.soon .ap-count { color: var(--warn-ink); }
+.appeal.over .ap-count { color: var(--bad); }
+.ap-date { font-size: 1.25rem; font-weight: 600; margin-top: 4px; }
 .hero-dl { background: var(--surface); border: 1px solid var(--line); border-top: 6px solid var(--primary); border-radius: var(--r); box-shadow: var(--shadow); padding: 28px; }
 .hero-dl.need { border-top-color: var(--warn); background: #FFFDF6; }
 .hero-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
@@ -337,6 +344,7 @@ footer.foot p { margin: 0; }
 /* ---------- Texts. Missing Norwegian keys fall back to English. ---------- */
 const T = {
   en: {
+    apTitle: 'Appeal deadline', apWhen: 'When did you receive the decision?', apWhenHelp: (n, u) => `The appeal deadline is ${n} ${u} from the day you received it. Enter the day and we calculate the date.`, apDaysLeft: (n) => (n === 1 ? '1 day left' : `${n} days left`), apToday: 'Last day is today', apExpired: (n) => `Expired ${n} ${n === 1 ? 'day' : 'days'} ago`, apNeedDate: 'We need a date before we can count down', apSave: 'Calculate the deadline',
     tbQuotes: (ok, n) => `${ok} of ${n} quotes found in the documents`, tbConfirm: (c, n) => `${c} of ${n} dates and amounts confirmed by you`, tbConfirmAll: 'You confirmed all dates and amounts',
     tbHint2: 'A found quote means those words are in the document. It does not mean the text was read correctly, or that we understood it right. Confirm dates and amounts yourself.',
     cfTitle: 'Confirm dates and amounts', cfLead: 'We found these words in your documents. Check each date and amount against the letter, then tick it.', cfBox: 'I have checked this against the letter', cfDate: 'Date', cfAmount: 'Amount', cfHeroNo: 'You have not confirmed this date yet', cfHeroYes: 'You confirmed this date', cfOpen: 'Open the document',
@@ -440,6 +448,7 @@ const T = {
     hideIds: 'Hide ID numbers', hideIdsHint: 'Hides personal ID numbers we recognize, such as Norwegian national ID numbers and US Social Security numbers. It can miss others, so check before you share.', idHidden: '[ID number hidden]', hLegendHidden: 'Personal ID numbers we recognize have been hidden.',
   },
   nb: {
+    apTitle: 'Ankefrist', apWhen: 'Når mottok du vedtaket?', apWhenHelp: (n, u) => `Ankefristen er ${n} ${u} fra dagen du mottok det. Legg inn dagen, så regner vi ut datoen.`, apDaysLeft: (n) => (n === 1 ? '1 dag igjen' : `${n} dager igjen`), apToday: 'Siste dag er i dag', apExpired: (n) => `Gikk ut for ${n} ${n === 1 ? 'dag' : 'dager'} siden`, apNeedDate: 'Vi trenger en dato før vi kan telle ned', apSave: 'Regn ut fristen',
     tbQuotes: (ok, n) => `${ok} av ${n} sitater funnet i dokumentene`, tbConfirm: (c, n) => `${c} av ${n} datoer og beløp bekreftet av deg`, tbConfirmAll: 'Du har bekreftet alle datoer og beløp',
     tbHint2: 'Et funnet sitat betyr at ordene står i dokumentet. Det betyr ikke at teksten er lest riktig, eller at vi har forstått den riktig. Bekreft datoer og beløp selv.',
     cfTitle: 'Bekreft datoer og beløp', cfLead: 'Vi fant disse ordene i dokumentene dine. Sjekk hver dato og hvert beløp mot brevet, og kryss av.', cfBox: 'Jeg har sjekket dette mot brevet', cfDate: 'Dato', cfAmount: 'Beløp', cfHeroNo: 'Du har ikke bekreftet denne datoen ennå', cfHeroYes: 'Du har bekreftet denne datoen', cfOpen: 'Åpne dokumentet',
@@ -714,6 +723,9 @@ function claimCard({ id, claim = '', detail = '', quote = '', dok, verified, col
 const A = () => st.analysis || {};
 const datedFrister = () => (A().frister || []).filter((f) => f.dato).sort((x, y) => x.dato.localeCompare(y.dato));
 const nextDeadline = () => datedFrister().find((f) => daysUntil(f.dato) >= 0) || null;
+const isAppeal = (f) => /appeal|klage|anke/i.test(`${f.hva} ${f.regel} ${f.sitat}`);
+const appealDeadline = () => (A().frister || []).find(isAppeal) || null;
+const nextOther = () => datedFrister().filter((f) => !isAppeal(f)).find((f) => daysUntil(f.dato) >= 0) || null;
 const needInfo = () => (A().frister || []).filter((f) => !f.dato);
 const wait = (p) => st.pending.includes(p);
 const icsIndex = (f) => datedFrister().indexOf(f);
@@ -920,9 +932,35 @@ function docEvidence(d) {
   return { n: mine.length, bad, dl, why, review: !!why };
 }
 
+// The appeal deadline gets its own countdown at the top. The date is calculated by code from the day the decision was received.
+function appealCard() {
+  if (wait('b')) return '';
+  const f = appealDeadline(); if (!f) return '';
+  const d = docById(f.dok), head = `<div class="hero-top"><h2 id="h-appeal" class="eyebrow">${esc(t('apTitle'))}</h2>`;
+  if (f.dato) {
+    const n = daysUntil(f.dato), cls = n < 0 ? 'over' : n <= 14 ? 'soon' : '';
+    const big = n < 0 ? t('apExpired', -n) : n === 0 ? t('apToday') : t('apDaysLeft', n);
+    return `<section class="appeal ${cls}" aria-labelledby="h-appeal">${head}${dueBadge(f.dato)}</div>
+      <p class="ap-count">${esc(big)}</p><p class="ap-date">${esc(fmtLong(f.dato))}</p>
+      ${calcHtml(f)}
+      <div class="hero-ev">${claimCard({ id: 'appeal', quote: f.sitat, dok: f.dok, verified: !!f.verifisert })}</div>
+      <p style="margin-top:12px">${st.checks[`cf:d:${ck(f.hva)}|${f.dato}`] ? badge('ok', 'check', t('cfHeroYes')) : badge('warn', 'info', t('cfHeroNo'))}</p>
+      <div class="hero-actions noprint"><a class="btn primary" href="${icsUrl(icsIndex(f))}" download>${icon('calendar-plus', 20)} ${esc(t('addToCalendar'))}</a><a class="btn-link" href="#/s/${esc(st.token)}/frister">${esc(t('seeCalc'))}</a></div></section>`;
+  }
+  const dur = f.varighet && f.fra === 'mottak' && d && !d.received;
+  return `<section class="appeal soon" aria-labelledby="h-appeal">${head}${badge('warn', 'alert', t('apNeedDate'))}</div>
+    <p class="ap-count" style="font-size:2rem">${esc(t('apWhen'))}</p>
+    ${dur ? `<p style="margin-top:8px">${esc(t('apWhenHelp', f.varighet.antall, f.varighet.enhet))}</p>
+      <form class="stack-s" data-form="received" data-id="${esc(d.id)}" style="margin-top:12px"><label for="ap-rc" class="sr-only" style="position:absolute;left:-9999px">${esc(t('apWhen'))}</label>
+      <div class="row"><input id="ap-rc" type="date" required style="width:auto;min-width:220px;min-height:52px"><button class="btn primary" type="submit" style="min-height:52px">${esc(t('apSave'))}</button></div></form>`
+      : `<p style="margin-top:8px">${esc(f.regel || t('defaultRule'))}</p><p style="margin-top:12px"><a class="btn primary" href="#/s/${esc(st.token)}/frister">${esc(t('enterDate'))}</a></p>`}
+    <div class="hero-ev">${claimCard({ id: 'appeal', quote: f.sitat, dok: f.dok, verified: !!f.verifisert })}</div></section>`;
+}
+
 function heroDeadline() {
   if (wait('b')) return `<section class="hero-dl" aria-label="${esc(t('cardDeadline'))}"><p class="skeleton">${esc(t('findingDeadlines'))}</p></section>`;
-  const f = nextDeadline();
+  const f = appealDeadline() ? nextOther() : nextDeadline();
+  if (!f && appealDeadline()) return '';
   if (f) {
     const d = docById(f.dok), voice = d?.source === 'tale';
     return `<section class="hero-dl" aria-labelledby="h-hero"><div class="hero-top"><h2 id="h-hero" class="eyebrow">${esc(t('cardDeadline'))}</h2>${dueBadge(f.dato)}</div>
@@ -934,7 +972,7 @@ function heroDeadline() {
       <div class="hero-actions noprint"><a class="btn primary" href="${icsUrl(icsIndex(f))}" download>${icon('calendar-plus', 20)} ${esc(t('addToCalendar'))}</a><a class="btn-link" href="#/s/${esc(st.token)}/frister">${esc(t('seeCalc'))}</a></div>
       ${expiringLine()}</section>`;
   }
-  const n = needInfo()[0];
+  const n = needInfo().find((x) => !isAppeal(x));
   if (n) return `<section class="hero-dl need" aria-labelledby="h-hero"><div class="hero-top"><h2 id="h-hero" class="eyebrow">${esc(t('cardDeadline'))}</h2>${badge('warn', 'alert', t('weNeedDate'))}</div>
       <p class="hero-date" style="font-size:2rem">${esc(t('needDate'))}</p><p class="hero-what">${capEsc(n.hva)}</p><p style="margin-top:4px">${esc(n.regel || '')}</p>
       <div class="hero-actions"><a class="btn primary" href="#/s/${esc(st.token)}/frister">${esc(t('enterDate'))}</a></div>${expiringLine()}</section>`;
@@ -971,6 +1009,7 @@ function pageOversikt() {
 
   return `<div class="stack">
     <h1 class="page-h1">${esc(t('attentionTitle'))}</h1>
+    ${appealCard()}
     ${heroDeadline()}
     ${confirmCard()}
     ${wait('a') || !a.status ? '' : `<p class="lead" style="font-size:1rem;color:var(--muted)">${esc(a.status)}</p>`}
@@ -1319,8 +1358,11 @@ async function fxPut(id, patch) {
 async function setReceived(docId, value) {
   const d = docById(docId); if (!d || !value) return;
   await caseApi('PUT', `/documents/${docId}`, { title: d.title, type: d.type, date: d.date, received: value, text: d.text, source: d.source });
+  // Only the calculated dates change. Recalculate them in code on the stored analysis, with no new model call.
+  let ok = false;
+  try { ok = (await caseApi('POST', '/recalc', {})).ok; } catch {}
   await reloadCase();
-  analyze();
+  if (!ok) analyze();
 }
 
 async function setCheck(key, done, id) {
