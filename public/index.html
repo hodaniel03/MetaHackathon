@@ -135,6 +135,13 @@ mark { background: var(--mark); color: var(--ink); padding: 1px 2px; border-radi
 .trustbar .tb-need { display: inline-flex; align-items: center; gap: 8px; color: var(--warn-ink); background: var(--warn-bg); border-radius: 999px; padding: 4px 12px; }
 .trustbar .tb-sep { color: var(--ctl); }
 .trustbar .tb-hint { font-weight: 400; color: var(--muted); font-size: .875rem; flex-basis: 100%; margin-top: -4px; }
+.badge.idea { background: #fff; border: 1.5px dashed var(--ctl); color: var(--ink); }
+.claim.neutral { border-left: 4px dashed var(--ctl); }
+.cf-item { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-top: 1px solid var(--line); }
+.cf-item:first-of-type { border-top: 0; }
+.cf-item input[type="checkbox"] { width: 24px; height: 24px; min-height: 24px; margin-top: 4px; padding: 0; accent-color: var(--primary); flex: none; }
+.cf-item label { margin: 0; font-weight: 400; min-height: 44px; }
+.cf-val { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; }
 .logo { display: inline-block; color: var(--primary); flex: none; }
 
 /* Overview: the hero deadline */
@@ -330,6 +337,10 @@ footer.foot p { margin: 0; }
 /* ---------- Texts. Missing Norwegian keys fall back to English. ---------- */
 const T = {
   en: {
+    tbQuotes: (ok, n) => `${ok} of ${n} quotes found in the documents`, tbConfirm: (c, n) => `${c} of ${n} dates and amounts confirmed by you`, tbConfirmAll: 'You confirmed all dates and amounts',
+    tbHint2: 'A found quote means those words are in the document. It does not mean the text was read correctly, or that we understood it right. Confirm dates and amounts yourself.',
+    cfTitle: 'Confirm dates and amounts', cfLead: 'We found these words in your documents. Check each date and amount against the letter, then tick it.', cfBox: 'I have checked this against the letter', cfDate: 'Date', cfAmount: 'Amount', cfHeroNo: 'You have not confirmed this date yet', cfHeroYes: 'You confirmed this date', cfOpen: 'Open the document',
+    ideaQuoteBadge: 'Quote from your documents. The idea itself is not checked.',
     sFull: 'Back to the full view', sDeadlineLabel: 'The next deadline',
     tbChecked: (ok, n) => `${ok} of ${n} claims checked against the documents`, tbNeed: (n) => `${n} ${n === 1 ? 'needs' : 'need'} your check`, tbAllGood: 'Nothing needs your check', tbReading: 'Reading your documents…', tbHint: 'Checked means the quote appears word for word in the document.', tbSee: 'See them',
     needsTitle: 'Needs your check', needsLead: 'We could not find these quotes word for word in the documents. Open the document and read for yourself.',
@@ -402,7 +413,7 @@ const T = {
     hLegend: 'Every claim has a quote from the document. “Checked” means the quote appears word for word in the document. “Check yourself” means we did not find it. This is not legal advice.',
     hStands: 'How the case stands', hNow: 'Now:', hDeadlines: 'Deadlines', hNone: 'None found.', hDateMissing: 'Date missing', hTimeline: 'Timeline', hDocs: 'Documents in the case', hMissing: 'Documents that are missing', hObtained: '(obtained)',
     hNotRead: 'The case has not been read through yet. Go back and press “Read through the case”.', hNothing: 'Nothing found.', hReceived: (d) => `received ${d}`,
-    vChecked: 'Checked against the document', vUnchecked: 'Could not be checked. Check yourself', viewInDoc: 'View in the document', hide: 'Hide', unknownDoc: 'Unknown document', pageN: (n) => `Page ${n}`,
+    vChecked: 'Quote found in the document', vUnchecked: 'Quote not found. Check yourself', viewInDoc: 'View in the document', hide: 'Hide', unknownDoc: 'Unknown document', pageN: (n) => `Page ${n}`,
     howItReads: 'How it reads in the document', quoteNotFound: 'We did not find the quote word for word in the text we read. Open the document and read for yourself.',
     origCaption: (pg) => `The original${pg ? `, page ${pg}` : ''}. The yellow is marked in the text we read from the letter.`, openFullDoc: 'Open the whole document', originalAlt: (t, pg) => `Original of ${t}${pg ? `, page ${pg}` : ''}`,
     close: 'Close', datedLower: 'dated', receivedLower: 'received', seeOriginal: (n) => `See the original (${n} ${n === 1 ? 'page' : 'pages'})`, fixText: 'Correct the text if needed', saveChanges: 'Save changes', cancel: 'Cancel',
@@ -420,7 +431,7 @@ const T = {
     recStart: 'Start recording', recStop: 'Stop and turn into text', recRecording: 'Recording…', recTranscribing: 'We are turning your voice into text…',
     recReview: 'Check what we heard', recCaveat: 'This is what you said, not an official document. Check names, dates and amounts, and fix anything we heard wrong.',
     recMicFail: 'We could not use the microphone. Allow microphone access in your browser, or paste text instead.', recTooShort: 'That was too short. Try again.', recTooLong: 'The recording reached 5 minutes and was stopped.',
-    recDefaultTitle: (d) => `Voice note, ${d}`, vCheckedVoice: 'Checked against your voice note', voiceCaveat: 'From your voice note, not an official document.',
+    recDefaultTitle: (d) => `Voice note, ${d}`, vCheckedVoice: 'Quote found in your voice note', voiceCaveat: 'From your voice note, not an official document.',
     openPdf: 'Open the original PDF', openPdfPage: (n) => `Open the original PDF, page ${n}`, pdfPreviewNote: 'The PDF opens in a new tab.', pdfTooBig: 'That PDF is too large (limit 14 MB). Try a photo instead.',
     repeated: (w) => `Said twice? “${w}”`, asInVoice: 'Deadline, as you said in your voice note', confirmWriting: 'This comes from what you said, not from a letter. Ask for it in writing.',
     heroClaims: (n) => (n === 1 ? 'claim' : 'claims'), heroChecked: 'checked against the document', heroUnchecked: 'could not be checked',
@@ -429,6 +440,10 @@ const T = {
     hideIds: 'Hide ID numbers', hideIdsHint: 'Hides personal ID numbers we recognize, such as Norwegian national ID numbers and US Social Security numbers. It can miss others, so check before you share.', idHidden: '[ID number hidden]', hLegendHidden: 'Personal ID numbers we recognize have been hidden.',
   },
   nb: {
+    tbQuotes: (ok, n) => `${ok} av ${n} sitater funnet i dokumentene`, tbConfirm: (c, n) => `${c} av ${n} datoer og beløp bekreftet av deg`, tbConfirmAll: 'Du har bekreftet alle datoer og beløp',
+    tbHint2: 'Et funnet sitat betyr at ordene står i dokumentet. Det betyr ikke at teksten er lest riktig, eller at vi har forstått den riktig. Bekreft datoer og beløp selv.',
+    cfTitle: 'Bekreft datoer og beløp', cfLead: 'Vi fant disse ordene i dokumentene dine. Sjekk hver dato og hvert beløp mot brevet, og kryss av.', cfBox: 'Jeg har sjekket dette mot brevet', cfDate: 'Dato', cfAmount: 'Beløp', cfHeroNo: 'Du har ikke bekreftet denne datoen ennå', cfHeroYes: 'Du har bekreftet denne datoen', cfOpen: 'Åpne dokumentet',
+    ideaQuoteBadge: 'Sitat fra dokumentene dine. Selve idéen er ikke sjekket.',
     sFull: 'Tilbake til full visning', sDeadlineLabel: 'Neste frist',
     tbChecked: (ok, n) => `${ok} av ${n} påstander kontrollert mot dokumentene`, tbNeed: (n) => `${n} trenger at du sjekker`, tbAllGood: 'Ingenting trenger sjekk fra deg', tbReading: 'Leser dokumentene dine…', tbHint: 'Kontrollert betyr at sitatet står ordrett i dokumentet.', tbSee: 'Se dem',
     needsTitle: 'Trenger din sjekk', needsLead: 'Vi fant ikke disse sitatene ordrett i dokumentene. Åpne dokumentet og les selv.',
@@ -501,7 +516,7 @@ const T = {
     hLegend: 'Hver påstand har et sitat fra dokumentet. «Kontrollert» betyr at sitatet står ordrett i dokumentet. «Sjekk selv» betyr at vi ikke fant det. Dette er ikke juridisk rådgivning.',
     hStands: 'Slik står saken', hNow: 'Nå:', hDeadlines: 'Frister', hNone: 'Ingen funnet.', hDateMissing: 'Dato mangler', hTimeline: 'Hendelsesforløp', hDocs: 'Dokumenter i saken', hMissing: 'Dokumentasjon som mangler', hObtained: '(skaffet)',
     hNotRead: 'Saken er ikke lest gjennom ennå. Gå tilbake og trykk «Les gjennom saken».', hNothing: 'Ingenting funnet.', hReceived: (d) => `mottatt ${d}`,
-    vChecked: 'Kontrollert mot dokumentet', vUnchecked: 'Kunne ikke kontrolleres. Sjekk selv', viewInDoc: 'Se i dokumentet', hide: 'Skjul', unknownDoc: 'Ukjent dokument', pageN: (n) => `Side ${n}`,
+    vChecked: 'Sitatet står i dokumentet', vUnchecked: 'Fant ikke sitatet. Sjekk selv', viewInDoc: 'Se i dokumentet', hide: 'Skjul', unknownDoc: 'Ukjent dokument', pageN: (n) => `Side ${n}`,
     howItReads: 'Slik står det i dokumentet', quoteNotFound: 'Vi fant ikke sitatet ordrett i teksten vi leste. Åpne dokumentet og les selv.',
     origCaption: (pg) => `Originalen${pg ? `, side ${pg}` : ''}. Det gule er markert i teksten vi leste fra brevet.`, openFullDoc: 'Åpne hele dokumentet', originalAlt: (t, pg) => `Original av ${t}${pg ? `, side ${pg}` : ''}`,
     close: 'Lukk', datedLower: 'datert', receivedLower: 'mottatt', seeOriginal: (n) => `Se originalen (${n} ${n === 1 ? 'side' : 'sider'})`, fixText: 'Rett teksten ved behov', saveChanges: 'Lagre endringer', cancel: 'Avbryt',
@@ -519,7 +534,7 @@ const T = {
     recStart: 'Start opptak', recStop: 'Stopp og gjør om til tekst', recRecording: 'Tar opp…', recTranscribing: 'Vi gjør stemmen din om til tekst…',
     recReview: 'Sjekk hva vi hørte', recCaveat: 'Dette er det du sa, ikke et offisielt dokument. Sjekk navn, datoer og beløp, og rett det vi hørte feil.',
     recMicFail: 'Vi kunne ikke bruke mikrofonen. Gi nettleseren tilgang til mikrofonen, eller lim inn tekst i stedet.', recTooShort: 'Det var for kort. Prøv igjen.', recTooLong: 'Opptaket nådde 5 minutter og ble stoppet.',
-    recDefaultTitle: (d) => `Talenotat, ${d}`, vCheckedVoice: 'Kontrollert mot talenotatet ditt', voiceCaveat: 'Fra talenotatet ditt, ikke et offisielt dokument.',
+    recDefaultTitle: (d) => `Talenotat, ${d}`, vCheckedVoice: 'Sitatet står i talenotatet ditt', voiceCaveat: 'Fra talenotatet ditt, ikke et offisielt dokument.',
     openPdf: 'Åpne original-PDF', openPdfPage: (n) => `Åpne original-PDF, side ${n}`, pdfPreviewNote: 'PDF-en åpnes i en ny fane.', pdfTooBig: 'PDF-en er for stor (grense 14 MB). Prøv et bilde i stedet.',
     repeated: (w) => `Sagt to ganger? «${w}»`, asInVoice: 'Frist, slik du sa det i talenotatet', confirmWriting: 'Dette kommer fra det du sa, ikke fra et brev. Be om det skriftlig.',
     heroClaims: () => 'funn', heroChecked: 'kontrollert mot dokumentet', heroUnchecked: 'kunne ikke kontrolleres',
@@ -674,9 +689,9 @@ function evidenceHtml(d, quote) {
 
 // id: unique key for view state. collapsed: timeline style, opened by the claim as a button.
 // rd: text filter (used to hide ID numbers). plain: no evidence button (used on the printable handover).
-function claimCard({ id, claim = '', detail = '', quote = '', dok, verified, collapsed = false, date = '', top = '', after = '', rd = (x) => x, plain = false }) {
+function claimCard({ id, claim = '', detail = '', quote = '', dok, verified, collapsed = false, date = '', top = '', after = '', rd = (x) => x, plain = false, neutral = false }) {
   const d = docById(dok), open = st.open.has(id), showEv = st.ev.has(id) && !plain, voice = d?.source === 'tale';
-  const vb = verified ? badge('ok', 'check', t(voice ? 'vCheckedVoice' : 'vChecked')) : badge('bad', 'alert', t('vUnchecked'));
+  const vb = neutral ? `<span class="badge idea">${icon('info', 16)}<span>${esc(t(verified ? 'ideaQuoteBadge' : 'vUnchecked'))}</span></span>` : verified ? badge('ok', 'check', t(voice ? 'vCheckedVoice' : 'vChecked')) : badge('bad', 'alert', t('vUnchecked'));
   const pg = d && quote ? pageOf(d, quote) : null;
   const src = d ? `${esc(d.title)} · ${esc(fmtShort(d.date))}${pg ? ` · ${esc(t('pageN', pg))}` : ''}` : esc(t('unknownDoc'));
   const inner = `
@@ -686,13 +701,13 @@ function claimCard({ id, claim = '', detail = '', quote = '', dok, verified, col
     ${d ? `<div class="src"><span>${src}</span>${plain ? '' : `<button class="btn-link" data-act="evidence" data-id="${esc(id)}" aria-expanded="${showEv}">${esc(showEv ? t('hide') : t('viewInDoc'))} ${icon(showEv ? 'x' : 'arrow', 16)}</button>`}</div>` : ''}
     ${showEv && d ? evidenceHtml(d, quote) : ''}${after}`;
   if (collapsed) {
-    return `<article class="claim ${verified ? '' : 'is-bad'}">
+    return `<article class="claim ${verified ? '' : 'is-bad'}${neutral ? ' neutral' : ''}">
       <button class="claim-toggle" data-act="toggle-claim" data-id="${esc(id)}" aria-expanded="${open}" aria-controls="cb-${esc(id)}">
         <span class="when">${esc(fmtShort(date))}</span><span class="ttl">${capEsc(rd(claim))}</span>${icon('chevron', 20).replace('class="ic"', 'class="ic chev"')}
       </button>
       <div class="claim-body" id="cb-${esc(id)}" ${open ? '' : 'hidden'}>${vb}${inner}</div></article>`;
   }
-  return `<article class="claim ${verified ? '' : 'is-bad'}">${vb}${claim ? `<h3 class="claim-text">${capEsc(rd(claim))}</h3>` : ''}${inner}</article>`;
+  return `<article class="claim ${verified ? '' : 'is-bad'}${neutral ? ' neutral' : ''}">${vb}${claim ? `<h3 class="claim-text">${capEsc(rd(claim))}</h3>` : ''}${inner}</article>`;
 }
 
 /* ---------- Data from the analysis ---------- */
@@ -863,9 +878,37 @@ function renderTrustBar() {
   el.hidden = false;
   if (wait('a') || wait('b') || wait('c')) { inner.innerHTML = `<span class="skeleton" role="status">${esc(t('tbReading'))}</span>`; return; }
   const claims = flatClaims(), bad = claims.filter((c) => !c.verified).length, ok = claims.length - bad;
-  inner.innerHTML = `<span class="tb-ok">${icon(bad ? 'alert' : 'check', 22)}<span>${esc(t('tbChecked', ok, claims.length))}</span></span><span class="tb-sep" aria-hidden="true">•</span>
-    ${bad ? `<span class="tb-need">${icon('alert', 18)}<span>${esc(t('tbNeed', bad))}</span></span>` : `<span class="tb-ok">${esc(t('tbAllGood'))}</span>`}
-    <span class="tb-hint">${esc(t('tbHint'))}</span>`;
+  const items = confirmItems(), c = confirmedN(items), all = items.length && c === items.length;
+  inner.innerHTML = `<span class="tb-ok">${icon(bad ? 'alert' : 'check', 22)}<span>${esc(t('tbQuotes', ok, claims.length))}</span></span>
+    ${bad ? `<span class="tb-need">${icon('alert', 18)}<span>${esc(t('tbNeed', bad))}</span></span>` : ''}
+    ${items.length ? `<span class="tb-sep" aria-hidden="true">•</span><span class="${all ? 'tb-ok' : 'tb-need'}">${icon(all ? 'check' : 'info', 18)}<span>${esc(all ? t('tbConfirmAll') : t('tbConfirm', c, items.length))}</span></span>` : ''}
+    <span class="tb-hint">${esc(t('tbHint2'))}</span>`;
+}
+
+/* ---------- Dates and amounts the user confirms. A found quote is not a confirmed number. ---------- */
+const MONEY = /\$\s?\d[\d,.]*|\d[\d\s.,]*\d\s?(?:kr|NOK|USD|dollars?|kroner)\b|\b(?:kr|NOK)\.?\s?\d[\d\s.,]*\d/gi;
+function confirmItems() {
+  const items = [];
+  for (const f of datedFrister()) items.push({ id: `cf:d:${ck(f.hva)}|${f.dato}`, kind: 'date', label: f.hva, value: fmtLong(f.dato), quote: f.sitat, dok: f.dok, verified: !!f.verifisert });
+  const seen = new Set();
+  const sources = [...flatClaims(), ...st.facts.filter((f) => f.quote).map((f) => ({ claim: factLabel(f), quote: f.quote, dok: f.docId, verified: f.status === 'checked' }))];
+  for (const c of sources) for (const m of String(c.quote || '').matchAll(MONEY)) {
+    const v = m[0].trim(), id = `cf:a:${v}|${c.dok}`;
+    if (seen.has(id) || items.filter((x) => x.kind === 'amount').length >= 6) continue;
+    seen.add(id); items.push({ id, kind: 'amount', label: c.claim || '', value: v, quote: c.quote, dok: c.dok, verified: c.verified });
+  }
+  return items;
+}
+const confirmedN = (items) => items.filter((x) => st.checks[x.id]).length;
+
+function confirmCard() {
+  if (wait('b') || wait('c') || wait('a')) return '';
+  const items = confirmItems(); if (!items.length) return '';
+  return `<section class="card" aria-labelledby="h-cf"><h2 id="h-cf">${esc(t('cfTitle'))}</h2><p style="margin-top:4px">${esc(t('cfLead'))}</p>
+    <div style="margin-top:8px">${items.map((x, i) => `<div class="cf-item"><input type="checkbox" id="cfx-${i}" data-check="${esc(x.id)}" ${st.checks[x.id] ? 'checked' : ''}>
+      <div><label for="cfx-${i}"><span class="meta">${esc(t(x.kind === 'date' ? 'cfDate' : 'cfAmount'))}${x.label ? ` · ${esc(cap(x.label))}` : ''}</span><br><span class="cf-val">${esc(x.value)}</span><br><span class="meta">${esc(t('cfBox'))}</span></label>
+      <div class="quote-wrap"><blockquote class="quote">«${esc(x.quote)}»</blockquote></div>
+      <p style="margin-top:4px"><button class="btn-link" data-act="open-doc" data-id="${esc(x.dok)}" data-quote="${esc(x.quote)}">${esc(t('cfOpen'))}</button></p></div></div>`).join('')}</div></section>`;
 }
 
 // Everything one document contributes: claims found, how many are unchecked, and its deadline if it has one.
@@ -887,6 +930,7 @@ function heroDeadline() {
       <p class="hero-what">${capEsc(f.hva)}</p>
       ${f.beregnet || f.usikker || voice ? calcHtml(f) : `<p class="meta" style="margin-top:8px">${esc(t('asInLetter'))}</p>`}
       <div class="hero-ev">${claimCard({ id: 'hero', quote: f.sitat, dok: f.dok, verified: !!f.verifisert })}</div>
+      <p style="margin-top:12px">${st.checks[`cf:d:${ck(f.hva)}|${f.dato}`] ? badge('ok', 'check', t('cfHeroYes')) : badge('warn', 'info', t('cfHeroNo'))}</p>
       <div class="hero-actions noprint"><a class="btn primary" href="${icsUrl(icsIndex(f))}" download>${icon('calendar-plus', 20)} ${esc(t('addToCalendar'))}</a><a class="btn-link" href="#/s/${esc(st.token)}/frister">${esc(t('seeCalc'))}</a></div>
       ${expiringLine()}</section>`;
   }
@@ -928,6 +972,7 @@ function pageOversikt() {
   return `<div class="stack">
     <h1 class="page-h1">${esc(t('attentionTitle'))}</h1>
     ${heroDeadline()}
+    ${confirmCard()}
     ${wait('a') || !a.status ? '' : `<p class="lead" style="font-size:1rem;color:var(--muted)">${esc(a.status)}</p>`}
     <div class="att-grid two">${card(t('cardMissing'), missingCard())}${card(t('cardLatest'), latestCard())}</div>
     ${needs}
@@ -1160,9 +1205,9 @@ function ideasHtml() {
   if (!ideas.length) return '';
   return `<section class="card" aria-labelledby="h-ideas"><h2 id="h-ideas">${esc(t('ideasTitle'))}</h2>
     <div class="notice" style="margin-top:12px">${icon('info')}<div>${esc(t('ideasNote'))}</div></div>
-    ${ideas.map((x, i) => `<article class="idea"><span class="badge neutral">${icon('help', 16)}<span>${esc(t('ideaBadge'))}</span></span>
+    ${ideas.map((x, i) => `<article class="idea"><span class="badge idea">${icon('help', 16)}<span>${esc(t('ideaBadge'))}</span></span>
       <h3 style="margin-top:10px">${capEsc(x.navn)}</h3><p>${esc(x.hvorfor)}</p>${x.hvordan ? `<p class="meta" style="margin-top:4px">${esc(t('ideaAsk'))} ${esc(x.hvordan)}</p>` : ''}
-      <p class="meta" style="margin-top:14px;margin-bottom:6px">${esc(t('ideaBecause'))}</p>${claimCard({ id: `i${i}`, quote: x.sitat, dok: x.dok, verified: !!x.verifisert })}</article>`).join('')}</section>`;
+      <p class="meta" style="margin-top:14px;margin-bottom:6px">${esc(t('ideaBecause'))}</p>${claimCard({ id: `i${i}`, quote: x.sitat, dok: x.dok, verified: !!x.verifisert, neutral: true })}</article>`).join('')}</section>`;
 }
 
 function packetUrl(kind, extra = '') {
