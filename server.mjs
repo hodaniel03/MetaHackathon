@@ -127,7 +127,7 @@ const ICS_TEXT = {
 function buildIcs(c, docs, frister, lang) {
   const X = ICS_TEXT[lang];
   const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
-  const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//CaseFolder//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', `X-WR-CALNAME:${icsEsc(X.cal + c.name)}`];
+  const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//CaseAlly//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', `X-WR-CALNAME:${icsEsc(X.cal + c.name)}`];
   for (const f of frister) {
     const next = new Date(`${f.dato}T12:00:00Z`);
     next.setUTCDate(next.getUTCDate() + 1);
@@ -147,7 +147,7 @@ function buildIcs(c, docs, frister, lang) {
   return L.map(icsFold).join('\r\n') + '\r\n';
 }
 
-const PART_FIELDS = { a: ['sammendrag', 'status', 'tidslinje'], b: ['frister', 'neste_steg'], c: ['mangler', 'ordliste'] };
+const PART_FIELDS = { a: ['sammendrag', 'status', 'tidslinje'], b: ['frister', 'neste_steg'], c: ['mangler', 'ordliste'], d: ['ideer'] };
 
 function createSample(lang) {
   const s = JSON.parse(fs.readFileSync(path.join(root, 'samples', `${lang}.json`), 'utf8'));
@@ -281,7 +281,7 @@ http
         const q = new URL(req.url, 'http://x').searchParams, i = q.get('i'), lang = ai.normLang(q.get('lang'));
         const list = i !== null && frister[Number(i)] ? [frister[Number(i)]] : frister;
         if (!list.length) throw new HttpError(404, lang === 'nb' ? 'Ingen frister med dato ennå.' : 'No deadlines with a date yet.');
-        return send(res, 200, buildIcs(db.getCase(token), docs, list, lang), 'text/calendar; charset=utf-8', { 'Content-Disposition': `attachment; filename="${lang === 'nb' ? 'saksmappen' : 'casefolder'}-deadlines.ics"` });
+        return send(res, 200, buildIcs(db.getCase(token), docs, list, lang), 'text/calendar; charset=utf-8', { 'Content-Disposition': `attachment; filename="${lang === 'nb' ? 'saksmappen' : 'case-ally'}-deadlines.ics"` });
       }
 
       if (sub === 'voice' && req.method === 'POST') {
@@ -299,6 +299,19 @@ http
       }
 
       if (sub === 'read' && req.method === 'POST') return sendJson(res, await readImages(token, await readBody(req, 25_000_000)));
+
+      if (sub === 'translate' && req.method === 'POST') {
+        requireKey();
+        const b = await readBody(req);
+        if (!ai.TARGET_LANGS[b.lang]) throw new HttpError(400, 'Unsupported language.');
+        const p = b.parts || {}, s = (v) => str(v, 2500);
+        const parts = { headings: { h1: s(p.headings?.h1), h2: s(p.headings?.h2), h3: s(p.headings?.h3) }, happened: s(p.happened), now: s(p.now), todo: (Array.isArray(p.todo) ? p.todo : []).slice(0, 8).map(s) };
+        try {
+          return sendJson(res, await ai.translateSimple(parts, b.lang));
+        } catch (e) {
+          throw new HttpError(502, e.message);
+        }
+      }
 
       if (req.method === 'POST' && ['analyze', 'ask', 'draft'].includes(sub)) {
         requireKey();

@@ -1,12 +1,12 @@
-# CaseFolder (Saksmappen)
+# Case Ally (Saksmappen)
 
 **A case folder for the family member who runs a long benefits or insurance case for someone else.**
 
-You add the letters, decisions and medical statements as they arrive, by photo, PDF, pasted text or a voice note. CaseFolder reads them, builds a timeline, finds the deadlines, lists what is still missing, and drafts an appeal. Every claim it makes comes with a **word-for-word quote from your document, and the server checks that the quote really is there.**
+You add the letters, decisions and medical statements as they arrive, by photo, PDF, pasted text or a voice note. Case Ally reads them, builds a timeline, finds the deadlines, lists what is still missing, and drafts an appeal. Every claim it makes comes with a **word-for-word quote from your document, and the server checks that the quote really is there.**
 
 The app is in English by default and also works in Norwegian (called *Saksmappen*). It was built for the Meta Global AI Developer Hackathon, theme **Build for Your World**, from the author's own experience of helping family through disability benefits, insurance claims and a lawyer.
 
-> CaseFolder organizes and explains. It does not give legal advice. All sample documents are fictional.
+> Case Ally organizes and explains. It does not give legal advice. All sample documents are fictional.
 
 ---
 
@@ -82,7 +82,8 @@ The API key lists `muse-spark-1.1`, `1.2`, `1.3`, two `-contributor` variants, `
 | **Deadlines** | Sorted by urgency. Shows the calculation. Asks for the received date when a deadline needs it. Downloads a calendar file (`.ics`) with alerts 7 days and 1 day before. |
 | **Missing** | A checklist with 24 px checkboxes. Each item says why it is needed and how to get it, with its source quote. Ticks are saved. |
 | **Ask & write** | Ask a question about the case. Draft an appeal letter or a plain-text summary. |
-| **Simple view** | A toggle in the header. One column, large text, three headings. |
+| **Things it may be worth asking about** | A card on the Overview with up to four general suggestions (for example free legal aid, or help with transport to appointments). Each is labelled **Idea, not checked** and shows the quote from your documents that triggered it. They come from general knowledge, are not rights, and carry no amounts or eligibility claims. |
+| **Simple view** | A toggle in the header. One column, large text, three headings. A language picker shows it in Norwegian, English, Arabic, Urdu, Polish, Somali, Ukrainian or Turkish (right-to-left for Arabic and Urdu). Dates keep their day, month and year and only get translated month names. The translation is by the model and is marked as machine translation. |
 | **Share** | Copy the case link. Open the printable **handover page** for a lawyer, with a **Hide ID numbers** switch. Rename or delete the case. |
 
 ### Voice notes
@@ -138,7 +139,8 @@ All routes are under `/api/cases`.
 - `POST /api/cases/:token/documents`, `PUT` and `DELETE …/documents/:id`
 - `POST …/read` (images, a PDF, or PDF text, to text plus suggestions)
 - `POST …/voice` (a WAV recording to text; the audio is not stored)
-- `POST …/analyze` (streams each of the three parts as it finishes)
+- `POST …/analyze` (streams each of the four parts as it finishes)
+- `POST …/translate` (the Simple view text into one of the supported languages)
 - `POST …/ask`, `POST …/draft`
 - `PUT …/checks`
 - `GET …/files/:id`, `GET …/calendar.ics` (optional `?i=` for one deadline, `?lang=`)
@@ -149,7 +151,7 @@ All routes are under `/api/cases`.
 
 ### Languages
 
-English is the default. Norwegian is selected with the button in the header, `?lang=nb`, or is remembered from earlier. Prompts, page reading, date phrases, dates, plurals and the calendar file all follow the language. The internal JSON keys and document types stay Norwegian in both, so there is nothing to migrate.
+English is the default. Norwegian is selected with the button in the header, `?lang=nb`, or is remembered from earlier. The footer carries a discreet not-legal-advice notice (in Norwegian it points to Nav.no for official deadlines). Prompts, page reading, date phrases, dates, plurals and the calendar file all follow the language. The internal JSON keys and document types stay Norwegian in both, so there is nothing to migrate.
 
 ---
 
@@ -201,7 +203,8 @@ Fonts come from Google Fonts and the PDF reader from cdnjs, so you need internet
 - Real phone photos, handwriting, stamps and tables. All image tests were synthetic.
 - A scanned PDF with many pages (the model reads the whole file, we have only tried one page).
 - Screen readers, printing to PDF, real devices, several people editing at once, cases above the size limit.
-- The ID-number hiding is pattern-based (Norwegian national ID, US Social Security number, Norwegian bank account number). It misses other formats, names and addresses. It is not a guarantee.
+- **Translations and ideas.** The translations were checked by us only for structure and dates, not by native speakers (Arabic, Urdu and Somali especially). The ideas are general knowledge from the model and are never checked against your documents.
+- The ID-number hiding is pattern-based (Norwegian national ID, US Social Security number, Norwegian bank account number). It misses other formats, names and addresses. It also runs on text the model writes (answers, drafts, translations), but it is not a guarantee.
 - Ticks are stored by the wording of the item, so a new analysis that words an item differently loses its tick.
 - The same decision in two documents can produce two deadlines that are not merged.
 - The app has no legal knowledge on purpose. It only uses what the documents say. A letter that states a deadline in a way our date code does not recognize will show *We need a date* or a model-computed date flagged as unchecked.

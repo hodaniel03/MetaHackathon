@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<title>CaseFolder</title>
+<title>Case Ally</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600&family=Source+Serif+4:ital,wght@1,400&display=swap" rel="stylesheet">
@@ -212,6 +212,12 @@ details.orig summary { cursor: pointer; min-height: 44px; display: flex; align-i
 .check-row { display: flex; gap: 16px; align-items: flex-start; cursor: pointer; margin: 0; font-weight: 400; font-size: 1rem; }
 .check-row input { width: 24px; height: 24px; min-height: 24px; margin-top: 4px; padding: 0; accent-color: var(--primary); flex: none; }
 
+.idea { padding: 20px 0 8px; border-top: 1px solid var(--line); margin-top: 20px; }
+.idea .claim { padding: 12px 16px; }
+.langpick { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 22px 0 8px; }
+.langpick select { width: auto; min-width: 220px; }
+footer.foot p { margin: 0; }
+
 /* Handover and print */
 .handover section { margin-top: 32px; }
 .handover .claim { break-inside: avoid; }
@@ -239,7 +245,7 @@ details.orig summary { cursor: pointer; min-height: 44px; display: flex; align-i
 /* ---------- Texts. Missing Norwegian keys fall back to English. ---------- */
 const T = {
   en: {
-    brand: 'CaseFolder', skip: 'Skip to content', simpleView: 'Simple view', shareBtn: 'Share case', langBtn: 'Norsk', langAria: 'Bytt til norsk',
+    brand: 'Case Ally', skip: 'Skip to content', simpleView: 'Simple view', shareBtn: 'Share case', langBtn: 'Norsk', langAria: 'Bytt til norsk',
     tabsAria: 'Parts of the case', tab_oversikt: 'Overview', tab_tidslinje: 'Timeline', tab_dokumenter: 'Documents', tab_frister: 'Deadlines', tab_mangler: 'Missing', tab_skriv: 'Ask & write',
     foot: 'Reads and checks your documents with Meta’s Muse Spark. Not legal advice.',
     type_vedtak: 'Decision', type_legeerklæring: 'Medical statement', type_forsikring: 'Insurance', type_advokat: 'Lawyer', type_innkalling: 'Appointment', type_notat: 'Own note', type_annet: 'Other',
@@ -285,7 +291,7 @@ const T = {
     copyLink: 'Copy the link', linkLabel: 'Link to the case', noLogin: 'We do not have sign-in yet. The link is the only thing that gives access.',
     hoTitle: 'Overview for a lawyer or support service', hoText: 'A tidy page that gathers the timeline, deadlines, documents and what is missing. Every claim has a quote and a source. You can print it or save it as PDF.', openOverview: 'Open the overview',
     settings: 'Settings', rename: 'Rename the case', deleteCase: 'Delete the case', deleteNote: 'When you delete, all documents and images are removed for good.',
-    hBack: 'Back', hTitle: (n) => `Case overview: ${n}`, hMade: (d) => `Made ${d} by CaseFolder`, hPrint: 'Print or save as PDF',
+    hBack: 'Back', hTitle: (n) => `Case overview: ${n}`, hMade: (d) => `Made ${d} by Case Ally`, hPrint: 'Print or save as PDF',
     hLegend: 'Every claim has a quote from the document. “Checked” means the quote appears word for word in the document. “Check yourself” means we did not find it. This is not legal advice.',
     hStands: 'How the case stands', hNow: 'Now:', hDeadlines: 'Deadlines', hNone: 'None found.', hDateMissing: 'Date missing', hTimeline: 'Timeline', hDocs: 'Documents in the case', hMissing: 'Documents that are missing', hObtained: '(obtained)',
     hNotRead: 'The case has not been read through yet. Go back and press “Read through the case”.', hNothing: 'Nothing found.', hReceived: (d) => `received ${d}`,
@@ -311,6 +317,8 @@ const T = {
     openPdf: 'Open the original PDF', openPdfPage: (n) => `Open the original PDF, page ${n}`, pdfPreviewNote: 'The PDF opens in a new tab.', pdfTooBig: 'That PDF is too large (limit 14 MB). Try a photo instead.',
     repeated: (w) => `Said twice? “${w}”`, asInVoice: 'Deadline, as you said in your voice note', confirmWriting: 'This comes from what you said, not from a letter. Ask for it in writing.',
     heroClaims: (n) => (n === 1 ? 'claim' : 'claims'), heroChecked: 'checked against the document', heroUnchecked: 'could not be checked',
+    ideasTitle: 'Things it may be worth asking about', ideasNote: 'These are ideas, not rights. They come from general knowledge, not from your documents, and have not been checked. Ask the agency or the municipality whether they apply to you.', findingIdeas: 'We are thinking about what else could be worth asking about…', ideaBadge: 'Idea, not checked', ideaAsk: 'Ask:', ideaBecause: 'Why we suggest it. Your documents say:',
+    sShowIn: 'Show this in', sSameLang: 'This language', sTranslating: 'We are translating…', sMachine: 'This is an automatic translation. A person has not checked it. If something is unclear, ask someone you trust, or the agency.', disclaimer: 'This is an AI analysis to organize and simplify. Always check official deadlines with the agency or its website.',
     hideIds: 'Hide ID numbers', hideIdsHint: 'Hides personal ID numbers we recognize, such as Norwegian national ID numbers and US Social Security numbers. It can miss others, so check before you share.', idHidden: '[ID number hidden]', hLegendHidden: 'Personal ID numbers we recognize have been hidden.',
   },
   nb: {
@@ -386,6 +394,8 @@ const T = {
     openPdf: 'Åpne original-PDF', openPdfPage: (n) => `Åpne original-PDF, side ${n}`, pdfPreviewNote: 'PDF-en åpnes i en ny fane.', pdfTooBig: 'PDF-en er for stor (grense 14 MB). Prøv et bilde i stedet.',
     repeated: (w) => `Sagt to ganger? «${w}»`, asInVoice: 'Frist, slik du sa det i talenotatet', confirmWriting: 'Dette kommer fra det du sa, ikke fra et brev. Be om det skriftlig.',
     heroClaims: () => 'funn', heroChecked: 'kontrollert mot dokumentet', heroUnchecked: 'kunne ikke kontrolleres',
+    ideasTitle: 'Ting det kan være verdt å spørre om', ideasNote: 'Dette er idéer, ikke rettigheter. De kommer fra generell kunnskap, ikke fra dokumentene dine, og er ikke kontrollert. Spør etaten eller kommunen om de gjelder deg.', findingIdeas: 'Vi tenker på hva mer det kan være verdt å spørre om…', ideaBadge: 'Idé, ikke kontrollert', ideaAsk: 'Spør:', ideaBecause: 'Hvorfor vi foreslår det. Dokumentene dine sier:',
+    sShowIn: 'Vis dette på', sSameLang: 'Dette språket', sTranslating: 'Vi oversetter…', sMachine: 'Dette er en automatisk oversettelse. Et menneske har ikke sjekket den. Er noe uklart, spør noen du stoler på, eller etaten.', disclaimer: 'Dette er en KI-analyse for strukturering og forenkling. Sjekk alltid offisielle frister på Nav.no eller kommunens nettsider.',
     hideIds: 'Skjul personnumre', hideIdsHint: 'Skjuler personnumre vi kjenner igjen, som norske fødselsnumre og amerikanske Social Security-numre. Vi kan overse andre, så sjekk før du deler.', idHidden: '[personnummer skjult]', hLegendHidden: 'Personnumre vi kjenner igjen er skjult.',
   },
 };
@@ -592,7 +602,7 @@ function focusMain() { window.scrollTo(0, 0); const h = $('#app h1'); if (h) { h
 function renderStatic() {
   document.documentElement.lang = lang;
   $('#skip').textContent = t('skip');
-  $('#foot').textContent = t('foot');
+  $('#foot').innerHTML = `<p>${esc(t('foot'))}</p><p style="margin-top:6px">${esc(t('disclaimer'))}</p>`;
   $('#tabs').setAttribute('aria-label', t('tabsAria'));
 }
 
@@ -631,7 +641,7 @@ function renderHome() {
 
 /* ---------- Open a case ---------- */
 async function openCase(token, page = 'oversikt') {
-  st = { token, page, hideIds: true, c: null, docs: [], analysis: null, aState: 'none', checks: {}, pending: [], open: new Set(), ev: new Set(), answer: null, draft: null, busy: '', err: '' };
+  st = { token, page, hideIds: true, sLang: '', trans: {}, transBusy: false, c: null, docs: [], analysis: null, aState: 'none', checks: {}, pending: [], open: new Set(), ev: new Set(), answer: null, draft: null, busy: '', err: '' };
   renderCase();
   try {
     const v = await api('GET', `/api/cases/${token}`);
@@ -646,7 +656,7 @@ async function openCase(token, page = 'oversikt') {
 }
 
 function applyView(v) {
-  st.c = v.case; st.docs = v.documents; st.analysis = v.analysis; st.aState = v.analysisState; st.checks = v.checks || {};
+  st.trans = {}; st.sLang = ''; st.c = v.case; st.docs = v.documents; st.analysis = v.analysis; st.aState = v.analysisState; st.checks = v.checks || {};
   document.title = `${v.case.name} · ${t('brand')}`;
   renderCase();
 }
@@ -725,6 +735,7 @@ function pageOversikt() {
     <div class="stack-s"><h1>${esc(t('attentionTitle'))}</h1>${wait('a') ? '' : `<p class="lead">${esc(a.status || '')}</p>`}</div>
     ${hero}
     <div class="att-grid">${card(t('cardDeadline'), deadlineCard())}${card(t('cardMissing'), missingCard())}${card(t('cardLatest'), latestCard())}</div>
+    ${ideasHtml()}
     <p class="row">${recordBtn}</p></div>`;
 }
 
@@ -798,17 +809,60 @@ function pageSkriv() {
       ${st.draft ? `<div class="out">${esc(st.draft)}</div><p style="margin-top:12px"><button class="btn" data-act="copy">${esc(t('copyText'))}</button></p>` : ''}</section></div>`;
 }
 
+// De tre punktene i Simple View som ren tekst. Brukes både for visning og for oversettelse.
+function simpleParts() {
+  const a = A(), next = nextDeadline(), n = next && daysUntil(next.dato);
+  const todo = [...(a.neste_steg || []).map((s) => s.steg), ...(a.mangler || []).filter((x) => !st.checks[ck(x.hva)]).map((x) => `${t('sGet')}${x.hva}`)].map(cap);
+  const now = [a.status || '', next ? `${t('sNextDeadline', fmtLong(next.dato))} ${n === 0 ? t('sToday') : t('sInDays', n)} ${cap(next.hva)}.` : ''].filter(Boolean).join(' ');
+  return { headings: { h1: t('sHappened'), h2: t('sNow'), h3: t('sToDo') }, happened: a.sammendrag || '', now, todo };
+}
+
+const OTHER_LANGS = [['nb', 'Norsk'], ['en', 'English'], ['ar', 'العربية'], ['ur', 'اردو'], ['pl', 'Polski'], ['so', 'Soomaali'], ['uk', 'Українська'], ['tr', 'Türkçe']];
+const RTL = new Set(['ar', 'ur']);
+
 function pageEnkel() {
   const a = A();
   if (!st.docs.length) return `<h1>${esc(t('sTitle'))}</h1><p style="margin-top:16px">${esc(t('sNoDocs'))}</p>`;
   if (!st.analysis) return `<h1>${esc(t('sTitle'))}</h1><p style="margin-top:16px">${esc(t('sNotRead'))}</p><p style="margin-top:24px"><button class="btn primary" data-act="analyze">${esc(t('readBtn'))}</button></p>`;
-  const next = nextDeadline(), n = next && daysUntil(next.dato);
-  const steps = [...(a.neste_steg || []).map((s) => s.steg), ...(a.mangler || []).filter((x) => !st.checks[ck(x.hva)]).map((x) => `${t('sGet')}${x.hva}`)];
-  return `<h1>${esc(t('sTitle'))}</h1>
+  const picker = `<div class="langpick noprint"><label for="s-lang" style="margin:0">${esc(t('sShowIn'))}</label><select id="s-lang"><option value="">${esc(t('sSameLang'))}</option>${OTHER_LANGS.filter(([l]) => l !== lang).map(([l, n]) => `<option value="${l}" ${st.sLang === l ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select></div>`;
+  if (st.sLang) {
+    const tl = st.trans[st.sLang];
+    if (st.transBusy) return `<h1>${esc(t('sTitle'))}</h1>${picker}<p class="skeleton" role="status" style="margin-top:16px">${esc(t('sTranslating'))}</p>`;
+    if (tl) return `<h1>${esc(t('sTitle'))}</h1>${picker}
+      <div lang="${esc(st.sLang)}" dir="${RTL.has(st.sLang) ? 'rtl' : 'ltr'}">
+        <h2>${esc(tl.headings.h1)}</h2><p>${esc(tl.happened)}</p>
+        <h2>${esc(tl.headings.h2)}</h2><p>${esc(tl.now)}</p>
+        <h2>${esc(tl.headings.h3)}</h2>${tl.todo.length ? `<ol class="simple-list">${tl.todo.map((s) => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+      </div>
+      <div class="notice" style="margin-top:32px">${icon('info')}<div>${esc(t('sMachine'))}</div></div>`;
+  }
+  const next = nextDeadline(), n = next && daysUntil(next.dato), p = simpleParts();
+  return `<h1>${esc(t('sTitle'))}</h1>${picker}
     <h2>${esc(t('sHappened'))}</h2><p>${wait('a') ? esc(t('sReading')) : esc(a.sammendrag || '')}</p>
     <h2>${esc(t('sNow'))}</h2><p>${wait('a') ? '' : esc(a.status || '')}</p>
     ${next ? `<p style="margin-top:16px"><strong>${esc(t('sNextDeadline', fmtLong(next.dato)))}</strong> ${esc(n === 0 ? t('sToday') : t('sInDays', n))}<br>${capEsc(next.hva)}</p>` : ''}
-    <h2>${esc(t('sToDo'))}</h2>${wait('b') || wait('c') ? `<p>${esc(t('sFinding'))}</p>` : steps.length ? `<ol class="simple-list">${steps.map((s) => `<li>${capEsc(s)}</li>`).join('')}</ol>` : `<p>${esc(t('sNothing'))}</p>`}`;
+    <h2>${esc(t('sToDo'))}</h2>${wait('b') || wait('c') ? `<p>${esc(t('sFinding'))}</p>` : p.todo.length ? `<ol class="simple-list">${p.todo.map((s) => `<li>${esc(s)}</li>`).join('')}</ol>` : `<p>${esc(t('sNothing'))}</p>`}`;
+}
+
+async function setSimpleLang(l) {
+  st.sLang = l; st.err = '';
+  if (l && !st.trans[l]) {
+    st.transBusy = true; renderPage();
+    try { st.trans[l] = await caseApi('POST', '/translate', { lang: l, parts: simpleParts() }); } catch (e) { st.err = e.message; st.sLang = ''; }
+    st.transBusy = false;
+  }
+  renderPage(); document.getElementById('s-lang')?.focus();
+}
+
+function ideasHtml() {
+  if (wait('d')) return `<section class="card" aria-labelledby="h-ideas"><h2 id="h-ideas">${esc(t('ideasTitle'))}</h2><p class="skeleton" style="margin-top:8px">${esc(t('findingIdeas'))}</p></section>`;
+  const ideas = A().ideer || [];
+  if (!ideas.length) return '';
+  return `<section class="card" aria-labelledby="h-ideas"><h2 id="h-ideas">${esc(t('ideasTitle'))}</h2>
+    <div class="notice" style="margin-top:12px">${icon('info')}<div>${esc(t('ideasNote'))}</div></div>
+    ${ideas.map((x, i) => `<article class="idea"><span class="badge neutral">${icon('help', 16)}<span>${esc(t('ideaBadge'))}</span></span>
+      <h3 style="margin-top:10px">${capEsc(x.navn)}</h3><p>${esc(x.hvorfor)}</p>${x.hvordan ? `<p class="meta" style="margin-top:4px">${esc(t('ideaAsk'))} ${esc(x.hvordan)}</p>` : ''}
+      <p class="meta" style="margin-top:14px;margin-bottom:6px">${esc(t('ideaBecause'))}</p>${claimCard({ id: `i${i}`, quote: x.sitat, dok: x.dok, verified: !!x.verifisert })}</article>`).join('')}</section>`;
 }
 
 function pageDel() {
@@ -853,7 +907,7 @@ async function guarded(label, fn) {
 async function analyze() {
   if (!st.docs.length || st.pending.length) return;
   const token = st.token;
-  st.err = ''; st.analysis = {}; st.pending = ['a', 'b', 'c']; renderPage();
+  st.err = ''; st.analysis = {}; st.pending = ['a', 'b', 'c', 'd']; st.trans = {}; renderPage();
   let ok = false;
   try {
     const r = await fetch(`/api/cases/${token}/analyze`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lang }) });
@@ -1252,6 +1306,7 @@ document.addEventListener('change', async (e) => {
   const el = e.target;
   if (el.id === 'f-upload') { const files = el.files; await startIntake(files); el.value = ''; }
   else if (el.dataset?.check !== undefined) await setCheck(el.dataset.check, el.checked, el.id);
+  else if (el.id === 's-lang') await setSimpleLang(el.value);
   else if (el.id === 'hide-ids') { st.hideIds = el.checked; renderPage(); document.getElementById('hide-ids')?.focus(); }
 });
 document.addEventListener('input', (e) => { if (e.target.id === 'i-text') renderChips(); });
