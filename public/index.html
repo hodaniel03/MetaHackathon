@@ -342,7 +342,7 @@ footer.foot p { margin: 0; }
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-logo" viewBox="0 0 48 44"><mask id="logo-cut"><rect width="48" height="44" fill="#fff"/><path d="M9 11l5 5 11-10" stroke="#000" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></mask><path mask="url(#logo-cut)" fill="currentColor" d="M4 8a4 4 0 0 1 4-4h12a4 4 0 0 1 2.9 1.25l2.7 2.9a4 4 0 0 0 2.9 1.35H40a4 4 0 0 1 4 4V36a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4Z"/></symbol></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-logo" viewBox="0 0 64 64"><path d="M5 17a6 6 0 0 1 6-6h13.5a6 6 0 0 1 4.6 2.1L33 18h20a6 6 0 0 1 6 6v29a6 6 0 0 1-6 6H11a6 6 0 0 1-6-6z" fill="#1E3A5F"/><path d="M5 29.5a3.5 3.5 0 0 1 3.5-3.5h47a3.5 3.5 0 0 1 3.5 3.5V53a6 6 0 0 1-6 6H11a6 6 0 0 1-6-6z" fill="#fff" fill-opacity=".1"/><path d="M19 42.5l8.5 8.5L45 33" fill="none" stroke="#fff" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="13" r="7" fill="#E0A526" stroke="#FAF7F1" stroke-width="3"/></symbol></svg>
 <a class="skip" id="skip" href="#app">Skip to content</a>
 <header class="top"><div class="wrap top-in" id="top"></div></header>
 <nav class="tabs" id="tabs" hidden></nav>
@@ -838,7 +838,7 @@ addEventListener('hashchange', route);
 function focusMain() { window.scrollTo(0, 0); const h = $('#app h1'); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); } }
 
 // The mark: a folder with a check cut into the tab. Defined once in the page, used with <use>.
-const logo = (w = 36) => `<svg class="logo" width="${w}" height="${Math.round(w * 44 / 48)}" viewBox="0 0 48 44" aria-hidden="true" focusable="false"><use href="#i-logo"/></svg>`;
+const logo = (w = 36) => `<svg class="logo" width="${w}" height="${w}" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><use href="#i-logo"/></svg>`;
 
 function renderStatic() {
   document.documentElement.lang = lang;
