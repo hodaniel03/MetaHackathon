@@ -1,0 +1,323 @@
+{
+  "ideer": [
+    {
+      "navn": "General short-term financial assistance",
+      "hvorfor": "No income since May and long time off work makes it worth asking if short-term help exists, based on the user's own account in “Voice note: talk with the employer” (October 25, 2026) which should be confirmed in writing.",
+      "hvordan": "municipality, social welfare office or State Disability Agency",
+      "dok": "dc4c48366ec",
+      "sitat": "Jordan has had no income since May",
+      "verifisert": true
+    },
+    {
+      "navn": "Free or low-cost legal advice about appeals",
+      "hvorfor": "Two denials with appeal rights and no lawyer contacted yet makes legal advice worth asking about, based on the user's own account in “Voice note: talk with the employer” (October 25, 2026) which should be confirmed in writing.",
+      "hvordan": "legal aid office, lawyer or citizen advice service",
+      "dok": "dc4c48366ec",
+      "sitat": "I have not contacted a lawyer yet.",
+      "verifisert": true
+    },
+    {
+      "navn": "Transport help to medical appointments",
+      "hvorfor": "Pain when sitting and an upcoming specialist visit makes transport help worth asking about, as described in “Medical statement from family doctor” (March 12, 2026).",
+      "hvordan": "clinic, insurer or municipality",
+      "dok": "d75b9a54576",
+      "sitat": "The patient has pain when sitting longer than 30 minutes and when lifting.",
+      "verifisert": true
+    },
+    {
+      "navn": "Rehabilitation support and daily living aids",
+      "hvorfor": "Ongoing neck and back injury with reduced work function makes rehabilitation advice worth asking about, as described in “Medical statement from family doctor” (March 12, 2026).",
+      "hvordan": "family doctor, orthopedic clinic or State Disability Agency",
+      "dok": "d75b9a54576",
+      "sitat": "Diagnosis: whiplash injury to the neck and lower back.",
+      "verifisert": true
+    }
+  ],
+  "_lang": "en",
+  "frister": [
+    {
+      "dato": "2026-11-18",
+      "fra": null,
+      "hva": "attend orthopedic appointment",
+      "regel": "Appointment notice sets the appointment date and time",
+      "dok": "d4",
+      "sitat": "You are scheduled for an appointment on November 18, 2026 at 10:30 AM.",
+      "viktighet": "høy",
+      "verifisert": true,
+      "usikker": false
+    },
+    {
+      "dato": "2026-11-30",
+      "fra": null,
+      "hva": "send statement from orthopedic specialist to insurer, or claim will be closed",
+      "regel": "Letter requires the statement by the stated date",
+      "dok": "d2",
+      "sitat": "We need a statement from an orthopedic specialist by November 30, 2026.",
+      "viktighet": "høy",
+      "verifisert": true,
+      "usikker": false
+    },
+    {
+      "dato": null,
+      "varighet": {
+        "antall": 48,
+        "enhet": "hours"
+      },
+      "fra": "annet",
+      "hva": "cancel appointment if you cannot attend, at least before the appointment",
+      "regel": "Notice requires cancellation at least 48 hours before the appointment",
+      "dok": "d4",
+      "sitat": "If you cannot attend, you must cancel at least 48 hours before the appointment.",
+      "viktighet": "middels",
+      "verifisert": true,
+      "beregnet": false
+    },
+    {
+      "dato": null,
+      "varighet": {
+        "antall": 60,
+        "enhet": "days"
+      },
+      "fra": "mottak",
+      "hva": "file appeal of disability denial",
+      "regel": "Decision gives 60 days from the date you receive this notice to file an appeal",
+      "dok": "d3",
+      "sitat": "You have 60 days from the date you receive this notice to file an appeal.",
+      "viktighet": "høy",
+      "verifisert": true,
+      "beregnet": false
+    }
+  ],
+  "neste_steg": [
+    {
+      "steg": "Attend orthopedic appointment on November 18, 2026 at 10:30 AM and bring MRI images and list of medications",
+      "hvorfor": "Specialist statement is needed for the insurer claim",
+      "innen": "2026-11-18"
+    },
+    {
+      "steg": "Ask the specialist for a written statement about permanent medical impairment and send it to the insurer by November 30, 2026",
+      "hvorfor": "Insurer denied lost income and permanent injury for lack of specialist statement and will close claim if missing",
+      "innen": "2026-11-30"
+    },
+    {
+      "steg": "File appeal of the disability denial within the 60 days from receipt",
+      "hvorfor": "Decision denied for lack of documentation of which work tasks cannot be performed",
+      "innen": null
+    },
+    {
+      "steg": "Get written confirmation from employer that work cannot be adjusted, and collect receipts and summary of lost income since May",
+      "hvorfor": "User's own account in voice note says this is missing and not in writing, should be confirmed in writing",
+      "innen": null
+    }
+  ],
+  "mangler": [
+    {
+      "hva": "Orthopedic specialist statement",
+      "hvorfor": "“Letter from Example Insurance Co.” (September 30, 2026) denies lost income and permanent injury for now and asks for this by November 30, 2026. “Appointment notice from orthopedic clinic” (October 20, 2026) shows an appointment on November 18, 2026.",
+      "hvordan": "Attend the appointment on November 18, 2026 and ask the specialist to write the statement for the insurer.",
+      "dok": "d2",
+      "sitat": "We need a statement from an orthopedic specialist by November 30, 2026.",
+      "verifisert": true
+    },
+    {
+      "hva": "Doctor description of work tasks",
+      "hvorfor": "“Decision from the State Disability Agency: application denied” (October 14, 2026) says ability to work reduced by at least half is not documented because the statement describes diagnosis but not work tasks.",
+      "hvordan": "Ask the family doctor or the orthopedic specialist to write which work tasks cannot be performed.",
+      "dok": "d3",
+      "sitat": "The medical statement dated March 12, 2026 describes a diagnosis, but not which work tasks you are unable to perform.",
+      "verifisert": true
+    },
+    {
+      "hva": "Written employer statement on adjustments",
+      "hvorfor": "“Voice note: talk with the employer” (October 25, 2026) is the user's own account, not a written proof. It says the employer cannot adjust work for part time work. This should be confirmed in writing for the agency and insurer.",
+      "hvordan": "Ask the employer to put in writing what the job requires and why part time or adjusted work is not possible.",
+      "dok": "d5",
+      "sitat": "They said they cannot adjust the work so that Jordan can work part time.",
+      "verifisert": true
+    },
+    {
+      "hva": "Lost income summary and proof",
+      "hvorfor": "“Letter from Example Insurance Co.” (September 30, 2026) denies lost income for now. “Voice note: talk with the employer” (October 25, 2026) is the user's own account and says there has been no income since May and no summary exists.",
+      "hvordan": "Ask the employer for pay records and collect bank statements showing missing income since May.",
+      "dok": "d5",
+      "sitat": "we have not collected receipts or a summary of the lost income.",
+      "verifisert": true
+    },
+    {
+      "hva": "MRI images and medication list",
+      "hvorfor": "“Appointment notice from orthopedic clinic” (October 20, 2026) asks for these at the appointment on November 18, 2026. Without them the specialist assessment may be weak.",
+      "hvordan": "Get MRI images from the imaging place and a list of medications from the doctor or pharmacy and bring them to the appointment.",
+      "dok": "d4",
+      "sitat": "Please bring any MRI images and a list of your medications.",
+      "verifisert": true
+    }
+  ],
+  "ordliste": [
+    {
+      "begrep": "permanent medical impairment",
+      "forklaring": "Lasting injury to the body. The insurer uses it to decide on payment for permanent injury."
+    },
+    {
+      "begrep": "disability benefits",
+      "forklaring": "Money from the state when illness or injury lowers the ability to work."
+    },
+    {
+      "begrep": "whiplash injury",
+      "forklaring": "Neck and back injury, often after being hit from behind in a car."
+    },
+    {
+      "begrep": "appeal",
+      "forklaring": "A written request to change a decision you disagree with."
+    }
+  ],
+  "sammendrag": "This case is about Jordan Example who was in a car accident on February 3, 2026. “Medical statement from family doctor” (March 12, 2026) describes whiplash injury to the neck and lower back and full time off work since the accident. “Letter from Example Insurance Co.” (September 30, 2026) approved treatment costs totaling $14,200 but denied lost income for now. “Decision from the State Disability Agency: application denied” (October 14, 2026) denied disability benefits because reduced ability to work was not documented.",
+  "status": "“Appointment notice from orthopedic clinic” (October 20, 2026) schedules an appointment on November 18, 2026. “Letter from Example Insurance Co.” (September 30, 2026) needs a specialist statement by November 30, 2026, and “Decision from the State Disability Agency: application denied” (October 14, 2026) can be appealed within 60 days from receipt.",
+  "tidslinje": [
+    {
+      "dato": "2026-02-03",
+      "tittel": "Car accident",
+      "beskrivelse": "“Medical statement from family doctor” (March 12, 2026) says Jordan was rear-ended on February 3, 2026. The doctor reports pain and full time off work since that day.",
+      "dok": "d1",
+      "sitat": "The patient was rear-ended in a car accident on February 3, 2026.",
+      "verifisert": true
+    },
+    {
+      "dato": "2026-03-12",
+      "tittel": "Family doctor statement",
+      "beskrivelse": "“Medical statement from family doctor” (March 12, 2026) gives diagnosis and work status. It says expected duration of inability to work is uncertain.",
+      "dok": "d1",
+      "sitat": "Diagnosis: whiplash injury to the neck and lower back.",
+      "verifisert": true
+    },
+    {
+      "dato": "2026-09-30",
+      "tittel": "Insurer decision",
+      "beskrivelse": "“Letter from Example Insurance Co.” (September 30, 2026) approved treatment costs and denied lost income for now. It asks for a specialist statement by November 30, 2026.",
+      "dok": "d2",
+      "sitat": "We need a statement from an orthopedic specialist by November 30, 2026.",
+      "verifisert": true
+    },
+    {
+      "dato": "2026-10-14",
+      "tittel": "Disability benefits denied",
+      "beskrivelse": "“Decision from the State Disability Agency: application denied” (October 14, 2026) denied benefits. It says reduced ability to work by at least half was not documented.",
+      "dok": "d3",
+      "sitat": "We find that it has not been documented that your ability to work is reduced by at least half because of illness or injury.",
+      "verifisert": true
+    },
+    {
+      "dato": "2026-10-25",
+      "tittel": "Talk with employer",
+      "beskrivelse": "“Voice note: talk with the employer” (October 25, 2026) is the user's own account, not an official document. It says the employer cannot adjust work and this should be confirmed in writing.",
+      "dok": "d5",
+      "sitat": "They said they cannot adjust the work so that Jordan can work part time.",
+      "verifisert": true
+    },
+    {
+      "dato": "2026-11-18",
+      "tittel": "Orthopedic appointment",
+      "beskrivelse": "“Appointment notice from orthopedic clinic” (October 20, 2026) schedules an appointment on November 18, 2026. It asks to bring MRI images and a list of medications.",
+      "dok": "d4",
+      "sitat": "You are scheduled for an appointment on November 18, 2026 at 10:30 AM.",
+      "verifisert": true
+    }
+  ],
+  "fakta": [
+    {
+      "nokkel": "annet",
+      "etikett": "Born",
+      "verdi": "Jordan Example, born 1991",
+      "sitat": "Patient: Jordan Example, born 1991.",
+      "dok": "d1",
+      "verifisert": true,
+      "side": 1,
+      "kilde": "document",
+      "fanget": "2026-03-12",
+      "gyldig": null
+    },
+    {
+      "nokkel": "annet",
+      "etikett": "Accident",
+      "verdi": "rear-ended in a car accident on February 3, 2026",
+      "sitat": "The patient was rear-ended in a car accident on February 3, 2026.",
+      "dok": "d1",
+      "verifisert": true,
+      "side": 1,
+      "kilde": "document",
+      "fanget": "2026-03-12",
+      "gyldig": null
+    },
+    {
+      "nokkel": "diagnose",
+      "etikett": null,
+      "verdi": "whiplash injury to the neck and lower back",
+      "sitat": "Diagnosis: whiplash injury to the neck and lower back.",
+      "dok": "d1",
+      "verifisert": true,
+      "side": 1,
+      "kilde": "document",
+      "fanget": "2026-03-12",
+      "gyldig": null
+    },
+    {
+      "nokkel": "arbeidsstatus",
+      "etikett": null,
+      "verdi": "fully off work since February 3, 2026",
+      "sitat": "The patient has been fully off work since February 3, 2026.",
+      "dok": "d1",
+      "verifisert": true,
+      "side": 1,
+      "kilde": "document",
+      "fanget": "2026-03-12",
+      "gyldig": null
+    },
+    {
+      "nokkel": "annet",
+      "etikett": "Statement validity",
+      "verdi": "Valid for 6 months from the statement date",
+      "sitat": "This statement is valid for 6 months from the date above.",
+      "gyldig": "6 months",
+      "dok": "d1",
+      "verifisert": true,
+      "side": 1,
+      "kilde": "document",
+      "fanget": "2026-03-12"
+    },
+    {
+      "nokkel": "saksnummer",
+      "etikett": null,
+      "verdi": "EI-2026-48213",
+      "sitat": "Claim number: EI-2026-48213",
+      "dok": "d2",
+      "verifisert": true,
+      "side": 1,
+      "kilde": "document",
+      "fanget": "2026-09-30",
+      "gyldig": null
+    },
+    {
+      "nokkel": "forsikring",
+      "etikett": null,
+      "verdi": "approved coverage of treatment costs totaling $14,200",
+      "sitat": "We have approved coverage of treatment costs totaling $14,200.",
+      "dok": "d2",
+      "verifisert": true,
+      "side": 1,
+      "kilde": "document",
+      "fanget": "2026-09-30",
+      "gyldig": null
+    },
+    {
+      "nokkel": "inntekt",
+      "etikett": null,
+      "verdi": "no income since May",
+      "sitat": "Jordan has had no income since May,",
+      "dok": "d5",
+      "verifisert": true,
+      "side": 1,
+      "kilde": "voice",
+      "fanget": "2026-10-25",
+      "gyldig": null
+    }
+  ]
+}

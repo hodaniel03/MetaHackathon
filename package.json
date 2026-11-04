@@ -1,0 +1,16 @@
+{
+  "name": "case-ally",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  },
+  "scripts": {
+    "test": "node --no-warnings --test test/facts.test.mjs test/deadlines.test.mjs test/profile.test.mjs test/blobstore.test.mjs",
+    "start": "node --no-warnings server.mjs",
+    "eval": "node --no-warnings eval/run.mjs && node --no-warnings eval/quotecheck.mjs && node eval/publish.mjs"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "ran": "2026-11-01T22:04:52.433Z",
+  "sentences": 53,
+  "documents": 20,
+  "tests": {
+    "exact quote": {
+      "expected": "accepted",
+      "tried": 53,
+      "correct": 53
+    },
+    "upper case and extra spaces": {
+      "expected": "accepted",
+      "tried": 53,
+      "correct": 53
+    },
+    "curly quote marks around it": {
+      "expected": "accepted",
+      "tried": 53,
+      "correct": 53
+    },
+    "one digit changed": {
+      "expected": "rejected",
+      "tried": 19,
+      "correct": 19
+    },
+    "one word replaced": {
+      "expected": "rejected",
+      "tried": 47,
+      "correct": 47
+    },
+    "paraphrased (words reordered)": {
+      "expected": "rejected",
+      "tried": 38,
+      "correct": 38
+    },
+    "real quote, wrong document": {
+      "expected": "rejected",
+      "tried": 53,
+      "correct": 53
+    }
+  },
+  "limit": {
+    "note": "The checker only tests that the words are in the document. A real sentence attached to the wrong claim is accepted.",
+    "example": "A deadline claim that quotes the sentence about a 48 hour cancellation is accepted if that sentence is in the document."
+  }
+}
