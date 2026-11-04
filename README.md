@@ -4,7 +4,7 @@
 
 You add the letters, decisions and medical statements as they arrive, by photo, PDF, pasted text or a voice note. Case Ally reads them, builds a timeline, finds the deadlines, lists what is still missing, and drafts an appeal. Every claim it makes comes with a **word-for-word quote from your document, and the server checks that the quote really is there.**
 
-The app opens in Norwegian (where it is called *Saksmappen*) and also works in English; the choice is remembered, and `?lang=en` forces English. It was built for the Meta Global AI Developer Hackathon, theme **Build for Your World**, from the author's own experience of helping family through disability benefits, insurance claims and a lawyer.
+The app follows the browser language (Norwegian, where it is called *Saksmappen*, or English). The language button and `?lang=nb|en` override it, and the choice is remembered. It was built for the Meta Global AI Developer Hackathon, theme **Build for Your World**, from the author's own experience of helping family through disability benefits, insurance claims and a lawyer.
 
 > Case Ally organizes and explains. It does not give legal advice. All sample documents are fictional.
 

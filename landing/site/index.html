@@ -3,38 +3,49 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Case Ally: a case folder for the family member who runs a long benefits or insurance case</title>
-<meta name="description" content="Case Ally turns letters and calls into a timeline, deadlines and a list of what is missing. Every claim has a word-for-word quote that the server checks.">
-<meta name="theme-color" content="#FAF9F6">
+<title>CaseAlly: every document, every deadline, every claim checked</title>
+<meta name="description" content="CaseAlly is the AI folder for family members running a benefits, insurance or disability case. Every claim has a quote you can check, and deadlines are calculated by code.">
+<meta name="theme-color" content="#FAF7F1">
 <link rel="canonical" href="https://caseally.netlify.app/">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Case Ally">
-<meta property="og:title" content="Case Ally: every claim comes with its quote">
-<meta property="og:description" content="A case folder for the family member who runs a long benefits or insurance case for someone else.">
+<meta property="og:site_name" content="CaseAlly">
+<meta property="og:title" content="CaseAlly: every document, every deadline, every claim checked">
+<meta property="og:description" content="The AI folder for family members running a benefits, insurance or disability case for someone they love.">
 <meta property="og:url" content="https://caseally.netlify.app/">
 <meta property="og:image" content="https://caseally.netlify.app/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Case Ally logo, the headline 'Every claim comes with its quote', and a claim card that says 'Checked against the document'.">
+<meta property="og:image:alt" content="CaseAlly logo, the headline 'Every document. Every deadline. Every claim checked.', and a claim card that says 'Quote found in the document'.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Case Ally: every claim comes with its quote">
-<meta name="twitter:description" content="A case folder for the family member who runs a long benefits or insurance case for someone else.">
+<meta name="twitter:title" content="CaseAlly: every document, every deadline, every claim checked">
+<meta name="twitter:description" content="The AI folder for family members running a benefits, insurance or disability case for someone they love.">
 <meta name="twitter:image" content="https://caseally.netlify.app/assets/og.png">
 <link rel="preload" href="assets/fonts/fraunces-normal-400-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/public-sans-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 @font-face{font-family:Fraunces;src:url(assets/fonts/fraunces-normal-400-700.woff2) format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
 @font-face{font-family:Fraunces;src:url(assets/fonts/fraunces-italic-400-600.woff2) format("woff2");font-weight:400 600;font-style:italic;font-display:swap}
-@font-face{font-family:"Public Sans";src:url(assets/fonts/public-sans-var.woff2) format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:Inter;src:url(assets/fonts/inter-var.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
 :root{
-  --bg:#FAF9F6; --surface:#FFFFFF; --line:#E5E1D8; --ink:#162232; --muted:#4A5668; --navy:#1E3A5F; --navy-dark:#17304F;
-  --ok:#14714A; --ok-bg:#E8F3EE; --amber:#9A6B00; --amber-ink:#7A5500; --amber-bg:#FFF4D6; --amber-line:#E8D49A;
-  --bad:#B42318; --bad-bg:#FCECEA; --mark:#FFF1A8; --quote-bg:#F3F2EE; --ctl:#6B7686; --r:16px;
-  --serif:Fraunces,Georgia,"Times New Roman",serif; --sans:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --bg:#FAF7F1; --surface:#FFFFFF; --line:#E7E0D2; --ink:#0E1F3D; --muted:#4A5568; --navy:#0E1F3D; --navy-dark:#1A3157;
+  --ok:#14632E; --ok-bg:#E4F1E8; --amber:#9A6B00; --amber-ink:#7A5500; --amber-bg:#FFF4D6; --amber-line:#E8D49A;
+  --bad:#B42318; --bad-bg:#FCECEA; --mark:#FFE873; --quote-bg:#F4EFE4; --ctl:#6B7280; --r:16px;
+  --serif:Fraunces,Georgia,"Times New Roman",serif; --sans:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 *{box-sizing:border-box}
+.layer-grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.lcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 2px 12px rgba(14,31,61,.06);padding:26px}
+.lcard h3{margin-bottom:8px}
+.mini-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.badge.sim{background:var(--navy);color:#fff}.badge.sim b{border:1.5px solid #fff;border-radius:4px;padding:0 5px;font-size:.875rem;letter-spacing:.04em}
+.badge.warn-b{background:var(--amber-bg);color:var(--amber-ink)}.badge.ok-b{background:var(--ok-bg);color:var(--ok)}.badge.bad-b{background:var(--bad-bg);color:var(--bad)}
+.note-line{display:flex;gap:12px;align-items:flex-start;margin-top:28px;padding:16px 18px;background:var(--quote-bg);border-radius:12px}
+.note-line .ic{margin-top:3px;color:var(--navy);flex:none}
+.ev-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.evc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 2px 12px rgba(14,31,61,.06);padding:22px;display:flex;flex-direction:column;gap:6px}
+.evn{font-family:var(--serif);font-weight:600;font-size:2.5rem;line-height:1.1;color:var(--navy)}
 html{scroll-padding-top:84px}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -332,9 +343,9 @@ footer a{color:#fff}
 
 <header class="top" id="top">
   <div class="wrap top-in">
-    <a class="brand" href="#main" aria-label="Case Ally, home"><img src="assets/mark.svg" alt="" width="40" height="40"><span>Case Ally</span></a>
+    <a class="brand" href="#main" aria-label="CaseAlly, home"><img src="assets/mark.svg" alt="" width="40" height="40"><span>CaseAlly</span></a>
     <nav class="main" aria-label="Page sections">
-      <a href="#problem">The problem</a><a href="#how">How it works</a><a href="#trust">Verification</a><a href="#meta">Meta models</a><a href="#privacy">Limits</a>
+      <a href="#how">How it works</a><a href="#trust">Verification</a><a href="#layer">Share with consent</a><a href="#eval">Evidence</a><a href="#meta">Meta models</a><a href="#privacy">Limits</a>
     </nav>
     <a class="btn primary small" href="https://caseally-app.netlify.app/?sample&lang=en" rel="noopener"><span class="long">Open the live app</span><span class="short">Live app</span></a>
   </div>
@@ -352,15 +363,15 @@ footer a{color:#fff}
   </div>
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <span class="eyebrow">Case Ally</span>
-      <h1 id="h1">Every claim comes with <em>its quote.</em></h1>
-      <p class="lead">A case folder for the family member who runs a long benefits or insurance case for someone else.</p>
+      <span class="eyebrow">CaseAlly</span>
+      <h1 id="h1">Every document. Every deadline. <em>Every claim checked.</em></h1>
+      <p class="lead">CaseAlly is the AI folder for family members running a benefits, insurance or disability case for someone they love.</p>
       <div class="cta-row">
         <a class="btn primary" href="https://caseally-app.netlify.app/?sample&lang=en" rel="noopener">Open a sample case in the app <svg class="ic" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         <a class="btn" href="#demo">Try the check on this page</a>
       </div>
-      <p class="hero-note" style="margin-bottom:10px"><span>The sample case needs no sign-in. Features that call live AI, such as reading your own documents, ask for an access code from the hackathon submission.</span></p>
-      <p class="hero-note"><svg class="ic" width="20" height="20" aria-hidden="true" style="margin-top:3px;color:var(--navy)"><use href="#i-shield"/></svg><span>Case Ally organizes and explains. It does not give legal advice. All sample documents are fictional.</span></p>
+      <p class="hero-note" style="margin-bottom:10px"><span>The sample case needs no sign-in. Reading your own documents with live AI asks for the access code in the submission.</span></p>
+      <p class="hero-note"><svg class="ic" width="20" height="20" aria-hidden="true" style="margin-top:3px;color:var(--navy)"><use href="#i-shield"/></svg><span>CaseAlly organizes and explains. It does not give legal advice. All sample documents are fictional.</span></p>
     </div>
     <figure class="video-frame" style="margin:0">
       <video id="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/poster.jpg" aria-label="Illustrated scene, no sound: papers on a kitchen table are photographed with a phone and line up as a timeline with checks, and one amber warning.">
@@ -388,18 +399,6 @@ footer a{color:#fff}
   </div>
 </section>
 
-<!-- WHO -->
-<section class="sec" id="who" aria-labelledby="h-who">
-  <div class="wrap">
-    <div class="sec-head"><span class="eyebrow">Who it helps</span><h2 id="h-who">Built for the person holding the paperwork.</h2></div>
-    <div class="who-grid">
-      <article class="who primary"><span class="tag">Primary</span><h3>The Helper</h3><p>An adult, often a son, daughter, sibling or partner, running the case for a relative.</p><p>No legal background. Tired. Afraid to miss something. Case Ally is made for them first.</p></article>
-      <article class="who"><span class="tag">Secondary</span><h3>The person the case is about</h3><p>Gets a <strong>Simple View</strong> with large text and no jargon, under three headings only:</p><p><strong>What happened.<br>What happens now.<br>What you need to do.</strong></p></article>
-      <article class="who"><span class="tag">Tertiary</span><h3>A lawyer or support service</h3><p>Gets a <strong>printable handover page</strong>, so they can see the case without reading every letter first.</p></article>
-    </div>
-  </div>
-</section>
-
 <!-- HOW -->
 <section class="sec how" id="how" aria-labelledby="h-how">
   <div class="px" data-speed="0.14" data-rot="-4" style="right:3%;bottom:-60px;width:240px" aria-hidden="true"><svg viewBox="0 0 64 64" width="240"><path d="M5 17a6 6 0 0 1 6-6h13.5a6 6 0 0 1 4.6 2.1L33 18h20a6 6 0 0 1 6 6v29a6 6 0 0 1-6 6H11a6 6 0 0 1-6-6z" fill="#1E3A5F" opacity=".07"/></svg></div>
@@ -408,7 +407,7 @@ footer a{color:#fff}
     <div class="steps">
       <article class="step"><div class="n" aria-hidden="true">1</div><h3>Add documents</h3><p>Letters, decisions and medical statements, as they arrive.</p>
         <div class="chips"><span class="chip"><svg class="ic" width="18" height="18" aria-hidden="true"><use href="#i-camera"/></svg>Photo</span><span class="chip"><svg class="ic" width="18" height="18" aria-hidden="true"><use href="#i-file"/></svg>PDF</span><span class="chip"><svg class="ic" width="18" height="18" aria-hidden="true"><use href="#i-text"/></svg>Pasted text</span><span class="chip"><svg class="ic" width="18" height="18" aria-hidden="true"><use href="#i-mic"/></svg>Voice note</span></div></article>
-      <article class="step"><div class="n" aria-hidden="true">2</div><h3>Case Ally reads them</h3><p>You see the image next to the text it read, and check dates, amounts and case numbers before anything is saved. That review step cannot be skipped.</p></article>
+      <article class="step"><div class="n" aria-hidden="true">2</div><h3>CaseAlly reads them</h3><p>You see the image next to the text it read, and check dates, amounts and case numbers before anything is saved. That review step cannot be skipped.</p></article>
       <article class="step"><div class="n" aria-hidden="true">3</div><h3>You get the case</h3><p>A timeline, the deadlines, a list of what is still missing, and drafts, including an appeal. Every item points back to the document it came from.</p></article>
     </div>
   </div>
@@ -424,16 +423,30 @@ footer a{color:#fff}
       <div class="arrow" aria-hidden="true"><svg class="ic" width="34" height="34"><use href="#i-arrow"/></svg></div>
       <article class="tcard"><div class="k">2 · Quote</div><p class="q">“You have 60 days from the date you receive this notice to file an appeal.”</p></article>
       <div class="arrow" aria-hidden="true"><svg class="ic" width="34" height="34"><use href="#i-arrow"/></svg></div>
-      <article class="tcard"><div class="k">3 · Source</div><p class="claim-t" style="font-size:1.1rem">Decision from the State Disability Agency</p><p class="srcline">Oct 14 · Page 2</p><p style="margin-top:14px"><span class="badge ok"><svg class="ic" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Checked against the document</span></p></article>
+      <article class="tcard"><div class="k">3 · Source</div><p class="claim-t" style="font-size:1.1rem">Decision from the State Disability Agency</p><p class="srcline">Oct 14 · Page 2</p><p style="margin-top:14px"><span class="badge ok"><svg class="ic" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Quote found in the document</span></p></article>
     </div>
     <div class="rules">
       <div class="rule"><svg class="ic" width="26" height="26" aria-hidden="true"><use href="#i-check"/></svg><div><h4>The model must quote the document, word for word.</h4><p class="muted">No paraphrase counts as evidence.</p></div></div>
-      <div class="rule"><svg class="ic" width="26" height="26" aria-hidden="true"><use href="#i-check"/></svg><div><h4>Then the server checks the quote.</h4><p class="muted">It looks for it in the document text. Case, quote marks and whitespace are ignored. The result is either <strong>“Checked against the document”</strong> or <strong>“Could not be checked. Check yourself.”</strong></p></div></div>
+      <div class="rule"><svg class="ic" width="26" height="26" aria-hidden="true"><use href="#i-check"/></svg><div><h4>Then the server checks the quote.</h4><p class="muted">It looks for it in the document text. Case, quote marks and whitespace are ignored. The result is either <strong>“Quote found in the document”</strong> or <strong>“Quote not found. Check yourself.”</strong></p></div></div>
       <div class="rule"><svg class="ic" width="26" height="26" aria-hidden="true"><use href="#i-check"/></svg><div><h4>Dates are calculated by code, not by the model.</h4><p class="muted">The model only reports the duration (“6 weeks”, “60 days”) and what it runs from: receipt, or the letter's date. The code adds it to the date you enter.</p></div></div>
       <div class="rule"><svg class="ic" width="26" height="26" aria-hidden="true"><use href="#i-check"/></svg><div><h4>When a date is not in the document, it says so.</h4><p class="muted">A date the model gives that appears neither in the document nor was computed by code is marked “The date is not in the document”, in an amber box.</p></div></div>
       <div class="rule"><svg class="ic" width="26" height="26" aria-hidden="true"><use href="#i-check"/></svg><div><h4>It asks instead of guessing.</h4><p class="muted">If a deadline depends on when you received the letter and you have not entered that, the app asks you.</p></div></div>
     </div>
     <div class="honest" role="note"><svg class="ic" width="28" height="28" aria-hidden="true"><use href="#i-alert"/></svg><div><h3>What the check proves, and what it does not</h3><p>It confirms the quote is in the text that was read.</p><p>It does <strong>not</strong> confirm the text was read correctly from a photo. That is what the review step is for. It does <strong>not</strong> confirm the model's interpretation of the quote is right. And drafts are not verified quote by quote.</p></div></div>
+  </div>
+</section>
+
+<!-- VERIFY ONCE -->
+<section class="sec" id="layer" aria-labelledby="h-layer">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Verify once. Share with consent.</span><h2 id="h-layer">From a case folder to a verification layer.</h2><p class="lead muted">The facts every program asks for again, income, household and where you live, are verified once and shared field by field, for as long as you choose.</p></div>
+    <div class="layer-grid">
+      <article class="lcard"><h3>A verified profile</h3><p>Each field shows where it comes from and when. A value from a source is labelled as such. A value the family only claims stays amber and is never shown as verified.</p><div class="mini-row"><span class="badge sim"><b>SIMULATED</b> Tax register · Nov 1</span><span class="badge warn-b">Claimed, not verified at a source</span></div></article>
+      <article class="lcard"><h3>Consent per field</h3><p>Tick which fields a program may see, choose 7, 30 or 90 days, and withdraw at any time. Every grant, visit and withdrawal is in the access log.</p><div class="mini-row"><span class="badge ok-b">Active until Dec 1</span><span class="badge bad-b">Withdrawn Nov 3</span></div></article>
+      <article class="lcard"><h3>What the program sees</h3><p>Only the consented fields, each marked <em>verified from source</em> or <em>claimed by the family</em>. A withdrawn link shows nothing.</p><div class="mini-row"><span class="badge sim"><b>SIMULATED</b> Population register</span></div></article>
+    </div>
+    <p class="note-line"><svg class="ic" width="20" height="20" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>Limits, stated plainly:</strong> the sources and the three programs are simulated and fictional, nothing connects to a real agency, and there is no sign-in yet, so a link is the only protection.</span></p>
+    <div class="cta-row"><a class="btn primary" href="https://caseally-app.netlify.app/?sample&lang=en&page=profil" rel="noopener">Open the profile in the sample case</a></div>
   </div>
 </section>
 
@@ -497,7 +510,7 @@ footer a{color:#fff}
 <!-- WHAT YOU CAN DO -->
 <section class="sec" id="app" aria-labelledby="h-app">
   <div class="wrap">
-    <div class="sec-head"><span class="eyebrow">What you can do in the app</span><h2 id="h-app">Eight screens. One job each.</h2><p class="lead muted">Everything below is a fictional sample.</p></div>
+    <div class="sec-head"><span class="eyebrow">What you can do in the app</span><h2 id="h-app">Every screen has one job.</h2><p class="lead muted">Everything below is a fictional sample.</p></div>
     <div class="tour">
       <div class="tabs" role="tablist" aria-label="App screens" aria-orientation="vertical" id="tabs"></div>
       <div class="tpanel" id="tpanel" role="tabpanel" tabindex="0"></div>
@@ -519,9 +532,25 @@ footer a{color:#fff}
     <div class="two">
       <div class="panel"><h3>Reading a letter</h3><p>Photos are reviewed next to the extracted text. Dates, amounts and case numbers are flagged, because a wrong date gives a wrong deadline.</p><ul><li>You can read, edit or delete the extracted text.</li><li>Each document shows a status: <strong>Read</strong> or <strong>Needs review</strong>.</li><li>PDFs use their text layer when available, or are read whole by the model for scans.</li></ul></div>
       <div class="panel"><h3>Voice notes, labeled honestly</h3><p>Muse Voice Transcribe turns the recording into text. You check and correct it before saving. <strong>The audio is not stored</strong>, only the text you save.</p>
-        <div class="vclaim ok vnote" style="border-left-color:var(--ok)"><span class="badge ok"><svg class="ic" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Checked against your voice note</span><p class="q" style="margin-top:12px">“They said the statement must arrive by December 5.”</p><p class="small muted" style="margin-top:8px">From your voice note, not an official document.</p></div>
+        <div class="vclaim ok vnote" style="border-left-color:var(--ok)"><span class="badge ok"><svg class="ic" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Quote found in your voice note</span><p class="q" style="margin-top:12px">“They said the statement must arrive by December 5.”</p><p class="small muted" style="margin-top:8px">From your voice note, not an official document.</p></div>
         <p class="small muted" style="margin-top:14px">The analysis is told to treat a voice note as your account, never as an official decision, and to say that a deadline from a call should be confirmed in writing.</p></div>
     </div>
+  </div>
+</section>
+
+<!-- EVIDENCE -->
+<section class="sec" id="eval" aria-labelledby="h-eval">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Evidence</span><h2 id="h-eval">Measured, not claimed.</h2><p class="lead muted">We ran the real analysis on 20 synthetic, fictional cases (10 English, 10 Norwegian) with the answers written first. The runner, cases and saved results are in the repository.</p></div>
+    <div class="ev-grid">
+      <div class="evc"><span class="evn">16 / 18</span><span>deadline dates found, exactly right</span></div>
+      <div class="evc"><span class="evn">0</span><span>wrong dates shown after the fix</span></div>
+      <div class="evc"><span class="evn">10 / 10</span><span>missing documents found</span></div>
+      <div class="evc"><span class="evn">0 / 94</span><span>quotes not found word for word</span></div>
+      <div class="evc"><span class="evn">157 / 157</span><span>altered quotes rejected by the checker</span></div>
+    </div>
+    <article class="lcard" style="margin-top:24px"><h3>What the first run found</h3><p>It found two wrong dates. “5 working days” became “5 days” and the code calculated a calendar date. “End of the month after this letter” became “1 month”. Both looked confident. The code now refuses to calculate rules it does not model and tells the user to read the letter. Both runs are saved.</p></article>
+    <p class="note-line"><svg class="ic" width="20" height="20" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>What this does not show:</strong> the cases are short, synthetic and written by us. It says nothing about real letters, photographs or handwriting, and a quote check cannot tell whether a true quote supports its claim.</span></p>
   </div>
 </section>
 
@@ -550,25 +579,6 @@ footer a{color:#fff}
   </div>
 </section>
 
-<!-- DESIGNED FOR REAL PEOPLE -->
-<section class="sec" id="people" aria-labelledby="h-people">
-  <div class="wrap">
-    <div class="sec-head"><span class="eyebrow">Designed for real people</span><h2 id="h-people">Calm, readable, and hard to misread.</h2></div>
-    <div class="people">
-      <div class="panel"><h3>Accessible by default</h3>
-        <ul class="checks">
-          <li><svg class="ic" width="22" height="22" aria-hidden="true"><use href="#i-check"/></svg><span>Status is never shown by color alone. It is always an icon plus text.</span></li>
-          <li><svg class="ic" width="22" height="22" aria-hidden="true"><use href="#i-check"/></svg><span>No text under 14 px and 44 px touch targets.</span></li>
-          <li><svg class="ic" width="22" height="22" aria-hidden="true"><use href="#i-check"/></svg><span>Visible focus rings and one clear next action per screen.</span></li>
-          <li><svg class="ic" width="22" height="22" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Simple View</strong> for the person the case is about: one column, large text, three headings.</span></li>
-        </ul></div>
-      <div class="langbox"><h3 style="margin-bottom:6px">English and Norwegian</h3><p class="muted">The app is in English by default and also works in Norwegian, where it is called <strong>Saksmappen</strong>. The texts and the model's instructions exist in both languages.</p>
-        <div class="seg" role="group" aria-label="Language of the examples"><button type="button" aria-pressed="true" data-l="en">English</button><button type="button" aria-pressed="false" data-l="nb">Norsk</button></div>
-        <div id="langrows" aria-live="polite"></div></div>
-    </div>
-  </div>
-</section>
-
 <!-- PRIVACY -->
 <section class="sec priv" id="privacy" aria-labelledby="h-priv">
   <div class="wrap">
@@ -580,7 +590,7 @@ footer a{color:#fff}
         <li>Voice recordings are not stored, only the text you save.</li>
         <li>Deleting a case removes all its documents, images, ticks and analysis.</li></ul></div>
       <div class="panel"><h3>What it cannot promise yet</h3><ul>
-        <li><strong>No legal advice.</strong> Case Ally organizes and explains.</li>
+        <li><strong>No legal advice.</strong> CaseAlly organizes and explains.</li>
         <li><strong>No sign-in yet.</strong> Anyone with the case link can see and change the case, and the interface says so. Real accounts are the first thing a real product would need.</li>
         <li><strong>ID-number hiding is pattern matching, not a guarantee.</strong> The handover page has a “Hide ID numbers” switch, and says so on the page.</li>
         <li>Meta's data terms for API input and EEA storage requirements have not been reviewed. Do not use real sensitive data until that is done.</li>
@@ -592,7 +602,7 @@ footer a{color:#fff}
 <!-- HACKATHON -->
 <section class="sec hack" id="hackathon" aria-labelledby="h-hack">
   <div class="wrap">
-    <div class="sec-head"><span class="pill"><svg class="ic" width="20" height="20" aria-hidden="true"><use href="#i-shield"/></svg>Meta Global AI Developer Hackathon</span><h2 id="h-hack">Built for “Build for Your World”.</h2><p class="lead muted">Case Ally was built for the Meta Global AI Developer Hackathon, under the theme “Build for Your World”, from the author's own experience of helping family through disability benefits, insurance claims, and working with a lawyer.</p></div>
+    <div class="sec-head"><span class="pill"><svg class="ic" width="20" height="20" aria-hidden="true"><use href="#i-shield"/></svg>Meta Global AI Developer Hackathon</span><h2 id="h-hack">Built for “Build for Your World”.</h2><p class="lead muted">CaseAlly was built for the Meta Global AI Developer Hackathon, under the theme “Build for Your World”, from the author's own experience of helping family through disability benefits, insurance claims, and working with a lawyer.</p></div>
   </div>
 </section>
 
@@ -610,8 +620,8 @@ footer a{color:#fff}
 
 <footer>
   <div class="wrap footgrid">
-    <div><a class="brand" href="#main"><img src="assets/mark.svg" alt="" width="40" height="40"><span>Case Ally</span></a><p>Called <strong>Saksmappen</strong> in Norwegian. Built for the Meta Global AI Developer Hackathon, theme “Build for Your World”.</p></div>
-    <p class="disc"><strong>Not legal advice.</strong> Case Ally organizes and explains. It does not give legal advice. All sample documents are fictional.</p>
+    <div><a class="brand" href="#main"><img src="assets/mark.svg" alt="" width="40" height="40"><span>CaseAlly</span></a><p>Called <strong>Saksmappen</strong> in Norwegian. Built for the Meta Global AI Developer Hackathon, theme “Build for Your World”.</p></div>
+    <p class="disc"><strong>Not legal advice.</strong> CaseAlly organizes and explains. It does not give legal advice. All sample documents are fictional.</p>
   </div>
 </footer>
 
@@ -669,7 +679,7 @@ function renderSheet(){
 }
 function setBadge(state){
   var c=$('#vclaim'),b=$('#vbadge'); c.classList.remove('ok','bad'); b.className='badge '+state;
-  var map={neutral:['i-help','Not checked yet'],ok:['i-check','Checked against the document'],bad:['i-alert','Could not be checked. Check yourself']}[state];
+  var map={neutral:['i-help','Not checked yet'],ok:['i-check','Quote found in the document'],bad:['i-alert','Quote not found. Check yourself']}[state];
   b.innerHTML='<svg class="ic" width="16" height="16" aria-hidden="true"><use href="#'+map[0]+'"/></svg><span>'+map[1]+'</span>'; if(state!=='neutral')c.classList.add(state)}
 function counts(){var okn=5+(st.checked===true?1:0), bad=st.checked===false?1:0;
   $('#n-ok').textContent=okn;$('#n-bad').textContent=bad;$('#stat-bad').className='stat'+(bad?' bad':' ok');
@@ -677,7 +687,7 @@ function counts(){var okn=5+(st.checked===true?1:0), bad=st.checked===false?1:0;
 function say(t){$('#live').textContent=t}
 function run(){var ok=verified(st.quote); st.checked=ok;
   if(ok){var h=find(st.quote);if(h)st.page=h.page} setBadge(ok?'ok':'bad'); renderSheet(); counts(); renderCalc();
-  say(ok?'Checked against the document. The quote was found on page '+st.page+'.':'Could not be checked. The quote is not in the document.')}
+  say(ok?'Quote found in the document. The quote was found on page '+st.page+'.':'Quote not found. The quote is not in the document.')}
 function reset(){st.checked=null;setBadge('neutral');counts();renderSheet();say('')}
 function setQuote(q){st.quote=q;$('#vquote').textContent='“'+q+'”';reset()}
 function fmt(d){return d.toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'})}
@@ -716,9 +726,11 @@ var TOUR=[
 ['Missing','Missing','A checklist where each item says why it is needed and how to get it, with its source quote.',
  '<div class="mock"><div class="mini"><div class="cb"><i></i><div><strong>Specialist statement on permanent impairment</strong><p class="small muted">Why: the insurer denied lost income for now because it has no specialist statement.</p></div></div></div><div class="mini"><div class="cb"><i class="on"><svg class="ic" width="16" height="16" aria-hidden="true" style="color:#fff"><use href="#i-check"/></svg></i><div><strong>Written confirmation from the employer</strong><p class="small muted">Obtained</p></div></div></div></div>'],
 ['Facts','Facts','Details that come up again in other applications, renewals and with professionals, each with a quote and a source. You can confirm, correct, exclude or delete a fact. A fact you correct is marked “Entered by you — not checked”, and a fact from a voice note says so. A validity is only arithmetic on a duration the document quotes.',
- '<div class="mock"><div class="mini"><span class="badge ok">'+CHECK+'Checked against the document</span><p class="claim-t" style="font-weight:600;font-size:1.25rem;margin:8px 0">Valid for 6 months from the statement date</p><div class="q">This statement is valid for 6 months from the date above.</div><p class="small muted" style="margin-top:8px">From medical statement dated Mar 12 + 6 months = Sep 12. May be stale for a renewal after this date.</p></div><div class="mini" style="margin-top:12px"><span class="badge ok">'+CHECK+'Checked against your voice note</span><p style="font-weight:600;margin:8px 0">no income since May</p><p class="small muted">From your voice note, not an official document.</p></div></div>'],
+ '<div class="mock"><div class="mini"><span class="badge ok">'+CHECK+'Quote found in the document</span><p class="claim-t" style="font-weight:600;font-size:1.25rem;margin:8px 0">Valid for 6 months from the statement date</p><div class="q">This statement is valid for 6 months from the date above.</div><p class="small muted" style="margin-top:8px">From medical statement dated Mar 12 + 6 months = Sep 12. May be stale for a renewal after this date.</p></div><div class="mini" style="margin-top:12px"><span class="badge ok">'+CHECK+'Quote found in your voice note</span><p style="font-weight:600;margin:8px 0">no income since May</p><p class="small muted">From your voice note, not an official document.</p></div></div>'],
+['Profile','Profile and sharing','Income, household and residence with source, date and status. Source values are SIMULATED in this demo. Share chosen fields with a fictional program for 7, 30 or 90 days, withdraw at any time, and read the access log.',
+ '<div class="mock"><div class="mini"><span class="badge sim"><b>SIMULATED</b> Tax register · Nov 1</span><p style="font-family:var(--serif);font-weight:600;font-size:1.3rem;margin:8px 0">NOK 460 000 per year</p><p class="small muted">The family says: no income since May (from a voice note).</p></div><div class="mini" style="margin-top:12px"><strong>Transport support (FICTIONAL)</strong><p class="small muted">Place of residence, household · active until Dec 1</p></div></div>'],
 ['Ask & Write','Ask & Write','Ask a question about the case, or draft an appeal letter or a plain-text summary. Answers use only the documents in the case, and show where they come from.',
- '<div class="mock"><div class="fakeinp">What does the specialist need to write for the insurer to accept it?</div><div class="mini" style="margin-top:12px"><p>The documents do not say more than that a specialist statement is needed by November 30. Ask the insurer what it must contain.</p><div class="vclaim ok" style="margin-top:10px;border-left-color:var(--ok);padding:12px 14px"><span class="badge ok">'+CHECK+'Checked against the document</span><p class="q" style="margin-top:8px;font-size:1rem">“We need a statement from an orthopedic specialist by November 30, 2026.”</p></div></div><p class="small muted" style="margin-top:10px">Drafts are not checked quote by quote. Read and edit them before you use them.</p></div>'],
+ '<div class="mock"><div class="fakeinp">What does the specialist need to write for the insurer to accept it?</div><div class="mini" style="margin-top:12px"><p>The documents do not say more than that a specialist statement is needed by November 30. Ask the insurer what it must contain.</p><div class="vclaim ok" style="margin-top:10px;border-left-color:var(--ok);padding:12px 14px"><span class="badge ok">'+CHECK+'Quote found in the document</span><p class="q" style="margin-top:8px;font-size:1rem">“We need a statement from an orthopedic specialist by November 30, 2026.”</p></div></div><p class="small muted" style="margin-top:10px">Drafts are not checked quote by quote. Read and edit them before you use them.</p></div>'],
 ['Simple View','Simple View','A toggle in the header. One column, large text, three headings: what happened, what happens now, what you need to do.',
  '<div class="mock"><div class="simplev"><h4>What happened</h4><p>Your application was denied on October 14.</p><h4>What happens now</h4><p>You can appeal. The deadline is December 15.</p><h4>What you need to do</h4><ol><li>Tell us the day you received the letter.</li></ol></div></div>'],
 ['Share / Handover','Share and handover','Copy the case link. Open a printable handover page for a lawyer, with a “Hide ID numbers” switch. Choose which facts go into a proof packet, and open it as a printable page or download it as data (JSON). Rename or delete the case.',
@@ -732,7 +744,7 @@ tabs.addEventListener('keydown',function(e){var cur=$$('[role=tab]',tabs).findIn
 sel(0);
 
 /* ---------- Language examples (real strings from the app) ---------- */
-var L={en:[['Checked against the document','check'],['Could not be checked. Check yourself','alert'],['What happened · What happens now · What you need to do','file'],['Add to calendar','cal']],nb:[['Kontrollert mot dokumentet','check'],['Kunne ikke kontrolleres. Sjekk selv','alert'],['Hva har skjedd · Hva skjer nå · Dette må du gjøre','file'],['Legg i kalender','cal']]};
+var L={en:[['Quote found in the document','check'],['Quote not found. Check yourself','alert'],['What happened · What happens now · What you need to do','file'],['Add to calendar','cal']],nb:[['Kontrollert mot dokumentet','check'],['Kunne ikke kontrolleres. Sjekk selv','alert'],['Hva har skjedd · Hva skjer nå · Dette må du gjøre','file'],['Legg i kalender','cal']]};
 function lang(l){$$('.seg button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.l===l))});
   $('#langrows').innerHTML=L[l].map(function(r){return '<div class="langrow"><svg class="ic" width="22" height="22" aria-hidden="true" style="color:'+(r[1]==='alert'?'var(--amber-ink)':'var(--ok)')+'"><use href="#i-'+r[1]+'"/></svg><span lang="'+l+'"><strong>'+r[0]+'</strong></span></div>'}).join('')}
 $$('.seg button').forEach(function(b){b.addEventListener('click',function(){lang(b.dataset.l)})});lang('en');
